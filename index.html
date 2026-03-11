@@ -10,6 +10,8 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -24,7 +26,7 @@
       <div class="nav-actions">
         <div class="nav-links">
           <a href="#projects" data-i18n="nav.projects">Projects</a>
-          <a href="#opensource" data-i18n="nav.opensource">Open Source</a>
+          <!-- <a href="#opensource" data-i18n="nav.opensource">Open Source</a> -->
           <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
           <a href="#skills" data-i18n="nav.skills">Stack</a>
           <a href="#contact" data-i18n="nav.contact">Contact</a>
@@ -45,13 +47,20 @@
     <div class="bg-decoration"></div>
     <div class="container flex-center column">
       <div class="avatar-container">
-        <img src="assets/images/Avatar.jpg" alt="Avatar" class="avatar" data-i18n="intro.avatarAlt">
+        <!-- <img src="assets/images/Avatar.jpg" alt="Avatar" class="avatar" data-i18n="intro.avatarAlt"> -->
         <div class="avatar-glow"></div>
       </div>
       <h1 class="gradient-text" data-i18n="intro.title">Hello, I'm Lain-Ego</h1>
       <p class="subtitle" data-i18n="intro.desc">...</p>
     </div>
   </section>
+
+  <!-- <section id="education" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="education.title">Education</h2>
+      <div class="education-container"></div>
+    </div>
+  </section> -->
 
   <section id="projects" class="section-padding">
     <div class="container">
@@ -60,12 +69,12 @@
     </div>
   </section>
 
-  <section id="opensource" class="section-padding">
+  <!-- <section id="opensource" class="section-padding">
     <div class="container">
       <h2 data-i18n="opensource.title">Open Source Contributions</h2>
       <div class="opensource-grid"></div>
     </div>
-  </section>
+  </section> -->
 
   <section id="timeline" class="section-padding">
     <div class="container">

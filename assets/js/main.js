@@ -1,4 +1,9 @@
 (() => {
+  const EDUCATION_EVENTS = [
+    'education.event2',
+    'education.event1',
+  ]
+
   const PROJECTS = [
     {
       img: 'assets/images/Portfolio-01.png',
@@ -21,6 +26,13 @@
       tagsKey: 'projects.item3.tags',
       link: 'pages/projects/project3.html',
     },
+    {
+      img: 'assets/images/Portfolio-04.png',
+      titleKey: 'projects.item4.title',
+      descKey: 'projects.item4.desc',
+      tagsKey: 'projects.item4.tags',
+      link: 'pages/projects/project4.html',
+    }
   ];
 
   const OPEN_SOURCE_ITEMS = [
@@ -123,12 +135,12 @@
     const htmlEl = document.documentElement;
     if (!toggleBtn) return;
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     htmlEl.setAttribute('data-theme', savedTheme);
 
     toggleBtn.addEventListener('click', () => {
       const currentTheme = htmlEl.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
       htmlEl.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
@@ -145,6 +157,26 @@
       const next = current === 'en' ? 'zh' : 'en';
       console.log(`[Lang] Switching to ${next}...`);
       window.i18n.changeLang(next);
+    });
+  }
+
+  function initEducation() {
+    const container = qs('.education-container');
+    if (!container) return;
+    clear(container);
+
+    EDUCATION_EVENTS.forEach((key) => {
+      const item = document.createElement('div');
+      item.className = 'timeline-item';
+      item.innerHTML = `
+        <div class="timeline-dot"></div>
+        <span class="timeline-date">${t(`${key}.date`)}</span>
+        <div class="timeline-content">
+          <h3>${t(`${key}.title`)}</h3> 
+          <p>${t(`${key}.desc`)}</p>
+        </div>
+      `;
+      container.appendChild(item);
     });
   }
 
@@ -169,7 +201,8 @@
           <a href="${project.link}" class="project-link">${t('projects.viewDetail')}</a>
         </div>
       `;
-      grid.appendChild(card);
+      card.onclick = () => {window.location.href = project.link;};
+      grid.appendChild(card); 
     });
   }
 
@@ -217,7 +250,7 @@
         <div class="timeline-dot"></div>
         <span class="timeline-date">${t(`${key}.date`)}</span>
         <div class="timeline-content">
-          <h3>${t(`${key}.title`)}</h3>
+          <h3>${t(`${key}.title`)}</h3> 
           <p>${t(`${key}.desc`)}</p>
         </div>
       `;
@@ -288,10 +321,46 @@
 
   window.addEventListener('i18nLoaded', () => {
     console.log('[main] i18n loaded, rendering content...');
+    // initEducation()
     initProjects();
-    initOpenSource();
+    // initOpenSource();
     initTimeline();
     initTechStack();
     initContactLinks();
   });
+
+
+
+
+  const images = document.querySelectorAll('.project-img');
+  let overlay = null;
+
+  images.forEach(img => {
+    img.addEventListener('click', () => {
+      overlay = document.createElement('div');
+      overlay.className = 'lightbox-overlay';
+
+      const largeImg = document.createElement('img');
+      largeImg.src = img.dataset.large || img.src;
+      largeImg.alt = img.alt || '';
+
+      overlay.appendChild(largeImg);
+      document.body.appendChild(overlay);
+      document.body.style.overflow = 'hidden';
+
+      overlay.addEventListener('click', closeLightbox);
+    });
+  });
+
+  function closeLightbox() {
+    if (!overlay) return;
+    overlay.remove();
+    overlay = null;
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
 })();

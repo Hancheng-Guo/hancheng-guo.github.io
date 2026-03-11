@@ -38,7 +38,15 @@
   function updatePageLang() {
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n');
-      applyTranslation(el, key, t(key));
+      // applyTranslation(el, key, t(key));
+      const value = t(key);
+      if (Array.isArray(value)) {
+        applyTranslation(el, key, value.map(text => marked.parse(text)).join(''));
+      } else if (typeof value === "string") {
+        applyTranslation(el, key, marked.parse(value));
+      } else {
+        applyTranslation(el, key, value);
+      }
     });
 
     const toggleBtn = document.querySelector('.lang-toggle');

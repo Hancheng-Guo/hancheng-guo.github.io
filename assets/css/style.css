@@ -6,17 +6,17 @@
   --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --radius-md: 16px;
   --radius-full: 999px;
-  --container-width: 1024px;
+  --container-width: clamp(600px, 90vw, 1800px);
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
   /* [Light Mode] 默认日间模式变量 */
   --bg-body: #f8fafc;
-  --bg-card: #ffffff;
+  --bg-card: #ffffff; 
   --bg-glass: rgba(255, 255, 255, 0.8);
   --bg-hover: #f1f5f9;
   
   --text-main: #0f172a;
-  --text-muted: #64748b;
+  --text-muted: #464b52;
   --text-invert: #ffffff;
   
   --primary: #2563eb;       /* 核心蓝 */
@@ -39,7 +39,7 @@
   --bg-hover: #334155;
   
   --text-main: #f1f5f9;     /* 亮灰白 */
-  --text-muted: #94a3b8;    /* 柔和灰 */
+  --text-muted: #c6ccd5;    /* 柔和灰 */
   
   --primary: #60a5fa;       /* 亮蓝，暗色下更显眼 */
   --primary-glow: rgba(96, 165, 250, 0.25);
@@ -256,6 +256,31 @@ nav {
   margin: 0 auto;
 }
 
+
+
+
+.education-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 30px;
+}
+
+/* Vertical Line */
+.education-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-light);
+}
+
+
+
+
+
 /* =========================================
    5. Projects Grid & Detail Images
    ========================================= */
@@ -279,6 +304,30 @@ h2::after {
   border-radius: 2px;
 }
 
+.project-container h3 {
+  font-size: 1.5rem;
+  text-align: left;
+  margin-bottom: 48px;
+  color: var(--text-main);
+  position: relative;
+  display: inline-block;
+  padding-left: 12px;
+  width: 100%;
+}
+
+.project-container h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  transform: translateY(-50%);
+  background: var(--primary);
+  border-radius: 50%;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -296,9 +345,10 @@ h2::after {
 }
 
 .card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-0px);
   box-shadow: var(--shadow-hover);
   border-color: var(--primary-glow);
+  border: 1.5px solid;
 }
 
 /* 首页项目卡片缩略图 - 优化适配 */
@@ -345,7 +395,9 @@ h2::after {
 .project-link:hover::after { transform: translateX(4px); }
 
 /* 子页面：详情大图样式 (新增) */
-.project-detail-card { padding: 40px; }
+.project-detail-card {
+  padding: 40px;
+}
 
 .project-detail-desc {
   max-width: 800px;
@@ -354,9 +406,15 @@ h2::after {
   color: var(--text-muted);
 }
 
+.project-container {
+  width: var(--project-container-width, min(100%, 1024px));
+  margin: 0 auto;
+  padding: 0 0;
+}
+
 .project-img {
   display: block;
-  width: 100%;             /* 强制宽度撑满容器 */
+  width: var(--img-width, min(100%, 1024px));  /* 强制宽度撑满容器 */
   max-width: 100%;         /* 防止超出父容器 */
   height: auto;            /* 高度自动，保持比例 */
   object-fit: contain;     /* 保证图片内容完整显示 */
@@ -364,7 +422,33 @@ h2::after {
   margin: 32px auto;       /* 上下增加间距 */
   box-shadow: var(--shadow-card);
   border: 1px solid var(--border-light);
+  cursor: zoom-in;
 }
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.lightbox-overlay img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: 5vh 5vw;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+
 
 /* =========================================
    6. Documents & Buttons

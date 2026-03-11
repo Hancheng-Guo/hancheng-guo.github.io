@@ -10,6 +10,8 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -42,31 +44,42 @@
   <section class="section-padding">
     <div class="container">
       <div class="card project-detail-card">
-        <h2 data-i18n="project1.title"></h2>
+        <div class="project-container">
+
+          <h2 data-i18n="project1.title"></h2>
+          
+          <img src="../../assets/images/Portfolio-01.png" data-i18n="projects1.imgAlt1" class="project-img" alt="" style="--img-width:1024px;">
+          
+          <div class="project-detail-desc">
+            <p data-i18n="project1.desc1"></p>
+          </div>
+
+          <h3 data-i18n="project1.title1"></h3>
+
+          <div class="project-detail-desc">
+            <p data-i18n="project1.desc2"></p>
+          </div>
+
+          <img src="../../assets/images/Portfolio-01-3.png" data-i18n="project1.imgAlt2" class="project-img">
+          <img src="../../assets/images/Portfolio-01-1.png" data-i18n="project1.imgAlt3" class="project-img">
+          <img src="../../assets/images/Portfolio-01-2.png" data-i18n="project1.imgAlt4" class="project-img">
         
-        <img src="../../assets/images/Portfolio-01.png" data-i18n="projects1.imgAlt1" class="project-img">
-        
-        <div class="project-detail-desc">
-           <p data-i18n="project1.desc"></p>
+          <div class="publish-links-wrapper">
+            <div class="publish-links">
+              <a href="https://github.com/Lain-Ego0/BRS-Parallel-Robot" target="_blank" class="publish-link github">
+                <i class="fab fa-github"></i> <span data-i18n="project1.links.github">开源代码</span>
+              </a>
+              <a href="https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home" target="_blank" class="publish-link">
+                <i class="fas fa-file-pdf"></i> <span data-i18n="project1.links.techDoc">技术文档</span>
+              </a>
+              <a href="https://www.bilibili.com/video/BV15wu4zuEmf" target="_blank" class="publish-link bilibili">
+                <i class="fab fa-bilibili"></i> <span data-i18n="project1.links.demo">演示视频</span>
+              </a>
+            </div>
+          </div>
+
         </div>
 
-        <img src="../../assets/images/Portfolio-01-3.png" data-i18n="project1.imgAlt2" class="project-img">
-        <img src="../../assets/images/Portfolio-01-1.png" data-i18n="project1.imgAlt3" class="project-img">
-        <img src="../../assets/images/Portfolio-01-2.png" data-i18n="project1.imgAlt4" class="project-img">
-       
-        <div class="publish-links-wrapper">
-          <div class="publish-links">
-            <a href="https://github.com/Lain-Ego0/BRS-Parallel-Robot" target="_blank" class="publish-link github">
-              <i class="fab fa-github"></i> <span data-i18n="project1.links.github">开源代码</span>
-            </a>
-            <a href="https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home" target="_blank" class="publish-link">
-              <i class="fas fa-file-pdf"></i> <span data-i18n="project1.links.techDoc">技术文档</span>
-            </a>
-            <a href="https://www.bilibili.com/video/BV15wu4zuEmf" target="_blank" class="publish-link bilibili">
-              <i class="fab fa-bilibili"></i> <span data-i18n="project1.links.demo">演示视频</span>
-            </a>
-          </div>
-        </div>
 
       </div>
     </div>
