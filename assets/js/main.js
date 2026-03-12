@@ -344,11 +344,105 @@
       largeImg.src = img.dataset.large || img.src;
       largeImg.alt = img.alt || '';
 
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'lightbox-close';
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Close image');
+      closeBtn.innerHTML = '&times;';
+
+      let scale = 1;
+      let translateX = 0;
+      let translateY = 0;
+      const minScale = 0.2;
+      const maxScale = 8;
+      const wheelStep = 0.12;
+      const dblclickScale = 2.2;
+
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+      let startTranslateX = 0;
+      let startTranslateY = 0;
+
+      function updateTransform() {
+        largeImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      }
+
+      largeImg.addEventListener('click', e => {
+        e.stopPropagation();
+      });
+
+      closeBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        closeLightbox();
+      });
+
+      overlay.addEventListener('wheel', e => {
+        e.preventDefault();
+
+        scale += e.deltaY < 0 ? wheelStep : -wheelStep;
+        scale = Math.max(minScale, Math.min(maxScale, scale));
+
+        updateTransform();
+      }, { passive: false });
+
+      largeImg.addEventListener('dblclick', e => {
+        e.stopPropagation();
+
+        if (scale === 1) {
+          scale = dblclickScale;
+        } else {
+          scale = 1;
+          translateX = 0;
+          translateY = 0;
+        }
+
+        updateTransform();
+      });
+
+      largeImg.addEventListener('mousedown', e => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startTranslateX = translateX;
+        startTranslateY = translateY;
+
+        largeImg.classList.add('dragging');
+      });
+
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+
+      function handleMouseMove(e) {
+        if (!isDragging) return;
+
+        translateX = startTranslateX + (e.clientX - startX);
+        translateY = startTranslateY + (e.clientY - startY);
+
+        updateTransform();
+      }
+
+      function handleMouseUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        largeImg.classList.remove('dragging');
+      }
+
       overlay.appendChild(largeImg);
+      overlay.appendChild(closeBtn);
       document.body.appendChild(overlay);
       document.body.style.overflow = 'hidden';
 
-      overlay.addEventListener('click', closeLightbox);
+      // overlay.addEventListener('click', closeLightbox);
+      overlay.addEventListener('click', closeLightbox, { once: true });
+
+      overlay._cleanup = () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
     });
   });
 

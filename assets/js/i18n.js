@@ -42,10 +42,10 @@
       const value = t(key);
       if (Array.isArray(value)) {
         applyTranslation(el, key, value.map(text => marked.parse(text)).join(''));
-      } else if (typeof value === "string") {
-        applyTranslation(el, key, marked.parse(value));
+      // } else if (typeof value === "string") {
+      //   applyTranslation(el, key, marked.parse(value));
       } else {
-        applyTranslation(el, key, value);
+        applyTranslation(el, key, marked.parse(value));
       }
     });
 
