@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project 01 - Lain-Ego</title>
+  <title>ROBOCON 2025 Quadruped Robot Challenge - Lain-Ego</title>
+  <meta name="description" content="Full-stack quadruped robot development for ROBOCON 2025, covering mechanical design, force control and 3D LiDAR navigation.">
+  <meta property="og:title" content="ROBOCON 2025 Quadruped Robot Challenge - Lain-Ego"><meta property="og:description" content="Full-stack quadruped robot development for ROBOCON 2025, covering mechanical design, force control and 3D LiDAR navigation."><meta property="og:type" content="article"><meta property="og:url" content="https://hancheng-guo.github.io/pages/projects/project1.html"><meta property="og:image" content="https://hancheng-guo.github.io/assets/images/Portfolio-01.png">
+  <link rel="canonical" href="https://hancheng-guo.github.io/pages/projects/project1.html">
+  <link rel="icon" href="../../assets/images/Avatar.jpg">
   
   <script>
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -24,15 +28,16 @@
       </a>
       
       <div class="nav-actions">
-        <div class="nav-links">
+        <button class="control-btn menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation" data-i18n-aria-label="nav.openMenu">☰</button>
+        <div class="nav-links" id="primary-navigation">
           <a href="../../index.html#projects" data-i18n="nav.projects">Projects</a>
           <a href="../../index.html#timeline" data-i18n="nav.timeline">Timeline</a>
           <a href="../../index.html#contact" data-i18n="nav.contact">Contact Me</a>
         </div>
         
         <div class="nav-controls">
-          <button class="control-btn lang-toggle" aria-label="Toggle Language">中文</button>
-          <button class="control-btn theme-toggle" aria-label="Toggle Theme">
+          <button class="control-btn lang-toggle" aria-label="Toggle language" data-i18n-aria-label="nav.toggleLanguage">中文</button>
+          <button class="control-btn theme-toggle" aria-label="Toggle color theme" data-i18n-aria-label="nav.toggleTheme">
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
           </button>

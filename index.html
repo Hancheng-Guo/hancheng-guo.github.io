@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lain-Ego's Homepage</title>
+  <meta name="description" content="Lain-Ego's robotics and intelligent systems portfolio.">
+  <meta property="og:title" content="Lain-Ego's Portfolio">
+  <meta property="og:description" content="Robotics, embedded systems and intelligent machines.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hancheng-guo.github.io/">
+  <meta property="og:image" content="https://hancheng-guo.github.io/assets/images/Portfolio-01.png">
+  <link rel="canonical" href="https://hancheng-guo.github.io/">
+  <link rel="icon" href="assets/images/Avatar.jpg">
   
   <script>
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -24,7 +32,8 @@
       </a>
       
       <div class="nav-actions">
-        <div class="nav-links">
+        <button class="control-btn menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation" data-i18n-aria-label="nav.openMenu">☰</button>
+        <div class="nav-links" id="primary-navigation">
           <a href="#projects" data-i18n="nav.projects">Projects</a>
           <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
           <a href="#skills" data-i18n="nav.skills">Stack</a>
@@ -32,8 +41,8 @@
         </div>
         
         <div class="nav-controls">
-          <button class="control-btn lang-toggle" aria-label="Toggle Language">中文</button>
-          <button class="control-btn theme-toggle" aria-label="Toggle Theme">
+          <button class="control-btn lang-toggle" aria-label="Toggle language" data-i18n-aria-label="nav.toggleLanguage">中文</button>
+          <button class="control-btn theme-toggle" aria-label="Toggle color theme" data-i18n-aria-label="nav.toggleTheme">
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
           </button>
@@ -50,6 +59,10 @@
       </div>
       <h1 class="gradient-text" data-i18n="intro.title">Hello, I'm Lain-Ego</h1>
       <p class="subtitle" data-i18n="intro.desc">...</p>
+      <div class="intro-actions">
+        <a class="publish-link primary-action" href="#projects" data-i18n="intro.viewProjects">View Projects</a>
+        <a class="publish-link" href="#contact" data-i18n="intro.contact">Contact Me</a>
+      </div>
     </div>
   </section>
 

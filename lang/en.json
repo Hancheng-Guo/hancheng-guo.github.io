@@ -3,17 +3,28 @@
     "projects": "Portfolio",
     "timeline": "Timeline",
     "skills": "Tech Stack",
-    "contact": "Contact"
+    "contact": "Contact",
+    "openMenu": "Open navigation",
+    "toggleLanguage": "Toggle language",
+    "toggleTheme": "Toggle color theme"
   },
   "intro": {
     "title": "Hello, I'm Lain",
-    "desc": "Robot development enthusiast, Junior Year Student.<br>Interning at a Humanoid Robot Company.<br>Focus on MCU & Linux development, Motion Control, RL, and Perception.<br>Email: lain-ego@qq.com"
+    "desc": "Robot development enthusiast, Junior Year Student.<br>Interning at a Humanoid Robot Company.<br>Focus on MCU & Linux development, Motion Control, RL, and Perception.<br>Email: lain-ego@qq.com",
+    "viewProjects": "View Projects",
+    "contact": "Contact Me"
   },
   "projects": {
     "title": "My Projects",
     "imgAlt": "Project image",
     "viewDetail": "View Details",
-    "notFound": "Project not found"
+    "notFound": "Project not found",
+    "back": "Back to Projects",
+    "loading": "Loading projects…",
+    "loadError": "Projects could not be loaded.",
+    "retry": "Retry",
+    "draft": "Draft project — content is pending confirmation.",
+    "empty": "No projects published yet."
   },
   "timeline": {
     "title": "Timeline",
@@ -87,6 +98,9 @@
     "1": "Detail View 1",
     "2": "Detail View 2",
     "3": "Detail View 3"
+  },
+  "lightbox": {
+    "close": "Close image preview"
   },
   "footer": {
     "copyright": "© 2023-2025 Lain-Ego | Personal Homepage"

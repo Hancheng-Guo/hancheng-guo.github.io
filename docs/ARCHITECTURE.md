@@ -221,7 +221,7 @@ Python 类型校验
 
 ```text
 [project quadruped-robot] 缺少英文 summary。
-位置：content/portfolio.py:18
+位置：portfolio.py:18
 建议：在 summary 参数中增加 {"en": "..."}。
 未修改 assets/data/projects.json。
 ```
@@ -229,10 +229,9 @@ Python 类型校验
 ### 5.4 CLI
 
 ```text
-python -m portfolio_content validate content/portfolio.py
-python -m portfolio_content build content/portfolio.py
-python -m portfolio_content preview content/portfolio.py --port 8000
-python -m portfolio_content migrate assets/data/projects.json
+python portfolio.py validate
+python portfolio.py build
+python portfolio.py preview --port 8000
 ```
 
 `preview` 先执行校验和生成，再启动本地静态服务器；不应要求维护者理解模块 MIME 或浏览器跨域问题。
@@ -321,7 +320,7 @@ format/lint
 
 1. 为当前 JSON 增加 schemaVersion 和 schema，不改变 UI。
 2. 实现 Python models、builder、validator 和当前 schema serializer。
-3. 将现有四个项目转为 `content/portfolio.py`，做生成结果快照测试。
+3. 使用根目录 `portfolio.py` 载入现有项目数据，并对生成结果做快照测试。
 4. 引入 blocks v2 和 block renderer，逐个迁移项目。
 5. 增加通用 `project.html`；保留旧 URL 兼容壳或重定向页。
 6. 拆分 CSS、补齐状态/无障碍/SEO。

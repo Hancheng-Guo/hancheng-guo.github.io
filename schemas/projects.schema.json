@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schemaVersion", "projects"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "projects": { "type": "array", "items": { "$ref": "#/$defs/project" } }
+  },
+  "$defs": {
+    "localized": { "type": "object", "required": ["en", "zh"], "additionalProperties": { "type": "string" } },
+    "project": {
+      "type": "object", "required": ["id", "locales", "tags", "thumbnail"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "thumbnail": { "oneOf": [{ "type": "string" }, { "type": "object", "required": ["src"] }] },
+        "locales": { "type": "object", "required": ["en", "zh"], "additionalProperties": { "type": "object", "required": ["title", "summary"] } }
+      }
+    }
+  }
+}

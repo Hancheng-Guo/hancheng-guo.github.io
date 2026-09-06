@@ -4,31 +4,44 @@ import { fromRoot } from './paths.js';
 import { loadProjects } from './project-data.js';
 import { CONTACT_LINKS, TECH_STACK, TIMELINE_EVENTS } from './site-data.js';
 
-function renderTags(tags, className) {
-  return tags.map((tag) => `<span class="${className}">${tag}</span>`).join('');
-}
-
 async function renderProjects() {
   const grid = qs('.projects-grid');
   if (!grid) return;
+  grid.innerHTML = '<p class="status-view" role="status">' + t('projects.loading') + '</p>';
+  let projects;
+  try { projects = await loadProjects(); } catch (error) {
+    grid.innerHTML = '<div class="status-view error-state" role="alert"><p>' + t('projects.loadError') + '</p><button class="control-btn" type="button">' + t('projects.retry') + '</button></div>';
+    grid.querySelector('button')?.addEventListener('click', () => renderProjects());
+    return;
+  }
+  projects = projects.filter((project) => project.status !== 'draft');
+  if (!projects.length) { grid.innerHTML = '<p class="status-view">' + t('projects.empty') + '</p>'; return; }
   clear(grid);
-
-  const projects = await loadProjects();
   projects.forEach((project) => {
     const content = project.locales[currentLanguage()] || project.locales.en;
-    const card = document.createElement('div');
+    const card = document.createElement('a');
     card.className = 'card';
+    card.href = fromRoot(project.page);
     card.innerHTML = `
       <div class="project-thumbnail-wrapper">
-        <img src="${fromRoot(project.thumbnail)}" alt="${t('projects.imgAlt')}" class="project-thumbnail">
+        <img class="project-thumbnail" loading="lazy" decoding="async">
       </div>
       <div class="project-info">
-        <h3>${content.title}</h3>
-        <p>${content.summary}</p>
-        <div class="project-tags">${renderTags(content.tags, 'project-tag')}</div>
-        <a href="${fromRoot(project.page)}" class="project-link">${t('projects.viewDetail')}</a>
+        <h3></h3><p></p><div class="project-tags"></div><span class="project-link"></span>
       </div>`;
-    card.addEventListener('click', () => { window.location.href = fromRoot(project.page); });
+    const image = qs('.project-thumbnail', card);
+    image.src = fromRoot(project.thumbnail.src);
+    image.alt = project.thumbnail.alt?.[currentLanguage()] || content.title;
+    qs('h3', card).textContent = content.title;
+    qs('.project-info > p', card).textContent = content.summary;
+    qs('.project-link', card).textContent = t('projects.viewDetail');
+    const tags = qs('.project-tags', card);
+    (project.tags || []).forEach((tag) => {
+      const badge = document.createElement('span');
+      badge.className = 'project-tag';
+      badge.textContent = tag;
+      tags.appendChild(badge);
+    });
     grid.appendChild(card);
   });
 }

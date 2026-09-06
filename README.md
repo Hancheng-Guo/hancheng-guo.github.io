@@ -1,5 +1,5 @@
 # Lain-Ego's Homepage
-这是一个轻量化、响应式的个人主页网站，支持暗黑/亮色主题切换、多语言切换，包含项目展示、开源贡献、时间线、技术栈、联系方式等核心模块。
+这是一个轻量化、响应式的个人主页网站，支持暗黑/亮色主题切换、多语言切换，包含项目展示、时间线、技术栈和联系方式等核心模块。
 CSS由vibecoding实现。
 
 ## 规划与交付文档
@@ -7,6 +7,7 @@ CSS由vibecoding实现。
 - [项目需求文档](docs/PROJECT_REQUIREMENTS.md)
 - [项目架构文档](docs/ARCHITECTURE.md)
 - [验收标准文档](docs/ACCEPTANCE_CRITERIA.md)
+- [Python 内容管理完整教程](docs/PYTHON_GUIDE.md)
 
 ## 目录
 - [源码构成](#源码构成)
@@ -69,7 +70,21 @@ git clone https://github.com/Lain-Ego0/Lain-Ego0.github.io.git
 cd Lain-Ego0.github.io
 ```
 
-### 2. 本地运行
+### 2. 使用 Python 维护项目内容
+
+编辑项目根目录的 `portfolio.py`，通过 `Portfolio`、`add_project()`、`add_project_page()` 和各类 `add_*()` 函数填写内容，无需编辑 HTML。该入口默认载入现有正式数据，直接执行不会用示例清空项目列表。
+
+```bash
+python portfolio.py validate
+python portfolio.py build
+python portfolio.py preview --port 8000
+```
+
+`validate` 只检查内容；`build` 在校验通过后以 UTF-8 稳定生成 `assets/data/projects.json`；`preview` 生成后启动本地预览。校验失败不会覆盖现有 JSON。
+
+新增项目、图片、段落、列表、指标、视频及双语内容的具体写法见 [Python 内容管理完整教程](docs/PYTHON_GUIDE.md)。
+
+### 3. 本地运行
 #### 方式1：直接打开（简单测试）
 双击 `index.html` 文件，通过浏览器直接打开（部分交互可能因跨域/本地路径问题受限）。
 
@@ -85,7 +100,7 @@ http-server -p 8080
 ```
 访问地址：`http://localhost:8080`
 
-### 3. 部署上线
+### 4. 部署上线
 #### 方式1：GitHub Pages（推荐）
 1. 将代码推送到 GitHub 仓库（仓库名：`[用户名].github.io`）；
 2. 进入仓库 → Settings → Pages → 选择 `main` 分支 → 保存；
@@ -140,6 +155,11 @@ Lain-Ego0.github.io/
 │   ├── project2.html
 │   ├── project3.html
 │   └── project4.html
+├── project.html             # Python 新增项目共用的详情页
+├── portfolio.py             # 根目录 Python 内容与命令入口
+├── portfolio_content/       # 离线 Python 内容生成包
+├── schemas/                 # 内容数据 Schema
+├── tests/python/            # Python 自动化测试
 └── README.md                # 项目说明
 ```
 
@@ -154,7 +174,7 @@ Lain-Ego0.github.io/
 
 ### 3. 核心板块
 - 「Intro」：个人简介（标题、描述）；
-- 「Projects」：项目展示（动态渲染，需在 `main.js` 中配置项目数据）；
+- 「Projects」：项目展示（由 `assets/data/projects.json` 动态渲染）；
 - 「Timeline」：时间线（经历/里程碑）；
 - 「Skills」：技术栈展示；
 - 「Contact」：联系方式（社交链接等）。

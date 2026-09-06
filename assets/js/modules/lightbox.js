@@ -1,8 +1,13 @@
 import { qsa } from './dom.js';
+import { t } from './i18n.js';
 
 export function initLightbox(root = document) {
   qsa('.project-img', root).forEach((image) => {
+    image.tabIndex = 0;
     image.addEventListener('click', () => openLightbox(image));
+    image.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openLightbox(image); }
+    });
   });
 }
 
@@ -20,11 +25,13 @@ function openLightbox(sourceImage) {
   let startTranslateY = 0;
 
   overlay.className = 'lightbox-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
   image.src = sourceImage.dataset.large || sourceImage.src;
   image.alt = sourceImage.alt || '';
   closeButton.className = 'lightbox-close';
   closeButton.type = 'button';
-  closeButton.setAttribute('aria-label', 'Close image');
+  closeButton.setAttribute('aria-label', t('lightbox.close'));
   closeButton.innerHTML = '&times;';
 
   const updateTransform = () => {
@@ -37,6 +44,7 @@ function openLightbox(sourceImage) {
     document.removeEventListener('keydown', onKeyDown);
     overlay.remove();
     document.body.style.overflow = '';
+    sourceImage.focus();
   };
 
   const onMouseMove = (event) => {
@@ -53,6 +61,10 @@ function openLightbox(sourceImage) {
 
   const onKeyDown = (event) => {
     if (event.key === 'Escape') close();
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      closeButton.focus();
+    }
   };
 
   overlay.addEventListener('click', close);
@@ -85,5 +97,6 @@ function openLightbox(sourceImage) {
   document.addEventListener('keydown', onKeyDown);
   overlay.append(image, closeButton);
   document.body.appendChild(overlay);
+  closeButton.focus();
   document.body.style.overflow = 'hidden';
 }

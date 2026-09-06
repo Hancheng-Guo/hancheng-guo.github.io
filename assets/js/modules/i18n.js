@@ -35,6 +35,12 @@ function translatePage() {
     }
   });
 
+  document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+    const key = element.dataset.i18nAriaLabel;
+    const value = t(key);
+    if (value !== key) element.setAttribute('aria-label', String(value));
+  });
+
   const toggle = document.querySelector('.lang-toggle');
   if (toggle) toggle.textContent = language === 'en' ? '中文' : 'English';
 }

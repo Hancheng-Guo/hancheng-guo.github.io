@@ -143,6 +143,13 @@ nav {
 .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
 .nav-controls { display: flex; align-items: center; gap: 12px; }
+.menu-toggle { display: none; }
+.back-link { display: inline-flex; margin-bottom: 28px; color: var(--primary); font-weight: 650; }
+.back-link:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
+.status-view { padding: 32px; text-align: center; color: var(--text-muted); }
+.error-state { border: 1px solid var(--border-light); border-radius: var(--radius-md); }
+.intro-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px; }
+.intro-actions .primary-action { color: #fff; background: var(--primary); border-color: var(--primary); }
 
 /* 按钮通用样式 */
 .control-btn {
@@ -568,7 +575,9 @@ footer {
    8. Mobile Responsive
    ========================================= */
 @media (max-width: 768px) {
-  .nav-links { display: none; } /* 暂时简化手机端 */
+  .menu-toggle { display: flex; }
+  .nav-links { display: none; position: absolute; left: 16px; right: 16px; top: 68px; padding: 16px; flex-direction: column; gap: 14px; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-md); box-shadow: var(--shadow-card); }
+  .nav-links.is-open { display: flex; }
   
   .intro { padding-top: 60px; }
   .gradient-text { font-size: 2.2rem; }

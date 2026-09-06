@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hancheng-guo.github.io/sitemap.xml

@@ -3,17 +3,28 @@
     "projects": "个人项目",
     "timeline": "时间轴",
     "skills": "技术栈",
-    "contact": "联系我"
+    "contact": "联系我",
+    "openMenu": "打开导航菜单",
+    "toggleLanguage": "切换语言",
+    "toggleTheme": "切换颜色主题"
   },
   "intro": {
     "title": "你好，我是Lain",
-    "desc": "机器人开发爱好者，大三在读，目前于人形机器人公司实习<br>擅长MCU与Linux应用层开发<br>持续钻研运动控制、强化学习及机器人感知技术<br>邮箱：lain-ego@qq.com"
+    "desc": "机器人开发爱好者，大三在读，目前于人形机器人公司实习<br>擅长MCU与Linux应用层开发<br>持续钻研运动控制、强化学习及机器人感知技术<br>邮箱：lain-ego@qq.com",
+    "viewProjects": "查看项目",
+    "contact": "联系我"
   },
   "projects": {
     "title": "个人项目",
     "imgAlt": "项目图片",
     "viewDetail": "查看详情",
-    "notFound": "未找到该项目"
+    "notFound": "未找到该项目",
+    "back": "返回项目列表",
+    "loading": "正在加载项目…",
+    "loadError": "项目加载失败，请重试。",
+    "retry": "重试",
+    "draft": "该项目仍为草稿，内容有待确认。",
+    "empty": "暂时没有已发布的项目。"
   },
   "timeline": {
     "title": "经历时间轴",
@@ -87,6 +98,9 @@
     "1": "细节展示图 1",
     "2": "细节展示图 2",
     "3": "细节展示图 3"
+  },
+  "lightbox": {
+    "close": "关闭图片预览"
   },
   "footer": {
     "copyright": "© 2023-2025 Lain-Ego | 个人主页"

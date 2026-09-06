@@ -127,9 +127,9 @@ Python 程序只作为离线内容编码和校验工具，不作为网站运行�
 建议的客户调用方式：
 
 ```python
-from portfolio_content import Portfolio, ProjectPage
+from portfolio_content import Portfolio
 
-site = Portfolio.load("content/portfolio.json")
+site = Portfolio.load("assets/data/projects.json")
 
 project = site.add_project(
     project_id="quadruped-robot",
@@ -140,7 +140,7 @@ project = site.add_project(
     featured=True,
 )
 
-page = ProjectPage(project, template="case-study")
+page = site.add_project_page("quadruped-robot", template="case-study")
 page.add_heading({"en": "My Role", "zh": "我的职责"}, level=2)
 page.add_paragraph({"en": "...", "zh": "..."})
 page.add_image(

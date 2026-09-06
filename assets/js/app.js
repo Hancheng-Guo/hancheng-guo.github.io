@@ -13,4 +13,4 @@ if (document.body.dataset.page === 'project') {
   initHome();
 }
 
-initLanguage();
+await initLanguage();
