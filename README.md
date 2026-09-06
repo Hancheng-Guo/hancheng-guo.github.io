@@ -49,8 +49,8 @@ CSS由vibecoding实现。
 - `modules/project-data.js`：集中读取项目数据
 - `modules/lightbox.js`：项目图片预览
 
-### 4. 集中项目数据（assets/data/projects.json）
-项目卡片、详情正文、图片、标签和外部链接均由这一份文件提供。修改项目内容时无需再同步编辑 `main.js` 和多个语言文件。
+### 4. 集中项目数据
+`portfolio.py` 是项目内容的唯一人工维护源；运行 `python portfolio.py build` 后生成 `assets/data/projects.json`，供浏览器读取。项目卡片、详情正文、图片、标签和外部链接都不再散落于 HTML 或语言文件。
 
 ### 5. 静态资源
 - `assets/images/`：头像（Avatar.jpg）等图片资源
@@ -72,15 +72,16 @@ cd Lain-Ego0.github.io
 
 ### 2. 使用 Python 维护项目内容
 
-编辑项目根目录的 `portfolio.py`，通过 `Portfolio`、`add_project()`、`add_project_page()` 和各类 `add_*()` 函数填写内容，无需编辑 HTML。该入口默认载入现有正式数据，直接执行不会用示例清空项目列表。
+编辑项目根目录的 `portfolio.py`，通过 `Portfolio`、`add_project()`、项目对象的 `add_page()` 和各类 `add_*()` 函数填写内容，无需编辑 HTML 或页面路径。当前四个项目已全部由该文件构建。
 
 ```bash
 python portfolio.py validate
 python portfolio.py build
 python portfolio.py preview --port 8000
+python portfolio.py clean
 ```
 
-`validate` 只检查内容；`build` 在校验通过后以 UTF-8 稳定生成 `assets/data/projects.json`；`preview` 生成后启动本地预览。校验失败不会覆盖现有 JSON。
+`validate` 只检查内容；`build` 在校验通过后生成 `assets/data/projects.json` 和项目 HTML 外壳；`preview` 生成后启动本地预览；`clean` 删除这些生成产物。校验失败不会覆盖现有 JSON。清理后重新执行 `build` 即可恢复。
 
 新增项目、图片、段落、列表、指标、视频及双语内容的具体写法见 [Python 内容管理完整教程](docs/PYTHON_GUIDE.md)。
 
@@ -143,7 +144,8 @@ Lain-Ego0.github.io/
 │   │       ├── site-data.js
 │   │       └── theme.js
 │   ├── data/
-│   │   └── projects.json    # 项目唯一数据源
+│   │   ├── projects.json    # Python 生成的项目运行时数据
+│   │   └── site.json        # Python 生成的时间线、技术栈和联系数据
 │   └── images/              # 图片目录
 │       ├── Avatar.jpg       # 个人头像（当前未启用）
 │       └── Portfolio-*.png  # 项目展示图片
@@ -153,8 +155,7 @@ Lain-Ego0.github.io/
 ├── pages/projects/          # 项目详情页
 │   ├── project1.html
 │   ├── project2.html
-│   ├── project3.html
-│   └── project4.html
+│   └── project3.html
 ├── project.html             # Python 新增项目共用的详情页
 ├── portfolio.py             # 根目录 Python 内容与命令入口
 ├── portfolio_content/       # 离线 Python 内容生成包
@@ -186,7 +187,7 @@ Lain-Ego0.github.io/
 - 页脚版权：修改 `index.html` 中 footer 的 `data-i18n` 文案。
 
 ### 2. 新增/修改板块内容
-- 项目：统一修改 `assets/data/projects.json`；时间线文案修改 `lang/*.json`，技能和联系方式配置修改 `assets/js/modules/site-data.js`。
+- 项目：统一修改根目录 `portfolio.py` 并运行构建；时间线文案修改 `lang/*.json`，技能和联系方式配置修改 `assets/js/modules/site-data.js`。
 
 ### 3. 自定义主题
 - 修改 `assets/css/style.css` 中的 `:root`（light 主题）和 `[data-theme="dark"]`（dark 主题）下的 CSS 变量（如颜色、字体、间距等）。

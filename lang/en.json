@@ -27,66 +27,13 @@
     "empty": "No projects published yet."
   },
   "timeline": {
-    "title": "Timeline",
-    "event1": {
-    "date": "2024-05",
-    "title": "Open Source SliverWolf Desktop Quadruped",
-    "desc": "Released SliverWolf, a desktop-level serial quadruped robot featuring voice control and robotic arm collaborative capabilities."
-    },
-    "event2": {
-      "date": "2024-07",
-      "title": "2024 ROBOCON National Competition",
-      "desc": "Developed the embedded control system for the R1 robot based on FreeRTOS, achieving ±5mm positioning accuracy, ball launching, and gripper functionalities."
-    },
-    "event3": {
-      "date": "2024-08",
-      "title": "2024 Fujian Undergraduate Electronics Design Contest",
-      "desc": "Developed an autonomous driving car system based on the MSPM0G3507, qualifying for the provincial testing stage."
-    },
-    "event4": {
-      "date": "2024-11",
-      "title": "Fujian Intelligent Marine Equipment Design Competition",
-      "desc": "Led the development of the control system for a buoyancy-controlled multi-DOF lobster underwater robot, winning the Grand Prize."
-    },
-    "event5": {
-      "date": "2024-12",
-      "title": "2024 World Marine Equipment Conference",
-      "desc": "Represented Fujian University of Technology as an exhibitor, showcasing the bionic Boston Lobster robot; covered by media outlets including Xinhua News Agency."
-    },
-    "event6": {
-      "date": "2025-07",
-      "title": "2025 ROBOCON National Competition",
-      "desc": "Responsible for full-stack R&D of the legged robot. Ranked 30th nationally in the Sprint Race, 31st in the Obstacle Race, and 34th in the Cross-Country Race, securing three National Second Prizes."
-    },
-    "event7": {
-      "date": "2025-08",
-      "title": "2025 National Undergraduate Electronics Design Contest",
-      "desc": "Responsible for the hardware design and fabrication of the power meter for an automatic ranging system, winning the National Second Prize."
-    },
-    "event8": {
-      "date": "2025-09",
-      "title": "Open Source BRS Parallel Quadruped Robot",
-      "desc": "Open-sourced the mechanical structure and control code of the BRS parallel quadruped robot on GitHub."
-    },
-    "event9": {
-      "date": "2025-10 to 2026-03",
-      "title": "Internship at Gaoqing Electromechanical",
-      "desc": "Responsible for mechanical design, control algorithm development, and system integration testing for the HTDW4438 bionic quadruped robot (both open-source and commercial versions)."
-    }
+    "title": "Timeline"
   },
   "skills": {
-    "title": "Tech Stack",
-    "embedded": "Embedded",
-    "robotics": "Robotics",
-    "software": "Software",
-    "hardware": "Hardware"
+    "title": "Tech Stack"
   },
   "contact": {
-    "title": "Let's Connect",
-    "bilibili": "Bilibili",
-    "github": "GitHub",
-    "twitter": "Twitter",
-    "zhihu": "Zhihu"
+    "title": "Let's Connect"
   },
   "projectLinks": {
     "github": "Code",

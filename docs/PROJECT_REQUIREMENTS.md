@@ -117,7 +117,7 @@ Python 程序只作为离线内容编码和校验工具，不作为网站运行�
 | PRD-PY-001 | P0 | 提供可导入的 Python 包，而不只是一次性脚本。 |
 | PRD-PY-002 | P0 | 维护者可通过函数创建站点、项目和标准内容块，正文文本必须作为参数传入。 |
 | PRD-PY-003 | P0 | 提供 `add_project()`、`add_heading()`、`add_paragraph()`、`add_image()`、`add_gallery()`、`add_metrics()`、`add_link()` 等模块化函数。 |
-| PRD-PY-004 | P0 | 提供 `add_project_page(template=...)`，用于选择已定义的详情页模板；模板内容仍通过内容块函数填充。 |
+| PRD-PY-004 | P0 | `add_project()` 返回项目对象，由 `project.add_page(template=...)` 选择详情页模板并自动维护页面路径；模板内容仍通过内容块函数填充。每个项目只允许一个详情页。 |
 | PRD-PY-005 | P0 | 输出前校验必填字段、重复 ID、语言缺失、图片路径、URL、块类型和字段长度。 |
 | PRD-PY-006 | P0 | 生成采用临时文件加原子替换；校验失败时不得破坏现有可用数据。 |
 | PRD-PY-007 | P0 | 相同输入必须产生稳定、格式化且 UTF-8 编码的 JSON。 |
@@ -132,7 +132,6 @@ from portfolio_content import Portfolio
 site = Portfolio.load("assets/data/projects.json")
 
 project = site.add_project(
-    project_id="quadruped-robot",
     title={"en": "Quadruped Robot", "zh": "四足机器人"},
     summary={"en": "...", "zh": "..."},
     thumbnail="assets/images/quadruped/cover.webp",
@@ -140,7 +139,7 @@ project = site.add_project(
     featured=True,
 )
 
-page = site.add_project_page("quadruped-robot", template="case-study")
+page = project.add_page(template="case-study")
 page.add_heading({"en": "My Role", "zh": "我的职责"}, level=2)
 page.add_paragraph({"en": "...", "zh": "..."})
 page.add_image(

@@ -4,21 +4,50 @@
     {
       "id": "project1",
       "page": "pages/projects/project1.html",
-      "links": [
-        {
-          "type": "github",
-          "url": "https://github.com/Lain-Ego0/BRS-Parallel-Robot"
-        },
-        {
-          "type": "techDoc",
-          "url": "https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home"
-        },
-        {
-          "type": "demo",
-          "url": "https://www.bilibili.com/video/BV15wu4zuEmf"
+      "thumbnail": {
+        "src": "assets/images/Portfolio-01.png",
+        "alt": {
+          "en": "ROBOCON 2025 Quadruped Robot Challenge",
+          "zh": "全国大学生机器人大赛ROBOCON足式机器人赛题"
         }
+      },
+      "tags": [
+        "Motion Control",
+        "SLAM",
+        "Mechanical Design",
+        "LiDAR"
       ],
       "locales": {
+        "en": {
+          "title": "ROBOCON 2025 Quadruped Robot Challenge",
+          "summary": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams.",
+          "blocks": [
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-01.png",
+              "alt": "ROBOCON quadruped robot project overview"
+            },
+            {
+              "type": "paragraph",
+              "text": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams."
+            },
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-01-3.png",
+              "alt": "Quadruped robot training and testing"
+            },
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-01-1.png",
+              "alt": "Quadruped robot project structure detail"
+            },
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-01-2.png",
+              "alt": "Quadruped robot project result"
+            }
+          ]
+        },
         "zh": {
           "title": "全国大学生机器人大赛ROBOCON足式机器人赛题",
           "summary": "2025赛季ROBOCON足式机器人全栈研发。负责从类植保无人机碳管装配工艺机械建模、力控制算法到3D雷达建图自主导航技术。带领团队在全国180余支队伍中取得竞速赛第30名、障碍赛第31名、越野赛34名的优异成绩。",
@@ -57,100 +86,40 @@
               "alt": "四足机器人项目运行结果"
             }
           ]
+        }
+      },
+      "links": [
+        {
+          "type": "github",
+          "url": "https://github.com/Lain-Ego0/BRS-Parallel-Robot"
         },
-        "en": {
-          "title": "ROBOCON 2025 Quadruped Robot Challenge",
-          "summary": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams.",
-          "blocks": [
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-01.png",
-              "alt": "ROBOCON quadruped robot project overview"
-            },
-            {
-              "type": "paragraph",
-              "text": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams."
-            },
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-01-3.png",
-              "alt": "Quadruped robot training and testing"
-            },
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-01-1.png",
-              "alt": "Quadruped robot project structure detail"
-            },
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-01-2.png",
-              "alt": "Quadruped robot project result"
-            }
-          ]
+        {
+          "type": "techDoc",
+          "url": "https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home"
+        },
+        {
+          "type": "demo",
+          "url": "https://www.bilibili.com/video/BV15wu4zuEmf"
         }
-      },
-      "thumbnail": {
-        "src": "assets/images/Portfolio-01.png",
-        "alt": {
-          "en": "ROBOCON 2025 Quadruped Robot Challenge",
-          "zh": "全国大学生机器人大赛ROBOCON足式机器人赛题"
-        }
-      },
-      "tags": [
-        "Motion Control",
-        "SLAM",
-        "Mechanical Design",
-        "LiDAR"
       ]
     },
     {
       "id": "project2",
       "page": "pages/projects/project2.html",
-      "links": [
-        {
-          "type": "github",
-          "url": null
-        },
-        {
-          "type": "techDoc",
-          "url": null
-        },
-        {
-          "type": "demo",
-          "url": null
+      "thumbnail": {
+        "src": "assets/images/Portfolio-02.png",
+        "alt": {
+          "en": "Bionic Boston Lobster Submersible",
+          "zh": "仿生波士顿大龙虾民用潜航机器人"
         }
+      },
+      "tags": [
+        "Embedded Systems",
+        "Vector Propulsion",
+        "Hardware Design",
+        "Waterproofing"
       ],
       "locales": {
-        "zh": {
-          "title": "仿生波士顿大龙虾民用潜航机器人",
-          "summary": "浮力可控多自由度龙虾水下机器人。负责控制系统开发（步进蠕动泵、电机/舵机驱动、陀螺仪融合、IIC编码器闭环），设计异形多旋翼矢量推进模型实现全向移动。硬件方面负责驱动选型与防水设计。获福建省大学生智能海洋装备大赛特等奖。",
-          "blocks": [
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-02.png",
-              "alt": "仿生波士顿大龙虾潜航机器人整体展示"
-            },
-            {
-              "type": "paragraph",
-              "text": "本项目为浮力可控的多自由度龙虾水下机器人。\n\n软件部分负责控制系统开发，设计了一套集成步进蠕动泵、电机与舵机驱动、陀螺仪数据处理以及读取 IIC 编码器闭环控制 360 度舵机的下位机框架，同时设计异形多旋翼的矢量推进模型，完善全向移动功能。在硬件设计部分负责了驱动器选型、降压电路以及防水设计等工作。\n\n作品获 2024 年福建省大学生智能海洋装备设计制作大赛水下机器人赛道特等奖，同时进一步代表福建理工大学参展 2024 世界航海装备大会，获得新华社、光明日报等媒体报道。"
-            },
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-02-1.png",
-              "alt": "潜航机器人机械结构细节"
-            },
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-02-2.png",
-              "alt": "潜航机器人控制系统展示"
-            },
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-02-3.png",
-              "alt": "潜航机器人比赛与展览成果"
-            }
-          ]
-        },
         "en": {
           "title": "Bionic Boston Lobster Submersible",
           "summary": "Buoyancy-controllable multi-DOF underwater robot. Developed control system (stepper pumps, motor/servo drive, gyro fusion, IIC encoder loop) and vector propulsion model for omnidirectional movement. Handled hardware selection and waterproofing. Won Special Prize in Fujian Intelligent Marine Equipment Competition.",
@@ -180,29 +149,42 @@
               "alt": "Submersible competition and exhibition result"
             }
           ]
+        },
+        "zh": {
+          "title": "仿生波士顿大龙虾民用潜航机器人",
+          "summary": "浮力可控多自由度龙虾水下机器人。负责控制系统开发（步进蠕动泵、电机/舵机驱动、陀螺仪融合、IIC编码器闭环），设计异形多旋翼矢量推进模型实现全向移动。硬件方面负责驱动选型与防水设计。获福建省大学生智能海洋装备大赛特等奖。",
+          "blocks": [
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-02.png",
+              "alt": "仿生波士顿大龙虾潜航机器人整体展示"
+            },
+            {
+              "type": "paragraph",
+              "text": "本项目为浮力可控的多自由度龙虾水下机器人。\n\n软件部分负责控制系统开发，设计了一套集成步进蠕动泵、电机与舵机驱动、陀螺仪数据处理以及读取 IIC 编码器闭环控制 360 度舵机的下位机框架，同时设计异形多旋翼的矢量推进模型，完善全向移动功能。在硬件设计部分负责了驱动器选型、降压电路以及防水设计等工作。\n\n作品获 2024 年福建省大学生智能海洋装备设计制作大赛水下机器人赛道特等奖，同时进一步代表福建理工大学参展 2024 世界航海装备大会，获得新华社、光明日报等媒体报道。"
+            },
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-02-1.png",
+              "alt": "潜航机器人机械结构细节"
+            },
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-02-2.png",
+              "alt": "潜航机器人控制系统展示"
+            },
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-02-3.png",
+              "alt": "潜航机器人比赛与展览成果"
+            }
+          ]
         }
       },
-      "thumbnail": {
-        "src": "assets/images/Portfolio-02.png",
-        "alt": {
-          "en": "Bionic Boston Lobster Submersible",
-          "zh": "仿生波士顿大龙虾民用潜航机器人"
-        }
-      },
-      "tags": [
-        "Embedded Systems",
-        "Vector Propulsion",
-        "Hardware Design",
-        "Waterproofing"
-      ]
-    },
-    {
-      "id": "project3",
-      "page": "pages/projects/project3.html",
       "links": [
         {
           "type": "github",
-          "url": "https://github.com/Lain-Ego0/ROBOCON2024-R1"
+          "url": null
         },
         {
           "type": "techDoc",
@@ -210,25 +192,26 @@
         },
         {
           "type": "demo",
-          "url": "https://www.bilibili.com/video/BV1VH4y1A7aM/?spm_id_from=333.337.search-card.all.click&vd_source=193a56b6f00b33090010ba20d05cfef7"
+          "url": null
         }
+      ]
+    },
+    {
+      "id": "project3",
+      "page": "pages/projects/project3.html",
+      "thumbnail": {
+        "src": "assets/images/Portfolio-03.png",
+        "alt": {
+          "en": "Intelligent Planting and Harvesting Robot",
+          "zh": "智能插秧收获一体机器人"
+        }
+      },
+      "tags": [
+        "FreeRTOS",
+        "Motor Control",
+        "Multi-robot Synergy"
       ],
       "locales": {
-        "zh": {
-          "title": "智能插秧收获一体机器人",
-          "summary": "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。",
-          "blocks": [
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-03.png",
-              "alt": "智能插秧收获一体机器人比赛现场"
-            },
-            {
-              "type": "paragraph",
-              "text": "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。\n\n通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，支持与另一台自主运行机器人协同作业，高效完成任务。"
-            }
-          ]
-        },
         "en": {
           "title": "Intelligent Planting and Harvesting Robot",
           "summary": "Smart planting & harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic design and hardware wiring, supporting dual-robot synergy.",
@@ -243,25 +226,23 @@
               "text": "Based on the FreeRTOS real-time operating system, I developed the control system for an integrated intelligent planting and harvesting agricultural robot.\n\nBy controlling DJI3508 motors, I completed the functional debugging of the gripper lifting mechanism, omnidirectional chassis, and omnidirectional positioning system, achieving a gripper positioning accuracy within ±5 mm. I also participated in the pneumatic system design and hardware wiring, supporting collaborative operation with another autonomous robot to efficiently complete tasks."
             }
           ]
+        },
+        "zh": {
+          "title": "智能插秧收获一体机器人",
+          "summary": "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。",
+          "blocks": [
+            {
+              "type": "image",
+              "src": "assets/images/Portfolio-03.png",
+              "alt": "智能插秧收获一体机器人比赛现场"
+            },
+            {
+              "type": "paragraph",
+              "text": "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。\n\n通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，支持与另一台自主运行机器人协同作业，高效完成任务。"
+            }
+          ]
         }
       },
-      "thumbnail": {
-        "src": "assets/images/Portfolio-03.png",
-        "alt": {
-          "en": "Intelligent Planting and Harvesting Robot",
-          "zh": "智能插秧收获一体机器人"
-        }
-      },
-      "tags": [
-        "FreeRTOS",
-        "Motor Control",
-        "Multi-robot Synergy"
-      ]
-    },
-    {
-      "id": "project4",
-      "status": "draft",
-      "page": "pages/projects/project4.html",
       "links": [
         {
           "type": "github",
@@ -275,50 +256,6 @@
           "type": "demo",
           "url": "https://www.bilibili.com/video/BV1VH4y1A7aM/?spm_id_from=333.337.search-card.all.click&vd_source=193a56b6f00b33090010ba20d05cfef7"
         }
-      ],
-      "locales": {
-        "zh": {
-          "title": "智能插秧收获一体机器人",
-          "summary": "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。",
-          "blocks": [
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-04.png",
-              "alt": "待确认项目展示图"
-            },
-            {
-              "type": "paragraph",
-              "text": "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。\n\n通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，支持与另一台自主运行机器人协同作业，高效完成任务。"
-            }
-          ]
-        },
-        "en": {
-          "title": "Intelligent Planting and Harvesting Robot",
-          "summary": "Smart planting & harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic design and hardware wiring, supporting dual-robot synergy.",
-          "blocks": [
-            {
-              "type": "image",
-              "src": "assets/images/Portfolio-04.png",
-              "alt": "Draft project image pending confirmation"
-            },
-            {
-              "type": "paragraph",
-              "text": "Based on the FreeRTOS real-time operating system, I developed the control system for an integrated intelligent planting and harvesting agricultural robot.\n\nBy controlling DJI3508 motors, I completed the functional debugging of the gripper lifting mechanism, omnidirectional chassis, and omnidirectional positioning system, achieving a gripper positioning accuracy within ±5 mm. I also participated in the pneumatic system design and hardware wiring, supporting collaborative operation with another autonomous robot to efficiently complete tasks."
-            }
-          ]
-        }
-      },
-      "thumbnail": {
-        "src": "assets/images/Portfolio-04.png",
-        "alt": {
-          "en": "Intelligent Planting and Harvesting Robot",
-          "zh": "智能插秧收获一体机器人"
-        }
-      },
-      "tags": [
-        "FreeRTOS",
-        "Motor Control",
-        "Multi-robot Synergy"
       ]
     }
   ]

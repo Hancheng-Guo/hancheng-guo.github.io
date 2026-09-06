@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "timeline": [
+    {
+      "date": {
+        "en": "2024-05",
+        "zh": "2024-05"
+      },
+      "title": {
+        "en": "Open Source SliverWolf Desktop Quadruped",
+        "zh": "开源 SliverWolf 桌面四足"
+      },
+      "description": {
+        "en": "Released SliverWolf, a desktop-level serial quadruped robot featuring voice control and robotic arm collaborative capabilities.",
+        "zh": "发布 SliverWolf，一款具备语音控制与机械臂协同作业能力的桌面级串联四足机器人。"
+      }
+    },
+    {
+      "date": {
+        "en": "2024-07",
+        "zh": "2024-07"
+      },
+      "title": {
+        "en": "2024 ROBOCON National Competition",
+        "zh": "2024ROBOCON全国赛"
+      },
+      "description": {
+        "en": "Developed the embedded control system for the R1 robot based on FreeRTOS, achieving ±5mm positioning accuracy, ball launching, and gripper functionalities.",
+        "zh": "基于FreeRTOS完成R1机器人嵌入式控制系统开发，实现±5mm定位精度，球体发射、夹爪夹取功能。"
+      }
+    },
+    {
+      "date": {
+        "en": "2024-08",
+        "zh": "2024-08"
+      },
+      "title": {
+        "en": "2024 Fujian Undergraduate Electronics Design Contest",
+        "zh": "2024福建省大学生电子设计大赛"
+      },
+      "description": {
+        "en": "Developed an autonomous driving car system based on the MSPM0G3507, qualifying for the provincial testing stage.",
+        "zh": "基于MSPM0G3507开发自动驾驶小车系统，进入省测。"
+      }
+    },
+    {
+      "date": {
+        "en": "2024-11",
+        "zh": "2024-11"
+      },
+      "title": {
+        "en": "Fujian Intelligent Marine Equipment Design Competition",
+        "zh": "福建省大学生智能海洋装备设计制作大赛"
+      },
+      "description": {
+        "en": "Led the development of the control system for a buoyancy-controlled multi-DOF lobster underwater robot, winning the Grand Prize.",
+        "zh": "负责开发浮力可控多自由度龙虾水下机器人的控制系统，获特等奖。"
+      }
+    },
+    {
+      "date": {
+        "en": "2024-12",
+        "zh": "2024-12"
+      },
+      "title": {
+        "en": "2024 World Marine Equipment Conference",
+        "zh": "2024 世界航海装备大会"
+      },
+      "description": {
+        "en": "Represented Fujian University of Technology as an exhibitor, showcasing the bionic Boston Lobster robot; covered by media outlets including Xinhua News Agency.",
+        "zh": "代表福建理工大学参展，展示仿生波士顿大龙虾机器人，获新华社等媒体报道。"
+      }
+    },
+    {
+      "date": {
+        "en": "2025-07",
+        "zh": "2025-07"
+      },
+      "title": {
+        "en": "2025 ROBOCON National Competition",
+        "zh": "2025 ROBOCON 全国赛"
+      },
+      "description": {
+        "en": "Responsible for full-stack R&D of the legged robot. Ranked 30th nationally in the Sprint Race, 31st in the Obstacle Race, and 34th in the Cross-Country Race, securing three National Second Prizes.",
+        "zh": "负责足式机器人全栈研发。获足式机器人竞速赛全国30名、障碍赛31名、越野赛34名，共三项国二佳绩。"
+      }
+    },
+    {
+      "date": {
+        "en": "2025-08",
+        "zh": "2025-08"
+      },
+      "title": {
+        "en": "2025 National Undergraduate Electronics Design Contest",
+        "zh": "2025全国大学生电子设计大赛"
+      },
+      "description": {
+        "en": "Responsible for the hardware design and fabrication of the power meter for an automatic ranging system, winning the National Second Prize.",
+        "zh": "负责自动测距系统的功率计硬件设计与制作，获全国二等奖。"
+      }
+    },
+    {
+      "date": {
+        "en": "2025-09",
+        "zh": "2025-09"
+      },
+      "title": {
+        "en": "Open Source BRS Parallel Quadruped Robot",
+        "zh": "开源 BRS 并联四足机器人"
+      },
+      "description": {
+        "en": "Open-sourced the mechanical structure and control code of the BRS parallel quadruped robot on GitHub.",
+        "zh": "在GitHub开源BRS并联四足机器人的机械结构与控制代码。"
+      }
+    },
+    {
+      "date": {
+        "en": "2025-10 to 2026-03",
+        "zh": "2025-10至2026-3"
+      },
+      "title": {
+        "en": "Internship at Gaoqing Electromechanical",
+        "zh": "高擎机电激情实习中"
+      },
+      "description": {
+        "en": "Responsible for mechanical design, control algorithm development, and system integration testing for the HTDW4438 bionic quadruped robot (both open-source and commercial versions).",
+        "zh": "负责HTDW4438仿生四足机器人的机械设计、控制算法开发与系统集成测试,分为开源版本与产品化版本"
+      }
+    }
+  ],
+  "techStack": [
+    {
+      "title": {
+        "en": "Embedded",
+        "zh": "嵌入式开发"
+      },
+      "items": [
+        {
+          "name": "STM32",
+          "icon": "fas fa-microchip"
+        },
+        {
+          "name": "ESP32",
+          "icon": "fas fa-wifi"
+        },
+        {
+          "name": "FreeRTOS",
+          "icon": "fas fa-cogs"
+        },
+        {
+          "name": "C/C++",
+          "icon": "fas fa-code"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Robotics",
+        "zh": "机器人技术"
+      },
+      "items": [
+        {
+          "name": "ROS/ROS2",
+          "icon": "fas fa-robot"
+        },
+        {
+          "name": "Gazebo",
+          "icon": "fas fa-cube"
+        },
+        {
+          "name": "Motion Control",
+          "icon": "fas fa-wave-square"
+        },
+        {
+          "name": "RL",
+          "icon": "fas fa-brain"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Hardware",
+        "zh": "硬件设计"
+      },
+      "items": [
+        {
+          "name": "Altium",
+          "icon": "fas fa-pencil-ruler"
+        },
+        {
+          "name": "SolidWorks",
+          "icon": "fas fa-drafting-compass"
+        },
+        {
+          "name": "PCB",
+          "icon": "fas fa-layer-group"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Software",
+        "zh": "软件与工具"
+      },
+      "items": [
+        {
+          "name": "Linux",
+          "icon": "fab fa-linux"
+        },
+        {
+          "name": "Python",
+          "icon": "fab fa-python"
+        },
+        {
+          "name": "Git",
+          "icon": "fab fa-git-alt"
+        }
+      ]
+    }
+  ],
+  "contacts": [
+    {
+      "label": {
+        "en": "Bilibili",
+        "zh": "哔哩哔哩"
+      },
+      "icon": "fab fa-bilibili",
+      "url": "https://space.bilibili.com/385516781/upload/video"
+    },
+    {
+      "label": {
+        "en": "GitHub",
+        "zh": "代码仓库"
+      },
+      "icon": "fab fa-github",
+      "url": "https://github.com/Lain-Ego0"
+    },
+    {
+      "label": {
+        "en": "Twitter",
+        "zh": "推特"
+      },
+      "icon": "fab fa-twitter",
+      "url": "https://x.com/Lain_Ego0"
+    },
+    {
+      "label": {
+        "en": "Zhihu",
+        "zh": "知乎"
+      },
+      "icon": "fab fa-zhihu",
+      "url": "https://www.zhihu.com/people/hua-99-50-21"
+    }
+  ]
+}

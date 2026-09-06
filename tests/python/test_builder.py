@@ -1,9 +1,60 @@
 import json
+import importlib.util
 import unittest
+from pathlib import Path
 from portfolio_content import Portfolio
 from portfolio_content.validators import validate_document
+from portfolio_content.cli import clean_generated_output, clean_generated_pages
 
 class BuilderTests(unittest.TestCase):
+  def test_clean_removes_only_generated_output_and_is_idempotent(self):
+    import tempfile
+    with tempfile.TemporaryDirectory() as folder:
+      generated = Path(folder) / "projects.json"
+      unrelated = Path(folder) / "image.jpg"
+      generated.write_text("{}", encoding="utf-8")
+      unrelated.write_text("keep", encoding="utf-8")
+      self.assertTrue(clean_generated_output(generated))
+      self.assertFalse(generated.exists())
+      self.assertTrue(unrelated.exists())
+      self.assertFalse(clean_generated_output(generated))
+
+  def test_project_owns_one_automatically_located_page(self):
+    project = Portfolio().add_project(
+      title={"en": "My Robot Project", "zh": "我的机器人"},
+      summary="Summary",
+      thumbnail="assets/images/Avatar.jpg",
+    )
+    self.assertEqual(project.id, "project1")
+    self.assertEqual(project.data["page"], "pages/projects/project1.html")
+    project.add_page(template="minimal")
+    with self.assertRaises(ValueError):
+      project.add_page(template="minimal")
+
+  def test_generated_page_can_be_built_and_cleaned(self):
+    import tempfile
+    with tempfile.TemporaryDirectory() as folder:
+      portfolio = Portfolio()
+      project = portfolio.add_project(project_id="demo", title="Demo", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+      project.add_page(template="minimal").add_paragraph("Body")
+      pages = portfolio.write_pages(root=folder)
+      self.assertEqual(len(pages), 1)
+      self.assertIn('data-project-id="demo"', pages[0].read_text(encoding="utf-8"))
+      self.assertEqual(clean_generated_pages(folder), pages)
+      self.assertFalse(pages[0].exists())
+
+  def test_root_python_source_matches_runtime_project_data(self):
+    source = Path("portfolio.py")
+    spec = importlib.util.spec_from_file_location("portfolio_source_regression", source)
+    self.assertIsNotNone(spec)
+    self.assertIsNotNone(spec.loader)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    runtime_data = json.loads(Path("assets/data/projects.json").read_text(encoding="utf-8"))
+    self.assertEqual(module.portfolio.document(), runtime_data)
+    runtime_site = json.loads(Path("assets/data/site.json").read_text(encoding="utf-8"))
+    self.assertEqual(module.portfolio.site_document(), runtime_site)
+
   def test_builder_is_chainable_and_validates(self):
     import tempfile
     with tempfile.TemporaryDirectory() as folder:

@@ -2,7 +2,11 @@ import { clear, qs } from './dom.js';
 import { currentLanguage, onLanguageChange, t } from './i18n.js';
 import { fromRoot } from './paths.js';
 import { loadProjects } from './project-data.js';
-import { CONTACT_LINKS, TECH_STACK, TIMELINE_EVENTS } from './site-data.js';
+import { loadSiteData } from './site-data.js';
+
+function localized(value) {
+  return value?.[currentLanguage()] ?? value?.en ?? '';
+}
 
 async function renderProjects() {
   const grid = qs('.projects-grid');
@@ -46,47 +50,71 @@ async function renderProjects() {
   });
 }
 
-function renderTimeline() {
+function renderTimeline(events) {
   const container = qs('.timeline-container');
   if (!container) return;
   clear(container);
-  TIMELINE_EVENTS.forEach((key) => {
+  [...events].reverse().forEach((event) => {
     const item = document.createElement('div');
     item.className = 'timeline-item';
-    item.innerHTML = `<div class="timeline-dot"></div><span class="timeline-date">${t(`${key}.date`)}</span><div class="timeline-content"><h3>${t(`${key}.title`)}</h3><p>${t(`${key}.desc`)}</p></div>`;
+    item.innerHTML = '<div class="timeline-dot"></div><span class="timeline-date"></span><div class="timeline-content"><h3></h3><p></p></div>';
+    qs('.timeline-date', item).textContent = localized(event.date);
+    qs('h3', item).textContent = localized(event.title);
+    qs('p', item).textContent = localized(event.description);
     container.appendChild(item);
   });
 }
 
-function renderTechStack() {
+function renderTechStack(groups) {
   const container = qs('.skills-wrapper');
   if (!container) return;
   clear(container);
-  TECH_STACK.forEach((group) => {
+  groups.forEach((group) => {
     const column = document.createElement('div');
     column.className = 'skill-category';
-    column.innerHTML = `<h3>${t(group.category)}</h3><div class="skill-list">${group.items.map((item) => `<div class="skill-badge"><i class="${item.icon}"></i> ${item.name}</div>`).join('')}</div>`;
+    const heading = document.createElement('h3');
+    heading.textContent = localized(group.title);
+    const list = document.createElement('div');
+    list.className = 'skill-list';
+    group.items.forEach((item) => {
+      const badge = document.createElement('div');
+      badge.className = 'skill-badge';
+      const icon = document.createElement('i');
+      icon.className = item.icon;
+      badge.append(icon, document.createTextNode(` ${item.name}`));
+      list.appendChild(badge);
+    });
+    column.append(heading, list);
     container.appendChild(column);
   });
 }
 
-function renderContacts() {
+function renderContacts(contacts) {
   const container = qs('.contact-links');
   if (!container) return;
   clear(container);
-  CONTACT_LINKS.forEach((contact) => {
+  contacts.forEach((contact) => {
     const item = document.createElement('div');
     item.className = 'contact-item';
-    item.innerHTML = `<a href="${contact.link}" target="_blank" rel="noopener noreferrer"><i class="${contact.icon}"></i><p>${t(contact.key)}</p></a>`;
+    const link = document.createElement('a');
+    link.href = contact.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    const icon = document.createElement('i');
+    icon.className = contact.icon;
+    const label = document.createElement('p');
+    label.textContent = localized(contact.label);
+    link.append(icon, label);
+    item.appendChild(link);
     container.appendChild(item);
   });
 }
 
 async function renderHome() {
-  await renderProjects();
-  renderTimeline();
-  renderTechStack();
-  renderContacts();
+  const [, site] = await Promise.all([renderProjects(), loadSiteData()]);
+  renderTimeline(site.timeline || []);
+  renderTechStack(site.techStack || []);
+  renderContacts(site.contacts || []);
 }
 
 export function initHome() {
