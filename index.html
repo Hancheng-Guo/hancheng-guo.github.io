@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lain-Ego's Homepage</title>
   
   <script>
-    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 
@@ -26,7 +26,6 @@
       <div class="nav-actions">
         <div class="nav-links">
           <a href="#projects" data-i18n="nav.projects">Projects</a>
-          <!-- <a href="#opensource" data-i18n="nav.opensource">Open Source</a> -->
           <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
           <a href="#skills" data-i18n="nav.skills">Stack</a>
           <a href="#contact" data-i18n="nav.contact">Contact</a>
@@ -47,7 +46,6 @@
     <div class="bg-decoration"></div>
     <div class="container flex-center column">
       <div class="avatar-container">
-        <!-- <img src="assets/images/Avatar.jpg" alt="Avatar" class="avatar" data-i18n="intro.avatarAlt"> -->
         <div class="avatar-glow"></div>
       </div>
       <h1 class="gradient-text" data-i18n="intro.title">Hello, I'm Lain-Ego</h1>
@@ -55,26 +53,12 @@
     </div>
   </section>
 
-  <!-- <section id="education" class="section-padding">
-    <div class="container">
-      <h2 data-i18n="education.title">Education</h2>
-      <div class="education-container"></div>
-    </div>
-  </section> -->
-
   <section id="projects" class="section-padding">
     <div class="container">
       <h2 data-i18n="projects.title">My Projects</h2>
       <div class="projects-grid"></div>
     </div>
   </section>
-
-  <!-- <section id="opensource" class="section-padding">
-    <div class="container">
-      <h2 data-i18n="opensource.title">Open Source Contributions</h2>
-      <div class="opensource-grid"></div>
-    </div>
-  </section> -->
 
   <section id="timeline" class="section-padding">
     <div class="container">
@@ -99,7 +83,6 @@
 
   <footer data-i18n="footer.copyright">© 2025 Lain-Ego. All rights reserved.</footer>
 
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

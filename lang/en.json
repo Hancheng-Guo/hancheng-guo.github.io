@@ -1,15 +1,11 @@
 {
   "nav": {
-    "home": "Home",
     "projects": "Portfolio",
-    "opensource": "Open Source",
     "timeline": "Timeline",
     "skills": "Tech Stack",
-    "contact": "Contact",
-    "documents": "Docs"
+    "contact": "Contact"
   },
   "intro": {
-    "avatarAlt": "Lain-Ego's avatar",
     "title": "Hello, I'm Lain",
     "desc": "Robot development enthusiast, Junior Year Student.<br>Interning at a Humanoid Robot Company.<br>Focus on MCU & Linux development, Motion Control, RL, and Perception.<br>Email: lain-ego@qq.com"
   },
@@ -17,112 +13,7 @@
     "title": "My Projects",
     "imgAlt": "Project image",
     "viewDetail": "View Details",
-    "item1": {
-      "title": "ROBOCON 2025 Quadruped Robot",
-      "desc": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams.",
-      "tags": ["Motion Control", "SLAM", "Mechanical Design", "LiDAR"]
-    },
-    "item2": {
-      "title": "Bionic Boston Lobster Submersible",
-      "desc": "Buoyancy-controllable multi-DOF underwater robot. Developed control system (stepper pumps, motor/servo drive, gyro fusion, IIC encoder loop) and vector propulsion model for omnidirectional movement. Handled hardware selection and waterproofing. Won Special Prize in Fujian Intelligent Marine Equipment Competition.",
-      "tags": ["Embedded Systems", "Vector Propulsion", "Hardware Design", "Waterproofing"]
-    },
-    "item3": {
-      "title": "Intelligent Agriculture Robot",
-      "desc": "Smart planting & harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic design and hardware wiring, supporting dual-robot synergy.",
-      "tags": ["FreeRTOS", "Motor Control", "Multi-robot Synergy"]
-    },
-    "item4": {
-      "title": "Intelligent Agriculture Robot",
-      "desc": "Smart planting & harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic design and hardware wiring, supporting dual-robot synergy.",
-      "tags": ["FreeRTOS", "Motor Control", "Multi-robot Synergy"]
-    }
-  },
-  "project1": {
-    "title": "ROBOCON 2025 Quadruped Robot Challenge",
-    "desc1": "ROBOCON作为制算法+3D31名、越野赛全国34名（全国赛参赛队伍180余支）共三项国二的良好成绩。",
-    "title1": "www",
-    "desc2": [
-      "ROBOCON作为机器人领域的顶尖赛事，对机械可靠性、电控稳定性、视觉准确性提出了较高的要求。<br><br>",
-      "在2025赛季我基本完整负责了足式机器人一队从机械建模、运动控制到自主导航的全栈研发，采用类植保无人机碳管装配工艺机构+力控制算法+3D雷达建图导航技术，",
-      "取得2025年ROBOCON（江阴）足式机器人竞速赛全国30名、障碍赛全国31名、越野赛全国34名（全国赛参赛队伍180余支）共三项国二的良好成绩。"
-    ],
-    "links": {
-      "github": "Code",
-      "techDoc": "Docs",
-      "demo": "Demo"
-    }
-  },
-  "project2": {
-    "title": "Bionic Boston Lobster Submersible",
-    "desc": "This project features a buoyancy-controllable multi-DOF lobster underwater robot.<br><br>On the software side, I was responsible for the control system development, designing a lower-level machine framework that integrates stepper peristaltic pumps, motor/servo drives, gyroscope data processing, and IIC encoder feedback for closed-loop control of 360-degree servos. I also designed a vector propulsion model for the irregular multi-rotor structure to achieve omnidirectional movement. On the hardware side, I handled driver selection, step-down circuit design, and waterproofing.<br><br>The project won the Special Prize in the Underwater Robot Track at the 2024 Fujian University Student Intelligent Marine Equipment Design Competition. It also represented Fujian University of Technology at the 2024 World Maritime Equipment Conference, receiving coverage from media outlets such as Xinhua News Agency and Guangming Daily."
-  },
-  "project3": {
-    "title": "Intelligent Planting and Harvesting Robot",
-    "desc": "Based on the FreeRTOS real-time operating system, I developed the control system for an integrated intelligent planting and harvesting agricultural robot.<br><br>By controlling DJI3508 motors, I completed the functional debugging of the gripper lifting mechanism, omnidirectional chassis, and omnidirectional positioning system, achieving a gripper positioning accuracy within ±5mm. I also participated in the pneumatic system design and hardware wiring, supporting collaborative operation with another autonomous robot to efficiently complete tasks."
-  },
-  "project4": {
-    "title": "Intelligent Planting and Harvesting Robot",
-    "desc": "Based on the FreeRTOS real-time operating system, I developed the control system for an integrated intelligent planting and harvesting agricultural robot.<br><br>By controlling DJI3508 motors, I completed the functional debugging of the gripper lifting mechanism, omnidirectional chassis, and omnidirectional positioning system, achieving a gripper positioning accuracy within ±5mm. I also participated in the pneumatic system design and hardware wiring, supporting collaborative operation with another autonomous robot to efficiently complete tasks."
-  },
-  "projects1": {
-    "imgAlt1": "Project Detail View",
-    "imgAlt2": "Detail View 1",
-    "imgAlt3": "Detail View 2",
-    "imgAlt4": "Detail View 3"
-  },
-  "opensource": {
-    "title": "Open Source Contributions",
-    "btnCode": "Code",
-    "btnDoc": "Docs",
-  "item1": {
-    "title": "BRS Parallel Quadruped Robot",
-    "desc": "Project 'BLACK☆ROCK SHOOTER': A full-stack parallel structure quadruped robot. The complete solution is open-source and competed in the 2025 ROBOCON National Competition.",
-    "tags": ["Robotics", "Mechanical Design", "Open Source"]
-  },
-  "item2": {
-    "title": "SliverWolf Desktop Quadruped",
-    "desc": "A direct-drive, position-controlled serial quadruped using 9g micro servos. Features IMU integration, voice control, various gaits, and collaborative fetching with a robotic arm.",
-    "tags": ["STM32", "Voice Control", "IMU", "Robotic Arm"]
-  },
-  "item3": {
-    "title": "Quadruped Robot Lark Knowledge Base",
-    "desc": "A comprehensive post-competition R&D knowledge base, covering the full workflow from basic concepts to practical development and reinforcement learning applications.",
-    "tags": ["Documentation", "Knowledge Sharing"]
-  },
-  "item4": {
-    "title": "ROBOCON 2024 R1 Robot",
-    "desc": "Low-level control repository for the ROBOCON 2024 R1 robot, including mechanical schemes, omnidirectional chassis kinematics, and task mechanism logic.",
-    "tags": ["Robocon", "STM32", "C", "Chassis Control"]
-  },
-  "item5": {
-    "title": "3508 Legged Robot Drive Platform",
-    "desc": "A quadruped robot drive solution based on DJI 3508 brushless geared motors, used in multiple ROBOCON National Competitions from 2022 to 2025.",
-    "tags": ["Motor Control", "DJI", "Legged Robot"]
-  },
-  "item6": {
-    "title": "HTDW4438 Isaac Gym",
-    "desc": "Isaac Gym reinforcement learning simulation environment for the HTDW4438 quadruped robot, with completed sim-to-sim migration.",
-    "tags": ["RL", "Isaac Gym", "RSL_RL", "Sim2Real", "Legged_gym"]
-  },
-  "item7": {
-    "title": "HTDW4438 OpenDog Deployment",
-    "desc": "Physical control and deployment code for the HTDW4438 robot, including mechanical design, control algorithm implementation, and system integration testing.",
-    "tags": ["Robotics", "Mechanical Design", "C++", "Robotics Hardware"]
-  },
-  "item8": {
-    "title": "Lain's Note Personal Knowledge Base",
-    "desc": "Personal technical documentation and blog repository, recording notes and technical insights accumulated during robotics R&D and algorithm studies.",
-    "tags": ["Blog", "Documentation", "Study Notes"]
-  },
-  "item9": {
-    "title": "PDF2PNG Converter Tool",
-    "desc": "Implemented via Vibecoding, a tool for batch converting PDF documents into high-quality PNG images.",
-    "tags": ["Utility", "Tool"]
-  }
-
-
-
+    "notFound": "Project not found"
   },
   "timeline": {
     "title": "Timeline",
@@ -185,6 +76,17 @@
     "github": "GitHub",
     "twitter": "Twitter",
     "zhihu": "Zhihu"
+  },
+  "projectLinks": {
+    "github": "Code",
+    "techDoc": "Docs",
+    "demo": "Demo"
+  },
+  "projectImages": {
+    "0": "Project Detail View",
+    "1": "Detail View 1",
+    "2": "Detail View 2",
+    "3": "Detail View 3"
   },
   "footer": {
     "copyright": "© 2023-2025 Lain-Ego | Personal Homepage"

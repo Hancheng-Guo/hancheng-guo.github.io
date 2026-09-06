@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project 03 - Lain-Ego</title>
+  <title>Project 04 - Lain-Ego</title>
   
   <script>
-    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body data-page="project" data-project-id="project4">
   <nav>
     <div class="container nav-container">
       <a href="../../index.html" class="logo">
@@ -25,7 +25,7 @@
       <div class="nav-actions">
         <div class="nav-links">
           <a href="../../index.html#projects" data-i18n="nav.projects">Projects</a>
-          <a href="../../index.html#documents" data-i18n="nav.documents">Documents</a>
+          <a href="../../index.html#timeline" data-i18n="nav.timeline">Timeline</a>
           <a href="../../index.html#contact" data-i18n="nav.contact">Contact Me</a>
         </div>
         <div class="nav-controls">
@@ -42,35 +42,13 @@
   <section class="section-padding">
     <div class="container">
       <div class="card project-detail-card">
-        <h2 data-i18n="project4.title"></h2>
-        
-        <img src="../../assets/images/Portfolio-04.png" data-i18n="projects1.imgAlt1" class="project-img">
-        
-        <div class="project-detail-desc">
-           <p data-i18n="project4.desc"></p>
-        </div>
-     
-        <div class="publish-links-wrapper">
-          <div class="publish-links">
-            <a href="https://github.com/Lain-Ego0/ROBOCON2024-R1" target="_blank" class="publish-link github">
-              <i class="fab fa-github"></i> <span data-i18n="project1.links.github">开源代码</span>
-            </a>
-            <a href="https://" target="_blank" class="publish-link">
-              <i class="fas fa-file-pdf"></i> <span data-i18n="project1.links.techDoc">技术文档（暂无）</span>
-            </a>
-            <a href="https://www.bilibili.com/video/BV1VH4y1A7aM/?spm_id_from=333.337.search-card.all.click&vd_source=193a56b6f00b33090010ba20d05cfef7" target="_blank" class="publish-link bilibili">
-              <i class="fab fa-bilibili"></i> <span data-i18n="project1.links.demo">演示视频</span>
-            </a>
-          </div>
-        </div>
-
+        <div class="project-container"></div>
       </div>
     </div>
   </section>
 
   <footer data-i18n="footer.copyright">© 2025 Lain-Ego. All rights reserved.</footer>
 
-  <script src="../../assets/js/i18n.js"></script>
-  <script src="../../assets/js/main.js"></script>
+  <script type="module" src="../../assets/js/app.js"></script>
 </body>
 </html>

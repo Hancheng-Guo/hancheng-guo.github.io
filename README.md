@@ -2,6 +2,12 @@
 这是一个轻量化、响应式的个人主页网站，支持暗黑/亮色主题切换、多语言切换，包含项目展示、开源贡献、时间线、技术栈、联系方式等核心模块。
 CSS由vibecoding实现。
 
+## 规划与交付文档
+
+- [项目需求文档](docs/PROJECT_REQUIREMENTS.md)
+- [项目架构文档](docs/ARCHITECTURE.md)
+- [验收标准文档](docs/ACCEPTANCE_CRITERIA.md)
+
 ## 目录
 - [源码构成](#源码构成)
 - [环境要求](#环境要求)
@@ -29,16 +35,23 @@ CSS由vibecoding实现。
 - 动效样式（头像光晕、渐变文字、背景装饰等）
 
 ### 3. JavaScript 交互
-#### (1) 国际化（assets/js/i18n.js）
+#### (1) 国际化（assets/js/modules/i18n.js）
 - 实现多语言切换（如示例中的中文/英文）
 - 基于 `data-i18n` 属性匹配语言文案，替换页面文本
 
-#### (2) 核心交互（assets/js/main.js）
-- 主题切换（切换 `data-theme` 属性，同步 localStorage）
-- 动态渲染内容（项目列表、开源贡献、时间线、技能、联系方式等）
-- 导航交互、响应式适配等辅助逻辑
+#### (2) 模块化交互（assets/js/）
+- `app.js`：统一入口，根据页面类型加载主页或详情页逻辑
+- `modules/theme.js`：主题切换与偏好保存
+- `modules/navigation.js`：语言切换和平滑滚动
+- `modules/home.js`：主页项目、时间线、技能和联系方式渲染
+- `modules/project-detail.js`：项目详情页渲染
+- `modules/project-data.js`：集中读取项目数据
+- `modules/lightbox.js`：项目图片预览
 
-### 4. 静态资源
+### 4. 集中项目数据（assets/data/projects.json）
+项目卡片、详情正文、图片、标签和外部链接均由这一份文件提供。修改项目内容时无需再同步编辑 `main.js` 和多个语言文件。
+
+### 5. 静态资源
 - `assets/images/`：头像（Avatar.jpg）等图片资源
 - 第三方依赖：Font Awesome 图标库（CDN 引入）
 
@@ -104,43 +117,61 @@ Lain-Ego0.github.io/
 │   ├── css/                 # 样式目录
 │   │   └── style.css        # 全局样式（含主题、布局、组件样式）
 │   ├── js/                  # 脚本目录
-│   │   ├── i18n.js          # 多语言切换逻辑
-│   │   └── main.js          # 核心交互（主题切换、内容渲染等）
+│   │   ├── app.js           # 应用统一入口
+│   │   └── modules/         # 功能模块
+│   │       ├── home.js
+│   │       ├── i18n.js
+│   │       ├── lightbox.js
+│   │       ├── navigation.js
+│   │       ├── project-data.js
+│   │       ├── project-detail.js
+│   │       ├── site-data.js
+│   │       └── theme.js
+│   ├── data/
+│   │   └── projects.json    # 项目唯一数据源
 │   └── images/              # 图片目录
-│       └── Avatar.jpg       # 个人头像
+│       ├── Avatar.jpg       # 个人头像（当前未启用）
+│       └── Portfolio-*.png  # 项目展示图片
+├── lang/                    # 国际化文案
+│   ├── zh.json              # 中文
+│   └── en.json              # 英文
+├── pages/projects/          # 项目详情页
+│   ├── project1.html
+│   ├── project2.html
+│   ├── project3.html
+│   └── project4.html
 └── README.md                # 项目说明
 ```
 
 ## 核心功能说明
 ### 1. 主题切换
-- 初始化：读取 localStorage 中的主题偏好，无则匹配系统深色/亮色模式；
+- 初始化：读取 localStorage 中的主题偏好，无已保存偏好时默认为深色；
 - 切换逻辑：点击导航栏「月亮/太阳」图标，切换 `data-theme` 为 `dark/light`，并同步到 localStorage。
 
 ### 2. 多语言切换
-- 点击导航栏「中文/English」按钮，通过 `i18n.js` 替换所有带 `data-i18n` 属性的元素文本；
-- 需在 `i18n.js` 中配置对应语言的文案映射。
+- 点击导航栏「中文/English」按钮，通过语言模块替换所有带 `data-i18n` 属性的元素文本；
+- 无已保存偏好时默认使用英文；通用界面文案位于 `lang/zh.json` 和 `lang/en.json`。
 
 ### 3. 核心板块
-- 「Intro」：个人简介（头像、标题、描述）；
+- 「Intro」：个人简介（标题、描述）；
 - 「Projects」：项目展示（动态渲染，需在 `main.js` 中配置项目数据）；
-- 「Open Source」：开源贡献（动态渲染）；
 - 「Timeline」：时间线（经历/里程碑）；
 - 「Skills」：技术栈展示；
 - 「Contact」：联系方式（社交链接等）。
 
 ## 自定义配置
 ### 1. 修改个人信息
-- 头像：替换 `assets/images/Avatar.jpg`；
+- 头像：如需启用，可在 `index.html` 的 `.avatar-container` 中添加头像标签；
 - 页面标题/简介：修改 `index.html` 中 `title`、`intro.title`、`intro.desc` 等 `data-i18n` 对应的文案（需同步修改 `i18n.js` 中的语言包）；
 - 页脚版权：修改 `index.html` 中 footer 的 `data-i18n` 文案。
 
 ### 2. 新增/修改板块内容
-- 项目/开源/时间线/技能/联系方式：在 `main.js` 中找到对应的数据数组，修改/新增条目即可。
+- 项目：统一修改 `assets/data/projects.json`；时间线文案修改 `lang/*.json`，技能和联系方式配置修改 `assets/js/modules/site-data.js`。
 
 ### 3. 自定义主题
 - 修改 `assets/css/style.css` 中的 `:root`（light 主题）和 `[data-theme="dark"]`（dark 主题）下的 CSS 变量（如颜色、字体、间距等）。
 
 ### 4. 新增语言
-- 在 `i18n.js` 中新增语言包对象（如 `fr` 法语）；
-- 在语言切换按钮中新增对应选项，并绑定切换逻辑。
+- 在 `lang/` 中增加对应 JSON，并在 `assets/data/projects.json` 的每个项目中增加相同语言的 `locales` 数据；
+- 扩展 `assets/js/modules/i18n.js` 中的语言切换规则。
 ---
