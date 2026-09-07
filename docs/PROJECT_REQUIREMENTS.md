@@ -67,7 +67,7 @@
 
 ### 4.4 工程质量
 
-- 依赖 CDN 提供 Marked 和 Font Awesome；网络受限时内容或图标可能降级。
+- 历史版本依赖 CDN 提供 Marked 和 Font Awesome；当前实现已将 Markdown 解析器和所需 SVG 图标本地化，离线访问不会发生内容或图标降级。
 - 文本通过 `innerHTML` 渲染，缺少 HTML 白名单清理。
 - 图片缺少统一压缩、WebP/AVIF、尺寸属性和懒加载策略；仓库中还有未使用的大尺寸头像。
 - 缺少 SEO/分享元数据、favicon、canonical、Open Graph、站点地图和结构化数据。
@@ -178,7 +178,7 @@ site.write("assets/data/projects.json")
 - PRD-APP-001（P0）：首页明确展示申请方向、目标项目/学位、研究兴趣和联系邮箱。
 - PRD-APP-002（P0）：项目结果尽量量化，并为奖项、代码、文档或视频提供证据链接。
 - PRD-SEO-001（P0）：每页具有唯一 title、description、canonical、Open Graph 和 favicon。
-- PRD-SEO-002（P1）：生成 sitemap.xml、robots.txt 和 Person/CreativeWork JSON-LD。
+- PRD-SEO-002（P1）：生成 Person/CreativeWork JSON-LD；当前精简版本不要求可选的 sitemap.xml 与 robots.txt。
 - PRD-PERF-001（P0）：首屏图片明确尺寸，非首屏图片 lazy-load；提供现代格式和合理 fallback。
 - PRD-PERF-002（P1）：关键内容不能因第三方 CDN 失败而完全不可用，依赖应本地化或提供降级。
 

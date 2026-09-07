@@ -8,6 +8,7 @@ CSS由vibecoding实现。
 - [项目架构文档](docs/ARCHITECTURE.md)
 - [验收标准文档](docs/ACCEPTANCE_CRITERIA.md)
 - [Python 内容管理完整教程](docs/PYTHON_GUIDE.md)
+- [实施状态矩阵](docs/IMPLEMENTATION_STATUS.md)
 
 ## 目录
 - [源码构成](#源码构成)
@@ -54,7 +55,7 @@ CSS由vibecoding实现。
 
 ### 5. 静态资源
 - `assets/images/`：头像（Avatar.jpg）等图片资源
-- 第三方依赖：Font Awesome 图标库（CDN 引入）
+- 图标资源：页面实际使用的 SVG 文件保存在 `assets/icons/`，不依赖图标字体或 CDN
 
 ## 环境要求
 无需复杂环境，满足以下任一条件即可运行：
@@ -147,16 +148,15 @@ Lain-Ego0.github.io/
 │   │   ├── projects.json    # Python 生成的项目运行时数据
 │   │   └── site.json        # Python 生成的时间线、技术栈和联系数据
 │   └── images/              # 图片目录
-│       ├── Avatar.jpg       # 个人头像（当前未启用）
+│       ├── Avatar.jpg       # 首页个人头像
 │       └── Portfolio-*.png  # 项目展示图片
 ├── lang/                    # 国际化文案
 │   ├── zh.json              # 中文
 │   └── en.json              # 英文
-├── pages/projects/          # 项目详情页
-│   ├── project1.html
-│   ├── project2.html
-│   └── project3.html
-├── project.html             # Python 新增项目共用的详情页
+├── pages/
+│   ├── project.html         # 通用项目详情页
+│   ├── cv.html              # 数据驱动的独立 CV 页
+│   └── projects/            # Python 生成的项目详情页
 ├── portfolio.py             # 根目录 Python 内容与命令入口
 ├── portfolio_content/       # 离线 Python 内容生成包
 ├── schemas/                 # 内容数据 Schema
@@ -181,13 +181,19 @@ Lain-Ego0.github.io/
 - 「Contact」：联系方式（社交链接等）。
 
 ## 自定义配置
+
+`portfolio.py` 中所有面向访客显示的自定义文字均按 Markdown 解析。标题、标签和按钮支持行内 Markdown，项目正文支持完整的 GitHub Flavored Markdown（段落、列表、链接、粗体、代码块等）；本项目将 `_文字_` 扩展为下划线，斜体请使用 `*文字*`。邮箱、URL、日期、文件路径和图标名称仍按其专用格式填写。
+
 ### 1. 修改个人信息
-- 头像：如需启用，可在 `index.html` 的 `.avatar-container` 中添加头像标签；
-- 页面标题/简介：修改 `index.html` 中 `title`、`intro.title`、`intro.desc` 等 `data-i18n` 对应的文案（需同步修改 `i18n.js` 中的语言包）；
-- 页脚版权：修改 `index.html` 中 footer 的 `data-i18n` 文案。
+- 头像：替换 `assets/images/Avatar.jpg` 即可更新首页头像；
+- 网站名称、作者和页脚信息：修改 `portfolio = Portfolio(site_name=..., author=..., copyright_text=..., last_update_date=...)`；
+- 首页姓名、简介和联系方式：修改 `portfolio.py` 中的 `set_profile()` 与 `add_contact()`，然后重新构建；
+- CV 下载按钮：在 `portfolio.py` 的 `set_resume()` 中以 `url=dict(zh=..., en=...)` 提供两种语言对应的本地 PDF；未提供时自动隐藏；
+- 页脚版权和最后更新日期：修改 `Portfolio(...)` 的 `copyright_text` 与 `last_update_date`。
 
 ### 2. 新增/修改板块内容
-- 项目：统一修改根目录 `portfolio.py` 并运行构建；时间线文案修改 `lang/*.json`，技能和联系方式配置修改 `assets/js/modules/site-data.js`。
+- 项目、时间线、技能和联系方式：统一修改根目录 `portfolio.py` 并运行构建。
+- 履历日期统一使用 `YYYY-MM`；时间段使用 `dict(start="YYYY-MM", end="YYYY-MM")`，由网页按当前语言格式化。
 
 ### 3. 自定义主题
 - 修改 `assets/css/style.css` 中的 `:root`（light 主题）和 `[data-theme="dark"]`（dark 主题）下的 CSS 变量（如颜色、字体、间距等）。

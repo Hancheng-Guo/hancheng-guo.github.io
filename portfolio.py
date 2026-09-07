@@ -1,7 +1,6 @@
-"""当前个人主页的唯一项目内容源。
+"""个人主页的唯一人工维护内容源。
 
-运行 ``python portfolio.py validate|build|preview|clean``。完整说明见
-docs/PYTHON_GUIDE.md。网页读取本文件生成的 assets/data/projects.json。
+运行 ``python portfolio.py validate|build|preview|clean``。
 """
 
 from pathlib import Path
@@ -10,176 +9,717 @@ import sys
 from portfolio_content import Portfolio
 
 
-portfolio = Portfolio()
-
-
-# Project 1: ROBOCON 2025 Quadruped Robot Challenge
-project_1 = portfolio.add_project(
-    title={"en": "ROBOCON 2025 Quadruped Robot Challenge", "zh": "全国大学生机器人大赛ROBOCON足式机器人赛题"},
-    summary={
-        "en": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams.",
-        "zh": "2025赛季ROBOCON足式机器人全栈研发。负责从类植保无人机碳管装配工艺机械建模、力控制算法到3D雷达建图自主导航技术。带领团队在全国180余支队伍中取得竞速赛第30名、障碍赛第31名、越野赛34名的优异成绩。",
-    },
-    thumbnail="assets/images/Portfolio-01.png",
-    tags=("Motion Control", "SLAM", "Mechanical Design", "LiDAR"),
+portfolio = Portfolio(
+    site_name=dict(
+        zh="郭瀚丞 个人主页",
+        en="Hancheng Guo Homepage",
+    ),
+    author=dict(
+        zh="郭瀚丞",
+        en="Hancheng Guo",
+    ),
+    copyright_text=dict(
+        zh="由 [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io) 提供支持",
+        en="Powered by [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io)",
+    ),
+    last_update_date="2026-09-07",
 )
-page_1 = project_1.add_page(template="minimal")
-page_1.add_image("assets/images/Portfolio-01.png", alt={"en": "ROBOCON quadruped robot project overview", "zh": "ROBOCON 足式机器人项目主图"})
-page_1.add_paragraph({
-    "en": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams.",
-    "zh": "作为我真正入门强化学习控制的第一个项目，我选择了四足机器狗这个相对成熟的课题。\n\n机器狗有相当多的开源项目可以借鉴，因此可能有人会选择下载下来，跑通它，修改一下其中的内容，并包装成自己的项目，但我不想这样——因为学习不到一些被忽略的关键部分。\n\n在过往的科研经历中，我深知理解全流程的重要性，所以我选择基于 Stable-Baseline3 与 Mujoco 库，自己搭建机器狗的 RL 训练流程。",
-})
-page_1.add_heading("如何跑得更快？课程学习与奖励塑型", level=3, languages=("zh",))
+
+portfolio.set_profile(
+    name=dict(
+        zh="郭瀚丞",
+        en="Hancheng Guo",
+    ),
+    summary=dict(
+        zh=(
+            "机器人开发爱好者，大三在读，目前于人形机器人公司实习。专注于 MCU 与 Linux 开发、运动控制、强化学习和机器人感知。"
+        ),
+        en=(
+            "Robot development enthusiast and junior-year student. Interning at a humanoid robot company, "
+            "with a focus on MCU and Linux development, motion control, reinforcement learning, "
+            "and robot perception."
+        ),
+    ),
+    email="hc.guo.tect@gmail.com",
+)
+
+portfolio.add_contact(
+    label=dict(
+        zh="代码仓库",
+        en="GitHub",
+    ),
+    icon="github",
+    url="https://github.com/Hancheng-Guo",
+)
+
+portfolio.add_education(
+    date=dict(
+        start="2022-09",
+        end="2026-06",
+    ),
+    institution=dict(
+        zh="Education Test",
+        en="Education Test",
+    ),
+    degree=dict(
+        zh="Education Test",
+        en="Education Test",
+    ),
+    status="test",
+)
+
+portfolio.add_work_experience(
+    date=dict(
+        start="2025-10",
+        end="2026-03",
+    ),
+    title=dict(
+        zh="Work Experience Test",
+        en="Work Experience Test",
+    ),
+    organization=dict(
+        zh="Work Experience Test",
+        en="Work Experience Test",
+    ),
+    summary=dict(
+        zh=(
+            "Work Experience Test"
+        ),
+        en=(
+            "Work Experience Test"
+        ),
+    ),
+)
+
+portfolio.add_publication(
+    publication_type="journal",
+    date="2025-04",
+    title=dict(
+        zh="[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
+        en="[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
+    ),
+    venue=dict(
+        zh=('**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, '
+            '"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi," '
+            'in *IEEE Transactions on Aerospace and Electronic Systems*, '
+            'vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.'),
+        en=('H. Guo, Z. Chen, M. Huang and X. Y. Zhang, '
+            '"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi," '
+            'in IEEE Transactions on Aerospace and Electronic Systems, '
+            'vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.'),
+    ),
+)
+
+portfolio.add_publication(
+    publication_type="conference",
+    date="2025-02",
+    title=dict(
+        zh="[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
+        en="[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
+    ),
+    venue=dict(
+        zh=('Z. Chen, **H. Guo** and X. Zhang, '
+            '"Children Presence Detection System in Vehicles via Wi-Fi Devices," '
+            '*2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, '
+            '2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443.'),
+        en=('Z. Chen, **H. Guo** and X. Zhang, '
+            '"Children Presence Detection System in Vehicles via Wi-Fi Devices," '
+            '*2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, '
+            '2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443.'),
+    ),
+)
+
+portfolio.add_publication(
+    publication_type="conference",
+    date="2025-02",
+    title=dict(
+        zh="[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
+        en="[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
+    ),
+    venue=dict(
+        zh=('Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, '
+            '"A WiPD-DL Network for in-Vehicle Secure Channel Detection," '
+            '*2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, '
+            '2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649.'),
+        en=('Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, '
+            '"A WiPD-DL Network for in-Vehicle Secure Channel Detection," '
+            '*2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, '
+            '2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649.'),
+    ),
+)
+
+portfolio.add_award(
+    date="2025-08",
+    title=dict(
+        zh="Award Test",
+        en="Award Test",
+    ),
+    status="test",
+)
+
+portfolio.set_resume(
+    label=dict(
+        zh="下载简历",
+        en="Download CV",
+    ),
+    url=dict(
+        zh="assets/documents/简历测试.pdf",
+        en="assets/documents/CVTest.pdf",
+    ),
+    status="test",
+)
+
+
+project_1 = portfolio.add_project(
+    title=dict(
+        zh="全国大学生机器人大赛 ROBOCON 足式机器人赛题",
+        en="ROBOCON 2025 Quadruped Robot Challenge",
+    ),
+    summary=dict(
+        zh=(
+            "2025赛季ROBOCON足式机器人全栈研发。负责从类植保无人机碳管装配工艺机械建模、\n"
+            "力控制算法到3D雷达建图自主导航技术。带领团队在全国180余支队伍中取得竞速赛第30名、\n"
+            "障碍赛第31名、越野赛34名的优异成绩。"
+        ),
+        en=(
+            "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling,\n"
+            "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed,\n"
+            "31st in Obstacle, and 34th in Cross-country among 180+ teams."
+        ),
+    ),
+    thumbnail="assets/images/Portfolio-01.png",
+    tags=(
+        dict(
+            zh="运动控制",
+            en="Motion Control",
+        ),
+        dict(
+            zh="SLAM",
+            en="SLAM",
+        ),
+        dict(
+            zh="机械设计",
+            en="Mechanical Design",
+        ),
+        dict(
+            zh="激光雷达",
+            en="LiDAR",
+        ),
+    ),
+)
+
+page_1 = project_1.add_page(
+    template="minimal",
+)
+page_1.add_image(
+    "assets/images/Portfolio-01.png",
+    alt=dict(
+        zh="ROBOCON 足式机器人项目主图",
+        en="ROBOCON quadruped robot project overview",
+    ),
+)
 page_1.add_paragraph(
-    "ROBOCON 作为机器人领域的顶尖赛事，对机械可靠性、电控稳定性、视觉准确性提出了较高的要求。\n\n在 2025 赛季我基本完整负责了足式机器人一队从机械建模、运动控制到自主导航的全栈研发，采用类植保无人机碳管装配工艺机构、力控制算法与 3D 雷达建图导航技术，取得 2025 年 ROBOCON（江阴）足式机器人竞速赛全国 30 名、障碍赛全国 31 名、越野赛全国 34 名（全国赛参赛队伍 180 余支），共三项国二。",
-    languages=("zh",),
+    text=dict(
+        zh=(
+            "作为我真正入门强化学习控制的第一个项目，我选择了四足机器狗这个相对成熟的课题。\n"
+            "\n"
+            "机器狗有相当多的开源项目可以借鉴，因此可能有人会选择下载下来，跑通它，修改一下其中的内容，\n"
+            "并包装成自己的项目，但我不想这样——因为学习不到一些被忽略的关键部分。\n"
+            "\n"
+            "在过往的科研经历中，我深知理解全流程的重要性，所以我选择基于 Stable-Baseline3 与 Mujoco 库，\n"
+            "自己搭建机器狗的 RL 训练流程。"
+        ),
+        en=(
+            "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling,\n"
+            "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed,\n"
+            "31st in Obstacle, and 34th in Cross-country among 180+ teams."
+        ),
+    ),
+)
+page_1.add_heading(
+    text=dict(
+        zh="如何跑得更快？课程学习与奖励塑型",
+        en="How Can It Run Faster? Curriculum Learning and Reward Shaping",
+    ),
+    level=3,
+)
+page_1.add_paragraph(
+    text=dict(
+        zh=(
+            "ROBOCON 作为机器人领域的顶尖赛事，对机械可靠性、电控稳定性、视觉准确性提出了较高的要求。\n"
+            "\n"
+            "在 2025 赛季我基本完整负责了足式机器人一队从机械建模、运动控制到自主导航的全栈研发，\n"
+            "采用类植保无人机碳管装配工艺机构、力控制算法与 3D 雷达建图导航技术，取得 2025 年\n"
+            "ROBOCON（江阴）足式机器人竞速赛全国 30 名、障碍赛全国 31 名、越野赛全国 34 名，\n"
+            "共三项国二。"
+        ),
+        en=(
+            "During the 2025 season, I worked across mechanical modeling, motion control, and autonomous\n"
+            "navigation. The robot combined a carbon-tube structure, force-control algorithms,\n"
+            "and 3D LiDAR mapping, earning three National Second Prizes."
+        ),
+    ),
 )
 page_1.add_image(
     "assets/images/Portfolio-01-3.png",
-    alt={"en": "Quadruped robot training and testing", "zh": "四足机器人训练与测试画面"},
+    alt=dict(
+        zh="四足机器人训练与测试画面",
+        en="Quadruped robot training and testing",
+    ),
 )
 page_1.add_image(
     "assets/images/Portfolio-01-1.png",
-    alt={"en": "Quadruped robot project structure detail", "zh": "四足机器人项目结构细节"},
+    alt=dict(
+        zh="四足机器人项目结构细节",
+        en="Quadruped robot project structure detail",
+    ),
 )
 page_1.add_image(
     "assets/images/Portfolio-01-2.png",
-    alt={"en": "Quadruped robot project result", "zh": "四足机器人项目运行结果"},
+    alt=dict(
+        zh="四足机器人项目运行结果",
+        en="Quadruped robot project result",
+    ),
 )
-page_1.add_link("github", "https://github.com/Lain-Ego0/BRS-Parallel-Robot")
-page_1.add_link("techDoc", "https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home")
-page_1.add_link("demo", "https://www.bilibili.com/video/BV15wu4zuEmf")
+page_1.add_link(
+    link_type="github",
+    url="https://github.com/Lain-Ego0/BRS-Parallel-Robot",
+)
+page_1.add_link(
+    link_type="techDoc",
+    url="https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home",
+)
+page_1.add_link(
+    link_type="demo",
+    url="https://www.bilibili.com/video/BV15wu4zuEmf",
+)
 
 
-# Project 2: Bionic Boston Lobster Submersible
 project_2 = portfolio.add_project(
-    title={"en": "Bionic Boston Lobster Submersible", "zh": "仿生波士顿大龙虾民用潜航机器人"},
-    summary={
-        "en": "Buoyancy-controllable multi-DOF underwater robot. Developed control system (stepper pumps, motor/servo drive, gyro fusion, IIC encoder loop) and vector propulsion model for omnidirectional movement. Handled hardware selection and waterproofing. Won Special Prize in Fujian Intelligent Marine Equipment Competition.",
-        "zh": "浮力可控多自由度龙虾水下机器人。负责控制系统开发（步进蠕动泵、电机/舵机驱动、陀螺仪融合、IIC编码器闭环），设计异形多旋翼矢量推进模型实现全向移动。硬件方面负责驱动选型与防水设计。获福建省大学生智能海洋装备大赛特等奖。",
-    },
+    title=dict(
+        zh="仿生波士顿大龙虾民用潜航机器人",
+        en="Bionic Boston Lobster Submersible",
+    ),
+    summary=dict(
+        zh=(
+            "浮力可控多自由度龙虾水下机器人。负责控制系统开发（步进蠕动泵、电机/舵机驱动、\n"
+            "陀螺仪融合、IIC编码器闭环），设计异形多旋翼矢量推进模型实现全向移动。\n"
+            "硬件方面负责驱动选型与防水设计。获福建省大学生智能海洋装备大赛特等奖。"
+        ),
+        en=(
+            "Buoyancy-controllable multi-DOF underwater robot. Developed control system (stepper pumps,\n"
+            "motor/servo drive, gyro fusion, IIC encoder loop) and vector propulsion model for omnidirectional\n"
+            "movement. Handled hardware selection and waterproofing. Won Special Prize in Fujian Intelligent\n"
+            "Marine Equipment Competition."
+        ),
+    ),
     thumbnail="assets/images/Portfolio-02.png",
-    tags=("Embedded Systems", "Vector Propulsion", "Hardware Design", "Waterproofing"),
+    tags=(
+        dict(
+            zh="嵌入式系统",
+            en="Embedded Systems",
+        ),
+        dict(
+            zh="矢量推进",
+            en="Vector Propulsion",
+        ),
+        dict(
+            zh="硬件设计",
+            en="Hardware Design",
+        ),
+        dict(
+            zh="防水设计",
+            en="Waterproofing",
+        ),
+    ),
 )
-page_2 = project_2.add_page(template="minimal")
-page_2.add_image("assets/images/Portfolio-02.png", alt={"en": "Bionic Boston lobster submersible overview", "zh": "仿生波士顿大龙虾潜航机器人整体展示"})
-page_2.add_paragraph({
-    "en": "This project features a buoyancy-controllable multi-DOF lobster underwater robot.\n\nOn the software side, I was responsible for the control system development, designing a lower-level machine framework that integrates stepper peristaltic pumps, motor and servo drives, gyroscope data processing, and IIC encoder feedback for closed-loop control of 360-degree servos. I also designed a vector propulsion model for the irregular multi-rotor structure to achieve omnidirectional movement. On the hardware side, I handled driver selection, step-down circuit design, and waterproofing.\n\nThe project won the Special Prize in the Underwater Robot Track at the 2024 Fujian University Student Intelligent Marine Equipment Design Competition. It also represented Fujian University of Technology at the 2024 World Maritime Equipment Conference, receiving coverage from media outlets such as Xinhua News Agency and Guangming Daily.",
-    "zh": "本项目为浮力可控的多自由度龙虾水下机器人。\n\n软件部分负责控制系统开发，设计了一套集成步进蠕动泵、电机与舵机驱动、陀螺仪数据处理以及读取 IIC 编码器闭环控制 360 度舵机的下位机框架，同时设计异形多旋翼的矢量推进模型，完善全向移动功能。在硬件设计部分负责了驱动器选型、降压电路以及防水设计等工作。\n\n作品获 2024 年福建省大学生智能海洋装备设计制作大赛水下机器人赛道特等奖，同时进一步代表福建理工大学参展 2024 世界航海装备大会，获得新华社、光明日报等媒体报道。",
-})
+page_2 = project_2.add_page(
+    template="minimal",
+)
+page_2.add_image(
+    "assets/images/Portfolio-02.png",
+    alt=dict(
+        zh="仿生波士顿大龙虾潜航机器人整体展示",
+        en="Bionic Boston lobster submersible overview",
+    ),
+)
+page_2.add_paragraph(
+    text=dict(
+        zh=(
+            "本项目为浮力可控的多自由度龙虾水下机器人。\n"
+            "\n"
+            "软件部分负责控制系统开发，设计了一套集成步进蠕动泵、电机与舵机驱动、陀螺仪数据处理以及\n"
+            "读取 IIC 编码器闭环控制 360 度舵机的下位机框架，同时设计异形多旋翼的矢量推进模型，\n"
+            "完善全向移动功能。在硬件设计部分负责了驱动器选型、降压电路以及防水设计等工作。\n"
+            "\n"
+            "作品获 2024 年福建省大学生智能海洋装备设计制作大赛水下机器人赛道特等奖，同时进一步代表\n"
+            "福建理工大学参展 2024 世界航海装备大会，获得新华社、光明日报等媒体报道。"
+        ),
+        en=(
+            "This project features a buoyancy-controllable multi-DOF lobster underwater robot.\n"
+            "\n"
+            "On the software side, I was responsible for control system development, integrating stepper\n"
+            "peristaltic pumps, motor and servo drives, gyroscope processing, and IIC encoder feedback for\n"
+            "closed-loop control. I also designed a vector propulsion model for omnidirectional movement.\n"
+            "On the hardware side, I handled driver selection, step-down circuit design, and waterproofing.\n"
+            "\n"
+            "The project won the Special Prize in the 2024 Fujian University Student Intelligent Marine\n"
+            "Equipment Design Competition and represented Fujian University of Technology at the\n"
+            "2024 World Maritime Equipment Conference."
+        ),
+    ),
+)
 page_2.add_image(
     "assets/images/Portfolio-02-1.png",
-    alt={"en": "Submersible mechanical structure detail", "zh": "潜航机器人机械结构细节"},
+    alt=dict(
+        zh="潜航机器人机械结构细节",
+        en="Submersible mechanical structure detail",
+    ),
 )
 page_2.add_image(
     "assets/images/Portfolio-02-2.png",
-    alt={"en": "Submersible control system", "zh": "潜航机器人控制系统展示"},
+    alt=dict(
+        zh="潜航机器人控制系统展示",
+        en="Submersible control system",
+    ),
 )
 page_2.add_image(
     "assets/images/Portfolio-02-3.png",
-    alt={"en": "Submersible competition and exhibition result", "zh": "潜航机器人比赛与展览成果"},
+    alt=dict(
+        zh="潜航机器人比赛与展览成果",
+        en="Submersible competition and exhibition result",
+    ),
 )
-page_2.add_link("github", None)
-page_2.add_link("techDoc", None)
-page_2.add_link("demo", None)
 
 
-# Project 3: Intelligent Planting and Harvesting Robot
 project_3 = portfolio.add_project(
-    title={"en": "Intelligent Planting and Harvesting Robot", "zh": "智能插秧收获一体机器人"},
-    summary={
-        "en": "Smart planting & harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic design and hardware wiring, supporting dual-robot synergy.",
-        "zh": "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。",
-    },
+    title=dict(
+        zh="智能插秧收获一体机器人",
+        en="Intelligent Planting and Harvesting Robot",
+    ),
+    summary=dict(
+        zh=(
+            "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，\n"
+            "定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。"
+        ),
+        en=(
+            "Smart planting and harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper\n"
+            "lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic\n"
+            "design and hardware wiring, supporting dual-robot synergy."
+        ),
+    ),
     thumbnail="assets/images/Portfolio-03.png",
-    tags=("FreeRTOS", "Motor Control", "Multi-robot Synergy"),
+    tags=(
+        dict(
+            zh="FreeRTOS",
+            en="FreeRTOS",
+        ),
+        dict(
+            zh="电机控制",
+            en="Motor Control",
+        ),
+        dict(
+            zh="多机器人协同",
+            en="Multi-robot Collaboration",
+        ),
+    ),
 )
-page_3 = project_3.add_page(template="minimal")
+page_3 = project_3.add_page(
+    template="minimal",
+)
 page_3.add_image(
     "assets/images/Portfolio-03.png",
-    alt={"en": "Intelligent planting and harvesting robot at the competition", "zh": "智能插秧收获一体机器人比赛现场"},
+    alt=dict(
+        zh="智能插秧收获一体机器人比赛现场",
+        en="Intelligent planting and harvesting robot at the competition",
+    ),
 )
-page_3.add_paragraph({
-    "en": "Based on the FreeRTOS real-time operating system, I developed the control system for an integrated intelligent planting and harvesting agricultural robot.\n\nBy controlling DJI3508 motors, I completed the functional debugging of the gripper lifting mechanism, omnidirectional chassis, and omnidirectional positioning system, achieving a gripper positioning accuracy within ±5 mm. I also participated in the pneumatic system design and hardware wiring, supporting collaborative operation with another autonomous robot to efficiently complete tasks.",
-    "zh": "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。\n\n通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，支持与另一台自主运行机器人协同作业，高效完成任务。",
-})
-page_3.add_link("github", "https://github.com/Lain-Ego0/ROBOCON2024-R1")
-page_3.add_link("techDoc", None)
-page_3.add_link("demo", "https://www.bilibili.com/video/BV1VH4y1A7aM/?spm_id_from=333.337.search-card.all.click&vd_source=193a56b6f00b33090010ba20d05cfef7")
+page_3.add_paragraph(
+    text=dict(
+        zh=(
+            "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。\n"
+            "\n"
+            "通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，\n"
+            "使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，\n"
+            "支持与另一台自主运行机器人协同作业，高效完成任务。"
+        ),
+        en=(
+            "Based on FreeRTOS, I developed the control system for an integrated intelligent planting and\n"
+            "harvesting agricultural robot. By controlling DJI3508 motors, I completed the gripper lifting,\n"
+            "omnidirectional chassis, and positioning functions with ±5 mm accuracy. I also participated in\n"
+            "pneumatic system design and hardware wiring for collaborative dual-robot operation."
+        ),
+    ),
+)
+page_3.add_link(
+    link_type="github",
+    url="https://github.com/Lain-Ego0/ROBOCON2024-R1",
+)
+page_3.add_link(
+    link_type="demo",
+    url="https://www.bilibili.com/video/BV1VH4y1A7aM/",
+)
 
 
-# Timeline
 portfolio.add_timeline_event(
     date="2024-05",
-    title={"en": "Open Source SliverWolf Desktop Quadruped", "zh": "开源 SliverWolf 桌面四足"},
-    description={"en": "Released SliverWolf, a desktop-level serial quadruped robot featuring voice control and robotic arm collaborative capabilities.", "zh": "发布 SliverWolf，一款具备语音控制与机械臂协同作业能力的桌面级串联四足机器人。"},
+    title=dict(
+        zh="开源 SliverWolf 桌面四足",
+        en="Open Source SliverWolf Desktop Quadruped",
+    ),
+    description=dict(
+        zh=(
+            "发布具备语音控制与机械臂协同作业能力的桌面级串联四足机器人 SliverWolf。"
+        ),
+        en=(
+            "Released SliverWolf, a desktop serial quadruped with voice control and robotic-arm collaboration."
+        ),
+    ),
 )
 portfolio.add_timeline_event(
     date="2024-07",
-    title={"en": "2024 ROBOCON National Competition", "zh": "2024ROBOCON全国赛"},
-    description={"en": "Developed the embedded control system for the R1 robot based on FreeRTOS, achieving ±5mm positioning accuracy, ball launching, and gripper functionalities.", "zh": "基于FreeRTOS完成R1机器人嵌入式控制系统开发，实现±5mm定位精度，球体发射、夹爪夹取功能。"},
+    title=dict(
+        zh="2024 ROBOCON 全国赛",
+        en="2024 ROBOCON National Competition",
+    ),
+    description=dict(
+        zh=(
+            "基于 FreeRTOS 完成 R1 机器人嵌入式控制系统开发，实现 ±5 mm 定位精度、球体发射和夹爪夹取功能。"
+        ),
+        en=(
+            "Developed the FreeRTOS embedded control system for the R1 robot,\n"
+            "achieving ±5 mm positioning accuracy, ball launching, and gripper functions."
+        ),
+    ),
 )
 portfolio.add_timeline_event(
     date="2024-08",
-    title={"en": "2024 Fujian Undergraduate Electronics Design Contest", "zh": "2024福建省大学生电子设计大赛"},
-    description={"en": "Developed an autonomous driving car system based on the MSPM0G3507, qualifying for the provincial testing stage.", "zh": "基于MSPM0G3507开发自动驾驶小车系统，进入省测。"},
+    title=dict(
+        zh="2024 福建省大学生电子设计大赛",
+        en="2024 Fujian Undergraduate Electronics Design Contest",
+    ),
+    description=dict(
+        zh=(
+            "基于 MSPM0G3507 开发自动驾驶小车系统并进入省级测试阶段。"
+        ),
+        en=(
+            "Developed an MSPM0G3507-based autonomous vehicle system and qualified for provincial testing."
+        ),
+    ),
 )
 portfolio.add_timeline_event(
     date="2024-11",
-    title={"en": "Fujian Intelligent Marine Equipment Design Competition", "zh": "福建省大学生智能海洋装备设计制作大赛"},
-    description={"en": "Led the development of the control system for a buoyancy-controlled multi-DOF lobster underwater robot, winning the Grand Prize.", "zh": "负责开发浮力可控多自由度龙虾水下机器人的控制系统，获特等奖。"},
+    title=dict(
+        zh="福建省大学生智能海洋装备设计制作大赛",
+        en="Fujian Intelligent Marine Equipment Design Competition",
+    ),
+    description=dict(
+        zh=(
+            "负责浮力可控多自由度龙虾水下机器人的控制系统开发，获特等奖。"
+        ),
+        en=(
+            "Led control-system development for a buoyancy-controlled multi-DOF lobster robot, winning the Special Prize."
+        ),
+    ),
 )
 portfolio.add_timeline_event(
     date="2024-12",
-    title={"en": "2024 World Marine Equipment Conference", "zh": "2024 世界航海装备大会"},
-    description={"en": "Represented Fujian University of Technology as an exhibitor, showcasing the bionic Boston Lobster robot; covered by media outlets including Xinhua News Agency.", "zh": "代表福建理工大学参展，展示仿生波士顿大龙虾机器人，获新华社等媒体报道。"},
+    title=dict(
+        zh="2024 世界航海装备大会",
+        en="2024 World Marine Equipment Conference",
+    ),
+    description=dict(
+        zh=(
+            "代表福建理工大学参展并展示仿生波士顿大龙虾机器人，获新华社等媒体报道。"
+        ),
+        en=(
+            "Represented Fujian University of Technology and exhibited the bionic Boston lobster robot,\n"
+            "receiving national media coverage."
+        ),
+    ),
 )
 portfolio.add_timeline_event(
     date="2025-07",
-    title={"en": "2025 ROBOCON National Competition", "zh": "2025 ROBOCON 全国赛"},
-    description={"en": "Responsible for full-stack R&D of the legged robot. Ranked 30th nationally in the Sprint Race, 31st in the Obstacle Race, and 34th in the Cross-Country Race, securing three National Second Prizes.", "zh": "负责足式机器人全栈研发。获足式机器人竞速赛全国30名、障碍赛31名、越野赛34名，共三项国二佳绩。"},
+    title=dict(
+        zh="2025 ROBOCON 全国赛",
+        en="2025 ROBOCON National Competition",
+    ),
+    description=dict(
+        zh=(
+            "负责足式机器人全栈研发，在竞速、障碍和越野赛中获得三项国家二等奖。"
+        ),
+        en=(
+            "Led full-stack development of the quadruped robot and earned three National Second Prizes."
+        ),
+    ),
 )
 portfolio.add_timeline_event(
     date="2025-08",
-    title={"en": "2025 National Undergraduate Electronics Design Contest", "zh": "2025全国大学生电子设计大赛"},
-    description={"en": "Responsible for the hardware design and fabrication of the power meter for an automatic ranging system, winning the National Second Prize.", "zh": "负责自动测距系统的功率计硬件设计与制作，获全国二等奖。"},
+    title=dict(
+        zh="2025 全国大学生电子设计大赛",
+        en="2025 National Undergraduate Electronics Design Contest",
+    ),
+    description=dict(
+        zh=(
+            "负责自动测距系统功率计的硬件设计与制作，获全国二等奖。"
+        ),
+        en=(
+            "Designed and fabricated the power-meter hardware for an automatic ranging system, winning the National Second Prize."
+        ),
+    ),
 )
 portfolio.add_timeline_event(
     date="2025-09",
-    title={"en": "Open Source BRS Parallel Quadruped Robot", "zh": "开源 BRS 并联四足机器人"},
-    description={"en": "Open-sourced the mechanical structure and control code of the BRS parallel quadruped robot on GitHub.", "zh": "在GitHub开源BRS并联四足机器人的机械结构与控制代码。"},
+    title=dict(
+        zh="开源 BRS 并联四足机器人",
+        en="Open Source BRS Parallel Quadruped Robot",
+    ),
+    description=dict(
+        zh=(
+            "在 GitHub 开源 BRS 并联四足机器人的机械结构与控制代码。"
+        ),
+        en=(
+            "Open-sourced the mechanical structure and control code of the BRS parallel quadruped robot on GitHub."
+        ),
+    ),
 )
 portfolio.add_timeline_event(
-    date={"en": "2025-10 to 2026-03", "zh": "2025-10至2026-3"},
-    title={"en": "Internship at Gaoqing Electromechanical", "zh": "高擎机电激情实习中"},
-    description={"en": "Responsible for mechanical design, control algorithm development, and system integration testing for the HTDW4438 bionic quadruped robot (both open-source and commercial versions).", "zh": "负责HTDW4438仿生四足机器人的机械设计、控制算法开发与系统集成测试,分为开源版本与产品化版本"},
+    date=dict(
+        start="2025-10",
+        end="2026-03",
+    ),
+    title=dict(
+        zh="高擎机电实习",
+        en="Internship at Gaoqing Electromechanical",
+    ),
+    description=dict(
+        zh=(
+            "负责 HTDW4438 仿生四足机器人的机械设计、控制算法开发与系统集成测试。"
+        ),
+        en=(
+            "Responsible for mechanical design, control-algorithm development,\n"
+            "and system-integration testing for the HTDW4438 bionic quadruped robot."
+        ),
+    ),
 )
 
 
-# Tech Stack
-portfolio.add_tech_group(title={"en": "Embedded", "zh": "嵌入式开发"}, items=[
-    {"name": "STM32", "icon": "fas fa-microchip"}, {"name": "ESP32", "icon": "fas fa-wifi"},
-    {"name": "FreeRTOS", "icon": "fas fa-cogs"}, {"name": "C/C++", "icon": "fas fa-code"},
-])
-portfolio.add_tech_group(title={"en": "Robotics", "zh": "机器人技术"}, items=[
-    {"name": "ROS/ROS2", "icon": "fas fa-robot"}, {"name": "Gazebo", "icon": "fas fa-cube"},
-    {"name": "Motion Control", "icon": "fas fa-wave-square"}, {"name": "RL", "icon": "fas fa-brain"},
-])
-portfolio.add_tech_group(title={"en": "Hardware", "zh": "硬件设计"}, items=[
-    {"name": "Altium", "icon": "fas fa-pencil-ruler"}, {"name": "SolidWorks", "icon": "fas fa-drafting-compass"},
-    {"name": "PCB", "icon": "fas fa-layer-group"},
-])
-portfolio.add_tech_group(title={"en": "Software", "zh": "软件与工具"}, items=[
-    {"name": "Linux", "icon": "fab fa-linux"}, {"name": "Python", "icon": "fab fa-python"},
-    {"name": "Git", "icon": "fab fa-git-alt"},
-])
-
-
-# Let's Connect
-portfolio.add_contact(label={"en": "Bilibili", "zh": "哔哩哔哩"}, icon="fab fa-bilibili", url="https://space.bilibili.com/385516781/upload/video")
-portfolio.add_contact(label={"en": "GitHub", "zh": "代码仓库"}, icon="fab fa-github", url="https://github.com/Lain-Ego0")
-portfolio.add_contact(label={"en": "Twitter", "zh": "推特"}, icon="fab fa-twitter", url="https://x.com/Lain_Ego0")
-portfolio.add_contact(label={"en": "Zhihu", "zh": "知乎"}, icon="fab fa-zhihu", url="https://www.zhihu.com/people/hua-99-50-21")
+portfolio.add_tech_group(
+    title=dict(
+        zh="嵌入式开发",
+        en="Embedded",
+    ),
+    items=[
+        dict(
+            name=dict(
+                zh="STM32",
+                en="STM32",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="ESP32",
+                en="ESP32",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="FreeRTOS",
+                en="FreeRTOS",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="C/C++",
+                en="C/C++",
+            ),
+        ),
+    ],
+)
+portfolio.add_tech_group(
+    title=dict(
+        zh="机器人技术",
+        en="Robotics",
+    ),
+    items=[
+        dict(
+            name=dict(
+                zh="ROS/ROS2",
+                en="ROS/ROS2",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="Gazebo",
+                en="Gazebo",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="运动控制",
+                en="Motion Control",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="强化学习",
+                en="Reinforcement Learning",
+            ),
+        ),
+    ],
+)
+portfolio.add_tech_group(
+    title=dict(
+        zh="硬件设计",
+        en="Hardware",
+    ),
+    items=[
+        dict(
+            name=dict(
+                zh="Altium",
+                en="Altium",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="SolidWorks",
+                en="SolidWorks",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="PCB",
+                en="PCB",
+            ),
+        ),
+    ],
+)
+portfolio.add_tech_group(
+    title=dict(
+        zh="软件与工具",
+        en="Software",
+    ),
+    items=[
+        dict(
+            name=dict(
+                zh="Linux",
+                en="Linux",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="Python",
+                en="Python",
+            ),
+        ),
+        dict(
+            name=dict(
+                zh="Git",
+                en="Git",
+            ),
+        ),
+    ],
+)
 
 
 if __name__ == "__main__":

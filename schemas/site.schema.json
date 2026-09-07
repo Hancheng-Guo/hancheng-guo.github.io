@@ -1,5 +1,50 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "dateRange": {
+      "type": "object",
+      "required": ["start"],
+      "properties": {
+        "start": { "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$" },
+        "end": { "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$" }
+      },
+      "additionalProperties": false
+    },
+    "datedItem": {
+      "type": "object",
+      "required": ["date"],
+      "properties": { "date": { "$ref": "#/$defs/dateRange" } }
+    }
+  },
   "type": "object",
-  "description": "Optional site content schema reserved for generated profile data."
+  "required": ["schemaVersion", "site", "profile", "education", "workExperience", "publications", "awards", "resume", "timeline", "techStack", "contacts"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "site": {
+      "type": "object",
+      "required": ["name", "author", "copyrightText", "lastUpdateDate"],
+      "properties": {
+        "name": { "type": "object" },
+        "author": { "type": "object" },
+        "copyrightText": { "type": "object" },
+        "lastUpdateDate": { "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])$" }
+      }
+    },
+    "profile": { "type": "object" },
+    "education": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
+    "workExperience": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
+    "publications": {
+      "type": "object",
+      "required": ["journalArticles", "conferencePapers"],
+      "properties": {
+        "journalArticles": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
+        "conferencePapers": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } }
+      }
+    },
+    "awards": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
+    "resume": { "type": "object" },
+    "timeline": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
+    "techStack": { "type": "array" },
+    "contacts": { "type": "array" }
+  }
 }

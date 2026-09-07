@@ -1,4 +1,5 @@
 import { fromRoot } from './paths.js';
+import { markdownInline } from './markdown.js';
 
 let language = localStorage.getItem('lang') || 'en';
 let messages = {};
@@ -18,7 +19,7 @@ export function currentLanguage() {
 
 export function renderMarkdown(value) {
   const values = Array.isArray(value) ? value : [value];
-  return values.map((item) => window.marked?.parse ? window.marked.parse(String(item)) : String(item)).join('');
+  return values.map((item) => markdownInline(item)).join('');
 }
 
 function translatePage() {

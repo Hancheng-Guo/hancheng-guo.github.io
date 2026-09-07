@@ -101,7 +101,7 @@ def test_all_external_urls_use_allowed_schemes(): ...
 | ID | 验收标准 | 验证方式 |
 |---|---|---|
 | AC-SEO-001 | 首页和每个项目页拥有非空且唯一的 title、description、canonical 和 Open Graph title/description/image。 | 静态生成检查。 |
-| AC-SEO-002 | favicon、robots.txt、sitemap.xml 返回 200，sitemap 覆盖所有公开页面。 | HTTP/解析测试。 |
+| AC-SEO-002 | favicon 返回 200，公开页面包含正确的 canonical、Open Graph 和结构化数据。 | HTTP/解析测试。 |
 | AC-SEO-003 | 页面提供合法的 Person 或 CreativeWork JSON-LD。 | Schema.org validator。 |
 | AC-PERF-001 | 移动端 Lighthouse Performance ≥ 90，Accessibility ≥ 95，Best Practices ≥ 95，SEO ≥ 95。 | CI Lighthouse，运行 3 次取中位数。 |
 | AC-PERF-002 | 所有图片有 width/height；非首屏图片设置 lazy loading；不存在未使用的超大资源进入发布产物。 | DOM/构建产物检查。 |
@@ -127,4 +127,4 @@ def test_all_external_urls_use_allowed_schemes(): ...
 - [ ] JSON Schema、单元测试、E2E、axe、链接检查全部通过。
 - [ ] GitHub Pages 预发布地址完成桌面和移动端人工检查。
 - [ ] 未提交隐私数据、密钥、本机绝对路径或临时文件。
-- [ ] sitemap、Open Graph 和 favicon 已在生产域名验证。
+- [ ] canonical、Open Graph、结构化数据和 favicon 已在生产域名验证。

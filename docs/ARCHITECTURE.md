@@ -38,7 +38,7 @@ Python 仅在内容编辑阶段运行，不进入线上请求链路。
 - 四个详情页的 nav、资源引用和 footer 重复。
 - 项目数据通过字符串插入 `innerHTML`，没有清理或上下文转义。
 - 数据请求错误没有传递到 UI，`initLanguage()` 和项目加载也没有统一启动状态。
-- Marked 和 Font Awesome 使用外部 CDN。
+- 历史版本使用 Marked 和 Font Awesome CDN；当前版本已移除运行时 CDN 请求。Markdown 解析器保存在 `assets/vendor/marked/`，实际使用的图标则以独立 SVG 保存在 `assets/icons/`，不再加载图标字体。
 - 没有构建、测试、格式化、链接检查或部署前门禁。
 
 ## 3. 目标目录
@@ -46,7 +46,7 @@ Python 仅在内容编辑阶段运行，不进入线上请求链路。
 ```text
 portfolio/
 ├── index.html
-├── project.html                    # 推荐：通用详情页，?id=<project-id>
+├── pages/project.html              # 推荐：通用详情页，?id=<project-id>
 ├── assets/
 │   ├── css/
 │   │   ├── tokens.css              # 颜色、字号、间距、圆角
@@ -91,7 +91,7 @@ portfolio/
 └── docs/
 ```
 
-如果必须保留现有 `pages/projects/project1.html` URL，可由 Python 自动生成兼容壳；新项目优先使用 `project.html?id=...`，避免继续复制 HTML。
+如果必须保留现有 `pages/projects/project1.html` URL，可由 Python 自动生成兼容壳；新项目优先使用 `pages/project.html?id=...`，避免继续复制 HTML。
 
 ## 4. 数据架构
 
@@ -100,6 +100,8 @@ portfolio/
 - `site.json`：站点级个人信息、时间线、技能、联系、简历链接。
 - `projects.json`：项目列表和详情内容。
 - `lang/*.json`：只保留组件级通用界面文案；不保存项目正文。
+
+当前实现还生成 `site.json`，其中包含 `site`、`profile`、`education`、`workExperience`、`publications`、`awards`、`resume`、`timeline`、`techStack` 和 `contacts`。`site` 保存双语网站名称、作者、版权文字及最后更新日期，`profile` 表达全站身份信息；论文必须进入 `publications`。所有履历条目的日期均保存为 `{start, end?}`，由前端按语言格式化。未确认资料应使用明确的 Test 占位文字。
 - CSS 和 JS 不保存业务文本。
 
 ### 4.2 推荐项目 schema
@@ -263,7 +265,7 @@ python portfolio.py preview --port 8000
 ### 6.3 安全边界
 
 - 纯文本一律用 `textContent`。
-- Markdown 仅用于明确允许的字段，渲染后经过 DOMPurify 等白名单清理。
+- 所有面向访客显示的自定义文字统一视为 Markdown：标题、标签和按钮使用行内模式，正文使用块级 GitHub Flavored Markdown。行内扩展将 `_文字_` 重载为 `<u>` 下划线，`*文字*` 保持标准斜体。前端统一经过本地 Markdown 模块解析，并移除脚本、事件属性和危险协议；邮箱、URL、日期、资源路径及图标名称保持结构化数据语义，不参与 Markdown 解析。
 - URL 只允许 `https:`、`mailto:` 和站内相对路径；禁止 `javascript:` 和数据 URL。
 - Python 生成器做第一层校验，浏览器仍需做防御性校验。
 
@@ -322,7 +324,7 @@ format/lint
 2. 实现 Python models、builder、validator 和当前 schema serializer。
 3. 使用根目录 `portfolio.py` 载入现有项目数据，并对生成结果做快照测试。
 4. 引入 blocks v2 和 block renderer，逐个迁移项目。
-5. 增加通用 `project.html`；保留旧 URL 兼容壳或重定向页。
+5. 增加通用 `pages/project.html`；保留旧 URL 兼容壳或重定向页。
 6. 拆分 CSS、补齐状态/无障碍/SEO。
 7. 增加 CI 后再允许非技术维护者使用生成流程。
 

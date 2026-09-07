@@ -1,9 +1,12 @@
 {
   "nav": {
-    "projects": "Portfolio",
+    "projects": "Project",
+    "portfolio": "Portfolio",
+    "project": "Project",
+    "publications": "Publications",
     "timeline": "Timeline",
     "skills": "Tech Stack",
-    "contact": "Contact",
+    "resume": "CV",
     "openMenu": "Open navigation",
     "toggleLanguage": "Toggle language",
     "toggleTheme": "Toggle color theme"
@@ -11,30 +14,39 @@
   "intro": {
     "title": "Hello, I'm Lain",
     "desc": "Robot development enthusiast, Junior Year Student.<br>Interning at a Humanoid Robot Company.<br>Focus on MCU & Linux development, Motion Control, RL, and Perception.<br>Email: lain-ego@qq.com",
-    "viewProjects": "View Projects",
-    "contact": "Contact Me"
+    "greeting": "Hello, I'm {name}",
+    "downloadCv": "Download CV"
   },
   "projects": {
-    "title": "My Projects",
+    "title": "Projects",
     "imgAlt": "Project image",
     "viewDetail": "View Details",
     "notFound": "Project not found",
     "back": "Back to Projects",
+    "previous": "Previous",
+    "next": "Next",
+    "navigation": "Project navigation",
     "loading": "Loading projects…",
     "loadError": "Projects could not be loaded.",
     "retry": "Retry",
     "draft": "Draft project — content is pending confirmation.",
     "empty": "No projects published yet."
   },
+  "publications": { "title": "Publications", "journal": "Journal Articles", "conference": "Conference Papers", "empty": "No publications published yet." },
   "timeline": {
-    "title": "Timeline"
+    "title": "Timeline",
+    "showMore": "Show more",
+    "showLess": "Show less"
   },
   "skills": {
     "title": "Tech Stack"
   },
-  "contact": {
-    "title": "Let's Connect"
-  },
+  "education": { "title": "Education" },
+  "work": { "title": "Work Experience" },
+  "publications": { "title": "Publications", "journal": "Journal Articles", "conference": "Conference Papers" },
+  "awards": { "title": "Awards & Scholarships" },
+  "resume": { "title": "CV", "view": "View CV", "back": "Back to Home", "loading": "Loading CV…", "error": "CV data could not be loaded." },
+  "content": { "placeholder": "Test content" },
   "projectLinks": {
     "github": "Code",
     "techDoc": "Docs",

@@ -1,219 +1,370 @@
 {
   "schemaVersion": 1,
+  "site": {
+    "name": {
+      "zh": "郭瀚丞 个人主页",
+      "en": "Hancheng Guo Homepage"
+    },
+    "author": {
+      "zh": "郭瀚丞",
+      "en": "Hancheng Guo"
+    },
+    "copyrightText": {
+      "zh": "由 [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io) 提供支持",
+      "en": "Powered by [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io)"
+    },
+    "lastUpdateDate": "2026-09-07"
+  },
+  "profile": {
+    "name": {
+      "zh": "郭瀚丞",
+      "en": "Hancheng Guo"
+    },
+    "summary": {
+      "zh": "机器人开发爱好者，大三在读，目前于人形机器人公司实习。专注于 MCU 与 Linux 开发、运动控制、强化学习和机器人感知。",
+      "en": "Robot development enthusiast and junior-year student. Interning at a humanoid robot company, with a focus on MCU and Linux development, motion control, reinforcement learning, and robot perception."
+    },
+    "email": "hc.guo.tect@gmail.com"
+  },
+  "education": [
+    {
+      "date": {
+        "start": "2022-09",
+        "end": "2026-06"
+      },
+      "institution": {
+        "zh": "Education Test",
+        "en": "Education Test"
+      },
+      "degree": {
+        "zh": "Education Test",
+        "en": "Education Test"
+      },
+      "status": "test"
+    }
+  ],
+  "workExperience": [
+    {
+      "date": {
+        "start": "2025-10",
+        "end": "2026-03"
+      },
+      "title": {
+        "zh": "Work Experience Test",
+        "en": "Work Experience Test"
+      },
+      "organization": {
+        "zh": "Work Experience Test",
+        "en": "Work Experience Test"
+      },
+      "summary": {
+        "zh": "Work Experience Test",
+        "en": "Work Experience Test"
+      }
+    }
+  ],
+  "publications": {
+    "journalArticles": [
+      {
+        "date": {
+          "start": "2025-04"
+        },
+        "title": {
+          "zh": "[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
+          "en": "[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)"
+        },
+        "venue": {
+          "zh": "**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, \"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi,\" in *IEEE Transactions on Aerospace and Electronic Systems*, vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.",
+          "en": "H. Guo, Z. Chen, M. Huang and X. Y. Zhang, \"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi,\" in IEEE Transactions on Aerospace and Electronic Systems, vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838."
+        }
+      }
+    ],
+    "conferencePapers": [
+      {
+        "date": {
+          "start": "2025-02"
+        },
+        "title": {
+          "zh": "[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
+          "en": "[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)"
+        },
+        "venue": {
+          "zh": "Z. Chen, **H. Guo** and X. Zhang, \"Children Presence Detection System in Vehicles via Wi-Fi Devices,\" *2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, 2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443.",
+          "en": "Z. Chen, **H. Guo** and X. Zhang, \"Children Presence Detection System in Vehicles via Wi-Fi Devices,\" *2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, 2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443."
+        }
+      },
+      {
+        "date": {
+          "start": "2025-02"
+        },
+        "title": {
+          "zh": "[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
+          "en": "[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)"
+        },
+        "venue": {
+          "zh": "Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, \"A WiPD-DL Network for in-Vehicle Secure Channel Detection,\" *2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, 2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649.",
+          "en": "Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, \"A WiPD-DL Network for in-Vehicle Secure Channel Detection,\" *2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, 2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649."
+        }
+      }
+    ]
+  },
+  "awards": [
+    {
+      "date": {
+        "start": "2025-08"
+      },
+      "title": {
+        "zh": "Award Test",
+        "en": "Award Test"
+      },
+      "status": "test"
+    }
+  ],
+  "resume": {
+    "label": {
+      "zh": "下载简历",
+      "en": "Download CV"
+    },
+    "url": {
+      "zh": "assets/documents/简历测试.pdf",
+      "en": "assets/documents/CVTest.pdf"
+    },
+    "status": "test"
+  },
   "timeline": [
     {
       "date": {
-        "en": "2024-05",
-        "zh": "2024-05"
+        "start": "2024-05"
       },
       "title": {
-        "en": "Open Source SliverWolf Desktop Quadruped",
-        "zh": "开源 SliverWolf 桌面四足"
+        "zh": "开源 SliverWolf 桌面四足",
+        "en": "Open Source SliverWolf Desktop Quadruped"
       },
       "description": {
-        "en": "Released SliverWolf, a desktop-level serial quadruped robot featuring voice control and robotic arm collaborative capabilities.",
-        "zh": "发布 SliverWolf，一款具备语音控制与机械臂协同作业能力的桌面级串联四足机器人。"
+        "zh": "发布具备语音控制与机械臂协同作业能力的桌面级串联四足机器人 SliverWolf。",
+        "en": "Released SliverWolf, a desktop serial quadruped with voice control and robotic-arm collaboration."
       }
     },
     {
       "date": {
-        "en": "2024-07",
-        "zh": "2024-07"
+        "start": "2024-07"
       },
       "title": {
-        "en": "2024 ROBOCON National Competition",
-        "zh": "2024ROBOCON全国赛"
+        "zh": "2024 ROBOCON 全国赛",
+        "en": "2024 ROBOCON National Competition"
       },
       "description": {
-        "en": "Developed the embedded control system for the R1 robot based on FreeRTOS, achieving ±5mm positioning accuracy, ball launching, and gripper functionalities.",
-        "zh": "基于FreeRTOS完成R1机器人嵌入式控制系统开发，实现±5mm定位精度，球体发射、夹爪夹取功能。"
+        "zh": "基于 FreeRTOS 完成 R1 机器人嵌入式控制系统开发，实现 ±5 mm 定位精度、球体发射和夹爪夹取功能。",
+        "en": "Developed the FreeRTOS embedded control system for the R1 robot,\nachieving ±5 mm positioning accuracy, ball launching, and gripper functions."
       }
     },
     {
       "date": {
-        "en": "2024-08",
-        "zh": "2024-08"
+        "start": "2024-08"
       },
       "title": {
-        "en": "2024 Fujian Undergraduate Electronics Design Contest",
-        "zh": "2024福建省大学生电子设计大赛"
+        "zh": "2024 福建省大学生电子设计大赛",
+        "en": "2024 Fujian Undergraduate Electronics Design Contest"
       },
       "description": {
-        "en": "Developed an autonomous driving car system based on the MSPM0G3507, qualifying for the provincial testing stage.",
-        "zh": "基于MSPM0G3507开发自动驾驶小车系统，进入省测。"
+        "zh": "基于 MSPM0G3507 开发自动驾驶小车系统并进入省级测试阶段。",
+        "en": "Developed an MSPM0G3507-based autonomous vehicle system and qualified for provincial testing."
       }
     },
     {
       "date": {
-        "en": "2024-11",
-        "zh": "2024-11"
+        "start": "2024-11"
       },
       "title": {
-        "en": "Fujian Intelligent Marine Equipment Design Competition",
-        "zh": "福建省大学生智能海洋装备设计制作大赛"
+        "zh": "福建省大学生智能海洋装备设计制作大赛",
+        "en": "Fujian Intelligent Marine Equipment Design Competition"
       },
       "description": {
-        "en": "Led the development of the control system for a buoyancy-controlled multi-DOF lobster underwater robot, winning the Grand Prize.",
-        "zh": "负责开发浮力可控多自由度龙虾水下机器人的控制系统，获特等奖。"
+        "zh": "负责浮力可控多自由度龙虾水下机器人的控制系统开发，获特等奖。",
+        "en": "Led control-system development for a buoyancy-controlled multi-DOF lobster robot, winning the Special Prize."
       }
     },
     {
       "date": {
-        "en": "2024-12",
-        "zh": "2024-12"
+        "start": "2024-12"
       },
       "title": {
-        "en": "2024 World Marine Equipment Conference",
-        "zh": "2024 世界航海装备大会"
+        "zh": "2024 世界航海装备大会",
+        "en": "2024 World Marine Equipment Conference"
       },
       "description": {
-        "en": "Represented Fujian University of Technology as an exhibitor, showcasing the bionic Boston Lobster robot; covered by media outlets including Xinhua News Agency.",
-        "zh": "代表福建理工大学参展，展示仿生波士顿大龙虾机器人，获新华社等媒体报道。"
+        "zh": "代表福建理工大学参展并展示仿生波士顿大龙虾机器人，获新华社等媒体报道。",
+        "en": "Represented Fujian University of Technology and exhibited the bionic Boston lobster robot,\nreceiving national media coverage."
       }
     },
     {
       "date": {
-        "en": "2025-07",
-        "zh": "2025-07"
+        "start": "2025-07"
       },
       "title": {
-        "en": "2025 ROBOCON National Competition",
-        "zh": "2025 ROBOCON 全国赛"
+        "zh": "2025 ROBOCON 全国赛",
+        "en": "2025 ROBOCON National Competition"
       },
       "description": {
-        "en": "Responsible for full-stack R&D of the legged robot. Ranked 30th nationally in the Sprint Race, 31st in the Obstacle Race, and 34th in the Cross-Country Race, securing three National Second Prizes.",
-        "zh": "负责足式机器人全栈研发。获足式机器人竞速赛全国30名、障碍赛31名、越野赛34名，共三项国二佳绩。"
+        "zh": "负责足式机器人全栈研发，在竞速、障碍和越野赛中获得三项国家二等奖。",
+        "en": "Led full-stack development of the quadruped robot and earned three National Second Prizes."
       }
     },
     {
       "date": {
-        "en": "2025-08",
-        "zh": "2025-08"
+        "start": "2025-08"
       },
       "title": {
-        "en": "2025 National Undergraduate Electronics Design Contest",
-        "zh": "2025全国大学生电子设计大赛"
+        "zh": "2025 全国大学生电子设计大赛",
+        "en": "2025 National Undergraduate Electronics Design Contest"
       },
       "description": {
-        "en": "Responsible for the hardware design and fabrication of the power meter for an automatic ranging system, winning the National Second Prize.",
-        "zh": "负责自动测距系统的功率计硬件设计与制作，获全国二等奖。"
+        "zh": "负责自动测距系统功率计的硬件设计与制作，获全国二等奖。",
+        "en": "Designed and fabricated the power-meter hardware for an automatic ranging system, winning the National Second Prize."
       }
     },
     {
       "date": {
-        "en": "2025-09",
-        "zh": "2025-09"
+        "start": "2025-09"
       },
       "title": {
-        "en": "Open Source BRS Parallel Quadruped Robot",
-        "zh": "开源 BRS 并联四足机器人"
+        "zh": "开源 BRS 并联四足机器人",
+        "en": "Open Source BRS Parallel Quadruped Robot"
       },
       "description": {
-        "en": "Open-sourced the mechanical structure and control code of the BRS parallel quadruped robot on GitHub.",
-        "zh": "在GitHub开源BRS并联四足机器人的机械结构与控制代码。"
+        "zh": "在 GitHub 开源 BRS 并联四足机器人的机械结构与控制代码。",
+        "en": "Open-sourced the mechanical structure and control code of the BRS parallel quadruped robot on GitHub."
       }
     },
     {
       "date": {
-        "en": "2025-10 to 2026-03",
-        "zh": "2025-10至2026-3"
+        "start": "2025-10",
+        "end": "2026-03"
       },
       "title": {
-        "en": "Internship at Gaoqing Electromechanical",
-        "zh": "高擎机电激情实习中"
+        "zh": "高擎机电实习",
+        "en": "Internship at Gaoqing Electromechanical"
       },
       "description": {
-        "en": "Responsible for mechanical design, control algorithm development, and system integration testing for the HTDW4438 bionic quadruped robot (both open-source and commercial versions).",
-        "zh": "负责HTDW4438仿生四足机器人的机械设计、控制算法开发与系统集成测试,分为开源版本与产品化版本"
+        "zh": "负责 HTDW4438 仿生四足机器人的机械设计、控制算法开发与系统集成测试。",
+        "en": "Responsible for mechanical design, control-algorithm development,\nand system-integration testing for the HTDW4438 bionic quadruped robot."
       }
     }
   ],
   "techStack": [
     {
       "title": {
-        "en": "Embedded",
-        "zh": "嵌入式开发"
+        "zh": "嵌入式开发",
+        "en": "Embedded"
       },
       "items": [
         {
-          "name": "STM32",
-          "icon": "fas fa-microchip"
+          "name": {
+            "zh": "STM32",
+            "en": "STM32"
+          }
         },
         {
-          "name": "ESP32",
-          "icon": "fas fa-wifi"
+          "name": {
+            "zh": "ESP32",
+            "en": "ESP32"
+          }
         },
         {
-          "name": "FreeRTOS",
-          "icon": "fas fa-cogs"
+          "name": {
+            "zh": "FreeRTOS",
+            "en": "FreeRTOS"
+          }
         },
         {
-          "name": "C/C++",
-          "icon": "fas fa-code"
+          "name": {
+            "zh": "C/C++",
+            "en": "C/C++"
+          }
         }
       ]
     },
     {
       "title": {
-        "en": "Robotics",
-        "zh": "机器人技术"
+        "zh": "机器人技术",
+        "en": "Robotics"
       },
       "items": [
         {
-          "name": "ROS/ROS2",
-          "icon": "fas fa-robot"
+          "name": {
+            "zh": "ROS/ROS2",
+            "en": "ROS/ROS2"
+          }
         },
         {
-          "name": "Gazebo",
-          "icon": "fas fa-cube"
+          "name": {
+            "zh": "Gazebo",
+            "en": "Gazebo"
+          }
         },
         {
-          "name": "Motion Control",
-          "icon": "fas fa-wave-square"
+          "name": {
+            "zh": "运动控制",
+            "en": "Motion Control"
+          }
         },
         {
-          "name": "RL",
-          "icon": "fas fa-brain"
+          "name": {
+            "zh": "强化学习",
+            "en": "Reinforcement Learning"
+          }
         }
       ]
     },
     {
       "title": {
-        "en": "Hardware",
-        "zh": "硬件设计"
+        "zh": "硬件设计",
+        "en": "Hardware"
       },
       "items": [
         {
-          "name": "Altium",
-          "icon": "fas fa-pencil-ruler"
+          "name": {
+            "zh": "Altium",
+            "en": "Altium"
+          }
         },
         {
-          "name": "SolidWorks",
-          "icon": "fas fa-drafting-compass"
+          "name": {
+            "zh": "SolidWorks",
+            "en": "SolidWorks"
+          }
         },
         {
-          "name": "PCB",
-          "icon": "fas fa-layer-group"
+          "name": {
+            "zh": "PCB",
+            "en": "PCB"
+          }
         }
       ]
     },
     {
       "title": {
-        "en": "Software",
-        "zh": "软件与工具"
+        "zh": "软件与工具",
+        "en": "Software"
       },
       "items": [
         {
-          "name": "Linux",
-          "icon": "fab fa-linux"
+          "name": {
+            "zh": "Linux",
+            "en": "Linux"
+          }
         },
         {
-          "name": "Python",
-          "icon": "fab fa-python"
+          "name": {
+            "zh": "Python",
+            "en": "Python"
+          }
         },
         {
-          "name": "Git",
-          "icon": "fab fa-git-alt"
+          "name": {
+            "zh": "Git",
+            "en": "Git"
+          }
         }
       ]
     }
@@ -221,35 +372,11 @@
   "contacts": [
     {
       "label": {
-        "en": "Bilibili",
-        "zh": "哔哩哔哩"
+        "zh": "代码仓库",
+        "en": "GitHub"
       },
-      "icon": "fab fa-bilibili",
-      "url": "https://space.bilibili.com/385516781/upload/video"
-    },
-    {
-      "label": {
-        "en": "GitHub",
-        "zh": "代码仓库"
-      },
-      "icon": "fab fa-github",
-      "url": "https://github.com/Lain-Ego0"
-    },
-    {
-      "label": {
-        "en": "Twitter",
-        "zh": "推特"
-      },
-      "icon": "fab fa-twitter",
-      "url": "https://x.com/Lain_Ego0"
-    },
-    {
-      "label": {
-        "en": "Zhihu",
-        "zh": "知乎"
-      },
-      "icon": "fab fa-zhihu",
-      "url": "https://www.zhihu.com/people/hua-99-50-21"
+      "icon": "github",
+      "url": "https://github.com/Hancheng-Guo"
     }
   ]
 }

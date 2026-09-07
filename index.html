@@ -11,6 +11,7 @@
   <meta property="og:url" content="https://hancheng-guo.github.io/">
   <meta property="og:image" content="https://hancheng-guo.github.io/assets/images/Portfolio-01.png">
   <link rel="canonical" href="https://hancheng-guo.github.io/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Lain-Ego","url":"https://hancheng-guo.github.io/","sameAs":["https://github.com/Lain-Ego0"]}</script>
   <link rel="icon" href="assets/images/Avatar.jpg">
   
   <script>
@@ -18,12 +19,9 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body id="top">
   <nav>
     <div class="container nav-container">
       <a href="#" class="logo">
@@ -34,17 +32,15 @@
       <div class="nav-actions">
         <button class="control-btn menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation" data-i18n-aria-label="nav.openMenu">☰</button>
         <div class="nav-links" id="primary-navigation">
-          <a href="#projects" data-i18n="nav.projects">Projects</a>
-          <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
-          <a href="#skills" data-i18n="nav.skills">Stack</a>
-          <a href="#contact" data-i18n="nav.contact">Contact</a>
+          <a href="#top" data-i18n="nav.portfolio">Portfolio</a><a href="#projects" data-i18n="nav.project">Project</a><a href="#publications" data-i18n="nav.publications">Publications</a><a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+          <a href="pages/cv.html" data-i18n="nav.resume">CV</a>
         </div>
         
         <div class="nav-controls">
           <button class="control-btn lang-toggle" aria-label="Toggle language" data-i18n-aria-label="nav.toggleLanguage">中文</button>
           <button class="control-btn theme-toggle" aria-label="Toggle color theme" data-i18n-aria-label="nav.toggleTheme">
-            <i class="fas fa-sun sun-icon"></i>
-            <i class="fas fa-moon moon-icon"></i>
+            <span class="svg-icon icon-sun sun-icon" aria-hidden="true"></span>
+            <span class="svg-icon icon-moon moon-icon" aria-hidden="true"></span>
           </button>
         </div>
       </div>
@@ -56,20 +52,32 @@
     <div class="container flex-center column">
       <div class="avatar-container">
         <div class="avatar-glow"></div>
+        <img class="avatar" src="assets/images/Avatar.jpg" alt="Lain-Ego profile portrait">
       </div>
-      <h1 class="gradient-text" data-i18n="intro.title">Hello, I'm Lain-Ego</h1>
-      <p class="subtitle" data-i18n="intro.desc">...</p>
-      <div class="intro-actions">
-        <a class="publish-link primary-action" href="#projects" data-i18n="intro.viewProjects">View Projects</a>
-        <a class="publish-link" href="#contact" data-i18n="intro.contact">Contact Me</a>
+      <h1 class="gradient-text hero-title" data-i18n="intro.title">Hello, I'm Lain-Ego</h1>
+      <p class="subtitle hero-summary" data-i18n="intro.desc">...</p>
+      <div class="hero-action-row">
+        <div class="intro-actions"></div>
+        <div id="contact" class="contact-links hero-contact-links" aria-label="Contact links"></div>
       </div>
     </div>
   </section>
 
   <section id="projects" class="section-padding">
     <div class="container">
-      <h2 data-i18n="projects.title">My Projects</h2>
+      <h2 data-i18n="projects.title">Projects</h2>
       <div class="projects-grid"></div>
+    </div>
+  </section>
+  <section id="publications" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="publications.title">Publications</h2>
+      <div class="narrative-container">
+        <h3 data-i18n="publications.journal">Journal Articles</h3>
+        <div class="content-list home-journals"></div>
+        <h3 data-i18n="publications.conference">Conference Papers</h3>
+        <div class="content-list home-conferences"></div>
+      </div>
     </div>
   </section>
 
@@ -77,24 +85,11 @@
     <div class="container">
       <h2 data-i18n="timeline.title">Timeline</h2>
       <div class="timeline-container"></div>
+      <button class="control-btn timeline-toggle" type="button" aria-expanded="false" data-i18n="timeline.showMore">Show more</button>
     </div>
   </section>
 
-  <section id="skills" class="section-padding">
-    <div class="container">
-      <h2 data-i18n="skills.title">Tech Stack</h2>
-      <div class="skills-wrapper"></div>
-    </div>
-  </section>
-
-  <section id="contact" class="contact section-padding">
-    <div class="container">
-      <h2 data-i18n="contact.title">Let's Connect</h2> 
-      <div class="contact-links"></div>
-    </div>
-  </section>
-
-  <footer data-i18n="footer.copyright">© 2025 Lain-Ego. All rights reserved.</footer>
+  <footer><span class="footer-copyright">© 2026 Lain-Ego, Powered by <a href="https://github.com/Lain-Ego0/Lain-Ego0.github.io"><strong>Lain-Ego0.github.io</strong></a></span><span class="footer-updated">Site last updated Sep 7, 2026</span></footer>
 
   <script type="module" src="assets/js/app.js"></script>
 </body>

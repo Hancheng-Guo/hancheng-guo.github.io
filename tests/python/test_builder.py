@@ -34,12 +34,19 @@ class BuilderTests(unittest.TestCase):
   def test_generated_page_can_be_built_and_cleaned(self):
     import tempfile
     with tempfile.TemporaryDirectory() as folder:
-      portfolio = Portfolio()
+      portfolio = Portfolio(
+        copyright_text={
+          "en": "Powered by [**Example**](https://example.com)",
+          "zh": "由 [**Example**](https://example.com) 提供支持",
+        },
+      )
       project = portfolio.add_project(project_id="demo", title="Demo", summary="Summary", thumbnail="assets/images/Avatar.jpg")
       project.add_page(template="minimal").add_paragraph("Body")
       pages = portfolio.write_pages(root=folder)
       self.assertEqual(len(pages), 1)
-      self.assertIn('data-project-id="demo"', pages[0].read_text(encoding="utf-8"))
+      generated = pages[0].read_text(encoding="utf-8")
+      self.assertIn('data-project-id="demo"', generated)
+      self.assertIn('<a href="https://example.com"><strong>Example</strong></a>', generated)
       self.assertEqual(clean_generated_pages(folder), pages)
       self.assertFalse(pages[0].exists())
 
@@ -106,5 +113,24 @@ class BuilderTests(unittest.TestCase):
       bad = Portfolio(); bad.add_project(project_id="demo", title="Demo", summary="Summary", thumbnail="missing.png")
       with self.assertRaises(ValueError): bad.write(target, root=folder)
       self.assertEqual(target.read_text(encoding="utf-8"), "original")
+
+  def test_site_identity_and_dates_are_structured(self):
+    portfolio = Portfolio(
+      site_name={"en": "Example Portfolio", "zh": "示例作品集"},
+      author={"en": "Example", "zh": "示例"},
+      copyright_text={"en": "All rights reserved.", "zh": "保留所有权利。"},
+      last_update_date="2026-09-07",
+    )
+    portfolio.add_timeline_event(date={"start": "2025-01", "end": "2025-03"}, title="Event", description="Description")
+    portfolio.add_education(date="2024-09", institution="School", degree="Degree")
+    site = portfolio.site_document()
+    self.assertEqual(site["site"]["author"]["zh"], "示例")
+    self.assertEqual(site["site"]["lastUpdateDate"], "2026-09-07")
+    self.assertEqual(site["timeline"][0]["date"], {"start": "2025-01", "end": "2025-03"})
+    self.assertEqual(site["education"][0]["date"], {"start": "2024-09"})
+    with self.assertRaises(ValueError):
+      portfolio.add_award(date="September 2025", title="Award")
+    with self.assertRaises(ValueError):
+      Portfolio(last_update_date="2026-02-30").site_document()
 
 if __name__ == '__main__': unittest.main()

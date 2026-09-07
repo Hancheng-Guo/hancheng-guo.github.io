@@ -214,3 +214,74 @@ python -m unittest discover -s tests/python -v
 - `assets/data/projects.json`：网页实际读取的生成结果；请勿手工修改，下一次构建会覆盖它。
 - `assets/images/`：项目图片。
 - `docs/PYTHON_GUIDE.md`：本教程。
+
+## 10. 申请资料与简历模块
+
+站点级资料同样写在 `portfolio.py`：`set_profile()` 保存姓名、简介、地点和联系方式；工作经历使用 `add_work_experience()`，论文使用 `add_publication(publication_type="journal"|"conference")`，奖项使用 `add_award()`。这些数据同时供首页一级板块和 `pages/cv.html` 使用。研究类项目详情仍可使用 `project.add_page(template="research")` 创建，它与站点级资料字段无关。
+
+首页 Portfolio 与 CV 页左侧的个人信息共用 `set_profile()` 数据。推荐至少传入 `name`、`summary` 和 `email`，也可以传入 `location`。如需在首页显示 **Download CV** 按钮，为 `set_resume()` 分别提供中英文简历文件路径；未提供当前语言的 `url` 时不会生成按钮：
+
+```python
+portfolio.set_resume(
+    label=dict(
+        zh="下载简历",
+        en="Download CV",
+    ),
+    url=dict(
+        zh="assets/documents/简历测试.pdf",
+        en="assets/documents/CVTest.pdf",
+    ),
+)
+```
+
+网站名称、作者和页脚文字在创建 `Portfolio` 时设置，并为所有显示文字提供中英文。所有显示文字都可以使用 Markdown；标题、标签等采用行内 Markdown，`add_paragraph()` 正文采用完整的 GitHub Flavored Markdown：
+
+```python
+portfolio = Portfolio(
+    site_name=dict(
+        zh="示例作品集",
+        en="Example Portfolio",
+    ),
+    author=dict(
+        zh="示例名称",
+        en="Example Name",
+    ),
+    copyright_text=dict(
+        zh="保留所有权利。",
+        en="All rights reserved.",
+    ),
+    last_update_date="2026-09-07",
+)
+```
+
+例如：
+
+```python
+page.add_paragraph(
+    text=dict(
+        zh=(
+            "这是 **加粗内容**，也可以添加 [项目链接](https://example.com)。\n\n"
+            "- 第一项\n"
+            "- 第二项"
+        ),
+        en=(
+            "This is **bold**, with a [project link](https://example.com).\n\n"
+            "- First item\n"
+            "- Second item"
+        ),
+    ),
+)
+```
+
+项目额外约定 `_文字_` 表示下划线；标准斜体请写成 `*文字*`，`__文字__` 和 `**文字**` 均仍表示粗体。邮箱、网址、日期、图片路径和图标名称属于结构化参数，不按 Markdown 解析。联系方式当前可使用本地 SVG 图标名称 `github`。
+
+Education、Work Experience、Publications、Awards & Scholarships 和 Timeline 的每一项都必须提供结构化日期。单月使用 `date="YYYY-MM"`；时间段使用：
+
+```python
+date=dict(
+    start="2025-10",
+    end="2026-03",
+)
+```
+
+构建器会拒绝非法月份或结束时间早于开始时间的输入。网页会根据当前语言将日期格式化为 `Oct 2025 – Mar 2026` 或 `2025年10月 – 2026年3月`。
