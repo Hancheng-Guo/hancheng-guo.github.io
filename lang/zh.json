@@ -50,7 +50,8 @@
   "projectLinks": {
     "github": "开源代码",
     "techDoc": "技术文档",
-    "demo": "演示视频"
+    "bilibili": "哔哩哔哩",
+    "youtube": "YouTube"
   },
   "projectImages": {
     "0": "项目展示图",

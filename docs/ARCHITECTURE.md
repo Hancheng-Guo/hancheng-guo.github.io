@@ -11,10 +11,10 @@
 portfolio_content 生成器 ── 校验 Schema / 路径 / URL / 多语言
         │
         ▼
-标准化 JSON + 必要的静态页面壳
+标准化 JSON + 完整静态首页、CV 页与项目详情页
         │
         ▼
-浏览器 ES Modules ── 渲染首页 / 详情页 / 国际化 / 主题 / 灯箱
+浏览器 ES Modules ── 渐进增强国际化 / 主题 / 导航 / 灯箱
         │
         ▼
 GitHub Pages 静态发布
@@ -46,7 +46,7 @@ Python 仅在内容编辑阶段运行，不进入线上请求链路。
 ```text
 portfolio/
 ├── index.html
-├── pages/project.html              # 推荐：通用详情页，?id=<project-id>
+├── pages/projects/*.html           # Python 生成的完整静态详情页
 ├── assets/
 │   ├── css/
 │   │   ├── tokens.css              # 颜色、字号、间距、圆角
@@ -91,7 +91,7 @@ portfolio/
 └── docs/
 ```
 
-如果必须保留现有 `pages/projects/project1.html` URL，可由 Python 自动生成兼容壳；新项目优先使用 `pages/project.html?id=...`，避免继续复制 HTML。
+每个项目固定生成 `pages/projects/<project-id>.html`。这些页面由同一 Python renderer 生成，保留稳定 URL，但不存在多份手工维护的 HTML 正文。
 
 ## 4. 数据架构
 
@@ -190,10 +190,13 @@ class ProjectPage:
     def add_quote(self, text, *, source=None): ...
     def add_metrics(self, items): ...
     def add_video(self, url, *, poster=None, title=None): ...
-    def add_link(self, link_type, url, *, label=None): ...
+    def add_github_link(self, url, *, label=None): ...
+    def add_doc_link(self, url, *, label=None): ...
+    def add_bilibili_link(self, url, *, label=None): ...
+    def add_youtube_link(self, url, *, label=None): ...
 ```
 
-所有添加函数返回 `self`，允许链式调用。传入文本接受 `str` 或 `{"en": str, "zh": str}`；内部统一转换为多语言模型。
+所有添加函数返回 `self`，允许链式调用。传入文本接受 `str` 或 `{"en": str, "zh": str}`；内部统一转换为多语言模型。四个类型化链接函数的可选 `label` 会原样进入项目数据，并由静态和运行时渲染器按当前语言安全解析 Markdown。
 
 ### 5.2 模板机制
 
@@ -247,7 +250,7 @@ python portfolio.py preview --port 8000
   → 加载界面语言和 site.json
   → 根据 page type 选择页面控制器
   → 加载项目数据
-  → 渲染 loading / content / empty / error
+  → 保留 Python 已生成的静态内容并用当前语言数据增强 / error
   → 绑定可访问交互
 ```
 
@@ -276,7 +279,7 @@ python portfolio.py preview --port 8000
 ```text
 Lain-Ego                         EN / 中    Theme
 
-← Back to Projects
+< Back to Projects
 Project title
 ```
 
@@ -324,7 +327,7 @@ format/lint
 2. 实现 Python models、builder、validator 和当前 schema serializer。
 3. 使用根目录 `portfolio.py` 载入现有项目数据，并对生成结果做快照测试。
 4. 引入 blocks v2 和 block renderer，逐个迁移项目。
-5. 增加通用 `pages/project.html`；保留旧 URL 兼容壳或重定向页。
+5. 为所有项目生成完整的 `pages/projects/<project-id>.html` 静态详情页。
 6. 拆分 CSS、补齐状态/无障碍/SEO。
 7. 增加 CI 后再允许非技术维护者使用生成流程。
 

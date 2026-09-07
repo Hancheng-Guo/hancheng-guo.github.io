@@ -66,24 +66,18 @@
   "publications": {
     "journalArticles": [
       {
-        "date": {
-          "start": "2025-04"
-        },
         "title": {
           "zh": "[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
           "en": "[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)"
         },
         "venue": {
           "zh": "**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, \"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi,\" in *IEEE Transactions on Aerospace and Electronic Systems*, vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.",
-          "en": "H. Guo, Z. Chen, M. Huang and X. Y. Zhang, \"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi,\" in IEEE Transactions on Aerospace and Electronic Systems, vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838."
+          "en": "**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, \"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi,\" in *IEEE Transactions on Aerospace and Electronic Systems*, vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838."
         }
       }
     ],
     "conferencePapers": [
       {
-        "date": {
-          "start": "2025-02"
-        },
         "title": {
           "zh": "[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
           "en": "[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)"
@@ -94,9 +88,6 @@
         }
       },
       {
-        "date": {
-          "start": "2025-02"
-        },
         "title": {
           "zh": "[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
           "en": "[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)"

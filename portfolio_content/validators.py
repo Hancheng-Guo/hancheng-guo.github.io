@@ -6,6 +6,20 @@ import re
 
 ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 BLOCKS = {"heading", "paragraph", "image", "gallery", "list", "quote", "video", "metrics"}
+LINK_TYPES = {"github", "techDoc", "bilibili", "youtube"}
+MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
+
+
+def _date_range(report: "ValidationReport", value: object, *, field: str) -> None:
+    if not isinstance(value, dict) or not isinstance(value.get("start"), str):
+        report.errors.append(f"{field} 必须包含 start")
+        return
+    start = value["start"]
+    end = value.get("end")
+    if not MONTH.fullmatch(start) or (end is not None and (not isinstance(end, str) or not MONTH.fullmatch(end))):
+        report.errors.append(f"{field} 必须使用 YYYY-MM 格式")
+    elif end and end < start:
+        report.errors.append(f"{field}.end 不能早于 start")
 
 def _local_asset(report: "ValidationReport", value: object, *, field: str, root: Path) -> None:
     if not isinstance(value, str) or not value.strip():
@@ -83,8 +97,13 @@ def validate_document(data: dict, *, root: Path = Path(".")) -> ValidationReport
         src = thumbnail.get("src") if isinstance(thumbnail, dict) else thumbnail
         if not isinstance(src, str) or not src: report.errors.append(f"{prefix}.thumbnail.src 不能为空")
         else: _local_asset(report, src, field=f"{prefix}.thumbnail.src", root=root)
+        if project.get("date") is not None:
+            _date_range(report, project["date"], field=f"{prefix}.date")
         for link in project.get("links", []):
             url = link.get("url") if isinstance(link, dict) else None
+            link_type = link.get("type") if isinstance(link, dict) else None
+            if link_type not in LINK_TYPES:
+                report.errors.append(f"{prefix}.links 类型不支持: {link_type}")
             if not url: continue
             parsed = urlparse(url)
             if parsed.scheme not in {"https", "mailto"}: report.errors.append(f"{prefix}.links URL 仅允许 https 或 mailto: {url}")

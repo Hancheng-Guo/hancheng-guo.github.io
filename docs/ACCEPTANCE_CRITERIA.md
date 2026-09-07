@@ -21,7 +21,7 @@
 
 | ID | 验收标准 | 验证方式 |
 |---|---|---|
-| AC-NAV-001 | 所有项目详情标题上方均可见 `← Back to Projects` 或 `← 返回项目`。 | 遍历全部详情页。 |
+| AC-NAV-001 | 所有项目详情标题上方均可见 `< Back to Projects` 或 `< 返回项目`。 | 遍历全部详情页。 |
 | AC-NAV-002 | 点击返回链接进入首页并定位到 `#projects`，直接打开详情页时也成立。 | 新标签直接打开详情 URL 后点击。 |
 | AC-NAV-003 | 左上角 `Lain-Ego` 仍进入首页，且不会与返回链接视觉混淆。 | 人工交互检查。 |
 | AC-NAV-004 | 返回链接可用 Tab 聚焦、Enter 激活；其 HTML 元素为 `<a href="...">`。 | 键盘测试 + DOM 检查。 |
@@ -42,6 +42,8 @@
 | AC-PY-008 | 输出为 UTF-8，有统一缩进，无绝对文件路径，通过 JSON Schema。 | 编码、文本和 schema 测试。 |
 | AC-PY-009 | `preview` 命令启动本地服务并打印唯一访问 URL；停止命令后端口释放。 | CLI 集成测试。 |
 | AC-PY-010 | 按维护指南新增一个标准项目，从编辑开始到看到本地预览不超过 15 分钟。 | 首次使用者可用性测试。 |
+| AC-PY-011 | `build` 生成首页、CV 和项目完整静态 HTML；禁用 JavaScript 后核心内容、返回和前后项目链接仍可用，且源码不含 Loading project。 | HTML 解析 + 禁用 JavaScript E2E。 |
+| AC-PY-012 | 四个类型化链接函数分别生成 GitHub、文档、Bilibili、YouTube 图标和链接；可选双语 Markdown `label` 在静态页和语言切换后均生效。 | 单元测试 + DOM 断言。 |
 
 建议的最低自动化用例：
 
@@ -65,6 +67,8 @@ def test_all_external_urls_use_allowed_schemes(): ...
 | AC-DATA-004 | URL 为 null 或空字符串时不渲染按钮；非法协议被拒绝。 | 单元测试 + DOM 断言。 |
 | AC-DATA-005 | 数据或语言加载失败时页面显示本地化错误信息和重试按钮，不出现永久空白或未处理 Promise。 | 网络拦截 E2E + console 断言。 |
 | AC-DATA-006 | 空项目列表显示 empty state；单项目和 20 项目时布局均可用。 | fixture E2E。 |
+| AC-DATA-007 | 所有自定义显示文本（含 Publication venue）支持安全 Markdown；结构化 URL、邮箱、日期、路径和图标名不参与 Markdown。 | Markdown fixture + DOM 断言。 |
+| AC-DATA-008 | Publication 缺省日期时不报错且无日期/分隔符；Project 日期显示在卡片 footer 右侧。无日期卡片保留完全相同的隐藏 `<time>` 槽，静态页与 hydration 后的 card、info、footer 文档坐标误差不超过 0.5px。 | Python 单元测试 + Playwright 网络延迟断言。 |
 
 ## 6. 国际化与主题
 
@@ -95,13 +99,14 @@ def test_all_external_urls_use_allowed_schemes(): ...
 | AC-RWD-002 | 项目图片保持比例，灯箱关闭按钮始终可见，放大后仍可恢复和关闭。 | 移动/桌面交互测试。 |
 | AC-RWD-003 | 中英文长标题不会溢出卡片、导航和按钮。 | 长文本 fixture。 |
 | AC-MOTION-001 | 系统开启 reduced motion 后，平滑滚动、卡片位移和灯箱动画被关闭或显著减弱。 | 媒体查询 E2E。 |
+| AC-MOTION-002 | 项目卡片 hover 或 focus-visible 前后外框位置和正文可用宽度完全一致。 | `getBoundingClientRect()` 自动断言。 |
 
 ## 9. SEO、性能和可靠性
 
 | ID | 验收标准 | 验证方式 |
 |---|---|---|
 | AC-SEO-001 | 首页和每个项目页拥有非空且唯一的 title、description、canonical 和 Open Graph title/description/image。 | 静态生成检查。 |
-| AC-SEO-002 | favicon 返回 200，公开页面包含正确的 canonical、Open Graph 和结构化数据。 | HTTP/解析测试。 |
+| AC-SEO-002 | 配置 favicon 时所有公开生成页引用该资源且返回 200；不配置时不输出 favicon 标签。页面包含正确的 canonical、Open Graph 和结构化数据。 | HTTP/解析测试。 |
 | AC-SEO-003 | 页面提供合法的 Person 或 CreativeWork JSON-LD。 | Schema.org validator。 |
 | AC-PERF-001 | 移动端 Lighthouse Performance ≥ 90，Accessibility ≥ 95，Best Practices ≥ 95，SEO ≥ 95。 | CI Lighthouse，运行 3 次取中位数。 |
 | AC-PERF-002 | 所有图片有 width/height；非首屏图片设置 lazy loading；不存在未使用的超大资源进入发布产物。 | DOM/构建产物检查。 |

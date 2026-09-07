@@ -50,7 +50,8 @@
   "projectLinks": {
     "github": "Code",
     "techDoc": "Docs",
-    "demo": "Demo"
+    "bilibili": "Bilibili",
+    "youtube": "YouTube"
   },
   "projectImages": {
     "0": "Project Detail View",

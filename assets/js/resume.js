@@ -1,7 +1,7 @@
 import { clear, qs } from './modules/dom.js';
 import { formatDateRange } from './modules/date.js';
 import { currentLanguage, initLanguage, onLanguageChange, t } from './modules/i18n.js';
-import { initNavigation } from './modules/navigation.js';
+import { initNavigation, revealInitialAnchor } from './modules/navigation.js';
 import { applySiteIdentity, loadSiteData } from './modules/site-data.js';
 import { initTheme } from './modules/theme.js';
 import { markdownText, renderInline } from './modules/markdown.js';
@@ -22,7 +22,26 @@ function renderEntries(selector, entries, fields) {
     const heading = document.createElement('h3');
     renderInline(heading, localized(entry[fields[0]]) || t('content.placeholder'));
     const detail = document.createElement('p');
-    renderInline(detail, [formatDateRange(entry.date), ...fields.slice(1).map((field) => localized(entry[field]))].filter(Boolean).join(' · '));
+    const values = [];
+    const dateText = formatDateRange(entry.date);
+    if (dateText) values.push({ value: dateText, date: true });
+    fields.slice(1).forEach((field) => {
+      const value = localized(entry[field]);
+      if (value) values.push({ value, date: false });
+    });
+    values.forEach((part, index) => {
+      if (index) {
+        const separator = document.createElement('span');
+        separator.className = 'entry-separator';
+        separator.textContent = ' · ';
+        detail.appendChild(separator);
+      }
+      const element = document.createElement(part.date ? 'time' : 'span');
+      element.className = part.date ? 'entry-date' : 'entry-detail';
+      if (part.date) element.textContent = part.value;
+      else renderInline(element, part.value);
+      detail.appendChild(element);
+    });
     card.append(heading, detail);
     container.appendChild(card);
   });
@@ -108,7 +127,18 @@ function renderResume(site) {
     const heading = document.createElement('h3');
     renderInline(heading, localized(group.title));
     const detail = document.createElement('p');
-    renderInline(detail, (group.items || []).map((item) => localized(item.name)).join(' · '));
+    (group.items || []).forEach((item, index) => {
+      if (index) {
+        const separator = document.createElement('span');
+        separator.className = 'entry-separator';
+        separator.textContent = ' · ';
+        detail.appendChild(separator);
+      }
+      const value = document.createElement('span');
+      value.className = 'entry-detail';
+      renderInline(value, localized(item.name));
+      detail.appendChild(value);
+    });
     card.append(heading, detail);
     skills.appendChild(card);
   });
@@ -119,6 +149,7 @@ async function start() {
   initTheme();
   initNavigation();
   await initLanguage();
+  revealInitialAnchor();
   try {
     const site = await loadSiteData();
     renderResume(site);

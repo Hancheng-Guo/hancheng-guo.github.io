@@ -89,7 +89,7 @@
 
 | ID | 优先级 | 需求 |
 |---|---:|---|
-| PRD-NAV-001 | P0 | 详情正文顶部必须显示明确的 `← Back to Projects` / `← 返回项目` 链接，目标为首页 `#projects`。 |
+| PRD-NAV-001 | P0 | 详情正文顶部必须显示明确的 `< Back to Projects` / `< 返回项目` 链接，目标为首页 `#projects`。 |
 | PRD-NAV-002 | P0 | 保留左上角品牌标识并继续链接首页；品牌归属与返回操作不得互相替代。 |
 | PRD-NAV-003 | P0 | 返回链接必须使用原生 `<a>`，支持键盘、复制链接、在新标签打开和无 JavaScript 降级。 |
 | PRD-NAV-004 | P1 | 详情页底部提供 Previous / Next Project，且项目顺序来自数据源。 |
@@ -106,7 +106,8 @@
 | PRD-DATA-003 | P0 | 正文改为有序 `blocks`，支持 `heading`、`paragraph`、`image`、`gallery`、`list`、`quote`、`video` 和 `metrics`。 |
 | PRD-DATA-004 | P0 | 外链必须标明类型、URL 和可选标签；URL 为空时不渲染按钮。 |
 | PRD-DATA-005 | P0 | 每张内容图片必须提供对应语言的 alt；纯装饰图片可显式标记为空 alt。 |
-| PRD-DATA-006 | P1 | 项目支持 featured、排序权重、年份、状态和关键词，以便首页筛选与排序。 |
+| PRD-DATA-006 | P1 | 项目支持可选结构化日期、featured、状态和关键词；传入日期时首页卡片在标题下显示本地化日期。 |
+| PRD-DATA-007 | P0 | 所有访客可见的自定义文本均按 Markdown 解析；Publication 日期可缺省，缺省时不得显示日期或悬空分隔符。 |
 
 ### 5.4 Python 内容生成工具
 
@@ -116,13 +117,14 @@ Python 程序只作为离线内容编码和校验工具，不作为网站运行�
 |---|---:|---|
 | PRD-PY-001 | P0 | 提供可导入的 Python 包，而不只是一次性脚本。 |
 | PRD-PY-002 | P0 | 维护者可通过函数创建站点、项目和标准内容块，正文文本必须作为参数传入。 |
-| PRD-PY-003 | P0 | 提供 `add_project()`、`add_heading()`、`add_paragraph()`、`add_image()`、`add_gallery()`、`add_metrics()`、`add_link()` 等模块化函数。 |
+| PRD-PY-003 | P0 | 提供 `add_project()`、内容块函数，以及 `add_github_link()`、`add_doc_link()`、`add_bilibili_link()`、`add_youtube_link()` 四个明确的链接函数；每个链接函数均接受可选的 `label`（`str` 或双语 Markdown 字典）。 |
 | PRD-PY-004 | P0 | `add_project()` 返回项目对象，由 `project.add_page(template=...)` 选择详情页模板并自动维护页面路径；模板内容仍通过内容块函数填充。每个项目只允许一个详情页。 |
 | PRD-PY-005 | P0 | 输出前校验必填字段、重复 ID、语言缺失、图片路径、URL、块类型和字段长度。 |
 | PRD-PY-006 | P0 | 生成采用临时文件加原子替换；校验失败时不得破坏现有可用数据。 |
 | PRD-PY-007 | P0 | 相同输入必须产生稳定、格式化且 UTF-8 编码的 JSON。 |
 | PRD-PY-008 | P1 | 提供 `preview` 和 `validate` 命令，并打印非技术用户可理解的错误位置和修复建议。 |
-| PRD-PY-009 | P1 | 自动创建详情页壳，或在目标架构中改为一个通用详情页，从根本上取消复制 HTML。 |
+| PRD-PY-009 | P0 | `build` 直接生成包含完整核心内容的首页、CV 页和每个项目详情页；禁用 JavaScript 后仍可阅读和导航，且不显示 Loading 占位。 |
+| PRD-PY-010 | P0 | favicon 由 `Portfolio(favicon=...)` 独立配置；未传入时所有生成页均不输出 favicon 标签。 |
 
 建议的客户调用方式：
 
@@ -149,7 +151,9 @@ page.add_image(
 page.add_metrics([
     {"label": {"en": "Position error", "zh": "定位误差"}, "value": "±5 mm"}
 ])
-page.add_link("github", "https://github.com/example/repo")
+page.add_github_link(
+    url="https://github.com/example/repo",
+)
 
 site.validate()
 site.write("assets/data/projects.json")

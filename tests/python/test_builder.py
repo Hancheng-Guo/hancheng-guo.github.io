@@ -3,6 +3,7 @@ import importlib.util
 import unittest
 from pathlib import Path
 from portfolio_content import Portfolio
+from portfolio_content.static_renderer import markdown_inline, render_cv, render_home, render_project
 from portfolio_content.validators import validate_document
 from portfolio_content.cli import clean_generated_output, clean_generated_pages
 
@@ -49,6 +50,18 @@ class BuilderTests(unittest.TestCase):
       self.assertIn('<a href="https://example.com"><strong>Example</strong></a>', generated)
       self.assertEqual(clean_generated_pages(folder), pages)
       self.assertFalse(pages[0].exists())
+
+  def test_clean_removes_generated_home_and_cv_but_preserves_manual_html(self):
+    import tempfile
+    with tempfile.TemporaryDirectory() as folder:
+      root = Path(folder)
+      portfolio = Portfolio()
+      portfolio.write_static_fallbacks(root=root)
+      manual = root / "manual.html"
+      manual.write_text("manual", encoding="utf-8")
+      removed = clean_generated_pages(root)
+      self.assertEqual(set(removed), {root / "index.html", root / "pages" / "cv.html"})
+      self.assertTrue(manual.exists())
 
   def test_root_python_source_matches_runtime_project_data(self):
     source = Path("portfolio.py")
@@ -132,5 +145,130 @@ class BuilderTests(unittest.TestCase):
       portfolio.add_award(date="September 2025", title="Award")
     with self.assertRaises(ValueError):
       Portfolio(last_update_date="2026-02-30").site_document()
+
+  def test_optional_publication_date_and_markdown_venue(self):
+    portfolio = Portfolio()
+    portfolio.add_publication(
+      publication_type="journal",
+      title={"en": "A **paper**", "zh": "一篇 **论文**"},
+      venue={"en": "*Nature* [site](https://example.com)", "zh": "*期刊*"},
+    )
+    home = render_home(portfolio)
+    cv = render_cv(portfolio)
+    for html in (home, cv):
+      self.assertIn("<em>Nature</em>", html)
+      self.assertIn('<a href="https://example.com">site</a>', html)
+      self.assertNotIn('class="entry-date"', html)
+      self.assertNotIn('class="entry-separator"', html)
+
+  def test_optional_project_date_is_rendered_only_when_present(self):
+    portfolio = Portfolio()
+    portfolio.add_project(
+      title="Dated",
+      summary="Summary",
+      thumbnail="assets/images/Avatar.jpg",
+      date={"start": "2025-10", "end": "2026-03"},
+    )
+    portfolio.add_project(
+      title="Undated",
+      summary="Summary",
+      thumbnail="assets/images/Avatar.jpg",
+    )
+    html = render_home(portfolio)
+    self.assertEqual(html.count('class="project-date"'), 2)
+    self.assertIn("Oct 2025 – Mar 2026", html)
+    self.assertIn('<time class="project-date" hidden></time>', html)
+    self.assertTrue(portfolio.validate(root=".").ok)
+
+  def test_favicon_is_optional_on_all_static_pages(self):
+    without = Portfolio()
+    project_without = without.add_project(
+      title="Demo",
+      summary="Summary",
+      thumbnail="assets/images/Avatar.jpg",
+    )
+    self.assertNotIn('rel="icon"', render_home(without))
+    self.assertNotIn('rel="icon"', render_cv(without))
+    self.assertNotIn('rel="icon"', render_project(without, project_without.data))
+    self.assertNotIn("favicon", without.site_document()["site"])
+
+    configured = Portfolio(favicon="assets/images/Avatar.jpg")
+    project_configured = configured.add_project(
+      title="Demo",
+      summary="Summary",
+      thumbnail="assets/images/Avatar.jpg",
+    )
+    self.assertIn('href="assets/images/Avatar.jpg"', render_home(configured))
+    self.assertIn('href="../assets/images/Avatar.jpg"', render_cv(configured))
+    self.assertIn('href="../../assets/images/Avatar.jpg"', render_project(configured, project_configured.data))
+    missing = Portfolio(favicon="assets/icons/missing.svg")
+    self.assertFalse(missing.validate(root=".").ok)
+
+  def test_typed_link_methods_cover_all_supported_icons(self):
+    portfolio = Portfolio()
+    project = portfolio.add_project(
+      title="Demo",
+      summary="Summary",
+      thumbnail="assets/images/Avatar.jpg",
+    )
+    page = project.add_page(template="minimal")
+    # First cover every default presentation, then verify each method carries
+    # through an explicit (including bilingual Markdown) label.
+    page.add_github_link(url="https://github.com/example/default")
+    page.add_doc_link(url="https://example.com/default.pdf")
+    page.add_bilibili_link(url="https://www.bilibili.com/video/default")
+    page.add_youtube_link(url="https://www.youtube.com/watch?v=default")
+    page.add_github_link(url="https://github.com/example/repo", label={"en": "**Source**", "zh": "**源码**"})
+    page.add_doc_link(url="https://example.com/doc.pdf", label={"en": "Read _docs_", "zh": "阅读 _文档_"})
+    page.add_bilibili_link(url="https://www.bilibili.com/video/example", label={"en": "**Watch**", "zh": "**观看**"})
+    page.add_youtube_link(url="https://www.youtube.com/watch?v=example", label={"en": "Video _demo_", "zh": "视频 _演示_"})
+    self.assertFalse(hasattr(page, "add_link"))
+    self.assertEqual(
+      [link["type"] for link in project.data["links"]],
+      ["github", "techDoc", "bilibili", "youtube"] * 2,
+    )
+    html = render_project(portfolio, project.data)
+    for icon in ("github", "file-pdf", "bilibili", "youtube"):
+      self.assertIn(f"icon-{icon}", html)
+    self.assertIn("<strong>Source</strong>", html)
+    self.assertIn("Read <u>docs</u>", html)
+    self.assertIn("<strong>Watch</strong>", html)
+    self.assertIn("Video <u>demo</u>", html)
+    self.assertEqual(project.data["links"][4]["label"]["zh"], "**源码**")
+    self.assertEqual(project.data["links"][5]["label"]["zh"], "阅读 _文档_")
+    self.assertEqual(project.data["links"][6]["label"]["zh"], "**观看**")
+    self.assertEqual(project.data["links"][7]["label"]["zh"], "视频 _演示_")
+    for default_label in (">Code<", ">Docs<", ">Bilibili<", ">YouTube<"):
+      self.assertIn(default_label, html)
+
+  def test_static_output_contains_content_without_loading_shell(self):
+    portfolio = Portfolio()
+    for number in range(9):
+      portfolio.add_timeline_event(
+        date=f"2025-{number + 1:02d}",
+        title=f"Event {number + 1}",
+        description="Description",
+      )
+    project = portfolio.add_project(
+      title="**Static** project",
+      summary="Readable before JavaScript",
+      thumbnail="assets/images/Avatar.jpg",
+    )
+    project.add_page(template="minimal").add_paragraph("Body with _underline_ and *italic*.")
+    home = render_home(portfolio)
+    detail = render_project(portfolio, project.data)
+    self.assertEqual(home.count("<main>"), 1)
+    self.assertIn("<strong>Static</strong> project", home)
+    self.assertEqual(home.count("timeline-extra"), 1)
+    self.assertIn("<u>underline</u>", detail)
+    self.assertIn("<em>italic</em>", detail)
+    self.assertNotIn("Loading project", detail)
+    self.assertIn("< Back to Projects", detail.replace("&lt;", "<"))
+
+  def test_markdown_escapes_html_and_preserves_snake_case(self):
+    rendered = markdown_inline("snake_case _underlined_ <script>alert(1)</script>")
+    self.assertIn("snake_case", rendered)
+    self.assertIn("<u>underlined</u>", rendered)
+    self.assertNotIn("<script>", rendered)
 
 if __name__ == '__main__': unittest.main()

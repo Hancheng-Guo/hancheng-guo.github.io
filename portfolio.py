@@ -23,6 +23,7 @@ portfolio = Portfolio(
         en="Powered by [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io)",
     ),
     last_update_date="2026-09-07",
+    # favicon="assets/images/Avatar.jpg",
 )
 
 portfolio.set_profile(
@@ -93,7 +94,6 @@ portfolio.add_work_experience(
 
 portfolio.add_publication(
     publication_type="journal",
-    date="2025-04",
     title=dict(
         zh="[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
         en="[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
@@ -103,16 +103,15 @@ portfolio.add_publication(
             '"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi," '
             'in *IEEE Transactions on Aerospace and Electronic Systems*, '
             'vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.'),
-        en=('H. Guo, Z. Chen, M. Huang and X. Y. Zhang, '
+        en=('**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, '
             '"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi," '
-            'in IEEE Transactions on Aerospace and Electronic Systems, '
+            'in *IEEE Transactions on Aerospace and Electronic Systems*, '
             'vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.'),
     ),
 )
 
 portfolio.add_publication(
     publication_type="conference",
-    date="2025-02",
     title=dict(
         zh="[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
         en="[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
@@ -131,7 +130,6 @@ portfolio.add_publication(
 
 portfolio.add_publication(
     publication_type="conference",
-    date="2025-02",
     title=dict(
         zh="[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
         en="[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
@@ -175,6 +173,7 @@ project_1 = portfolio.add_project(
         zh="全国大学生机器人大赛 ROBOCON 足式机器人赛题",
         en="ROBOCON 2025 Quadruped Robot Challenge",
     ),
+    date="2025-04",
     summary=dict(
         zh=(
             "2025赛季ROBOCON足式机器人全栈研发。负责从类植保无人机碳管装配工艺机械建模、\n"
@@ -281,17 +280,26 @@ page_1.add_image(
         en="Quadruped robot project result",
     ),
 )
-page_1.add_link(
-    link_type="github",
+page_1.add_github_link(
     url="https://github.com/Lain-Ego0/BRS-Parallel-Robot",
+    label=dict(
+        en="**Source code**",
+        zh="**项目源码**"
+    ),
 )
-page_1.add_link(
-    link_type="techDoc",
+page_1.add_doc_link(
     url="https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home",
+    label=dict(
+        en="**Docs**",
+        zh="**技术文档**"
+    ),
 )
-page_1.add_link(
-    link_type="demo",
+page_1.add_bilibili_link(
     url="https://www.bilibili.com/video/BV15wu4zuEmf",
+    label=dict(
+        en="**Demo**",
+        zh="**演示视频**"
+    ),
 )
 
 
@@ -451,12 +459,10 @@ page_3.add_paragraph(
         ),
     ),
 )
-page_3.add_link(
-    link_type="github",
+page_3.add_github_link(
     url="https://github.com/Lain-Ego0/ROBOCON2024-R1",
 )
-page_3.add_link(
-    link_type="demo",
+page_3.add_bilibili_link(
     url="https://www.bilibili.com/video/BV1VH4y1A7aM/",
 )
 

@@ -8,10 +8,20 @@
   },
   "$defs": {
     "localized": { "type": "object", "required": ["en", "zh"], "additionalProperties": { "type": "string" } },
+    "dateRange": {
+      "type": "object",
+      "required": ["start"],
+      "properties": {
+        "start": { "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$" },
+        "end": { "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$" }
+      },
+      "additionalProperties": false
+    },
     "project": {
       "type": "object", "required": ["id", "locales", "tags", "thumbnail"],
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "date": { "$ref": "#/$defs/dateRange" },
         "tags": { "type": "array", "items": { "type": "string" } },
         "thumbnail": { "oneOf": [{ "type": "string" }, { "type": "object", "required": ["src"] }] },
         "locales": { "type": "object", "required": ["en", "zh"], "additionalProperties": { "type": "object", "required": ["title", "summary"] } }

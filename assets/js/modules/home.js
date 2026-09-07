@@ -14,7 +14,6 @@ function localized(value) {
 async function renderProjects() {
   const grid = qs('.projects-grid');
   if (!grid) return;
-  grid.innerHTML = '<p class="status-view" role="status">' + t('projects.loading') + '</p>';
   let projects;
   try { projects = await loadProjects(); } catch (error) {
     grid.innerHTML = '<div class="status-view error-state" role="alert"><p>' + t('projects.loadError') + '</p><button class="control-btn" type="button">' + t('projects.retry') + '</button></div>';
@@ -44,13 +43,16 @@ async function renderProjects() {
         <img class="project-thumbnail" loading="lazy" decoding="async">
       </div>
       <div class="project-info">
-        <h3></h3><p></p><div class="project-tags"></div><a class="project-link"></a>
+        <h3></h3><p class="project-summary"></p><div class="project-tags"></div><div class="project-card-footer"><a class="project-link"></a><time class="project-date"></time></div>
       </div>`;
     const image = qs('.project-thumbnail', card);
     image.src = fromRoot(project.thumbnail.src);
-    image.alt = project.thumbnail.alt?.[currentLanguage()] || content.title;
+    image.alt = markdownText(project.thumbnail.alt?.[currentLanguage()] || content.title);
     renderInline(qs('h3', card), content.title);
-    renderInline(qs('.project-info > p', card), content.summary);
+    renderInline(qs('.project-summary', card), content.summary);
+    // Keep the static fallback and hydrated DOM structurally identical so the
+    // footer cannot reflow while project data is loading.
+    const date = qs('.project-date', card); date.textContent = project.date ? formatDateRange(project.date) : ''; date.hidden = !project.date;
     renderInline(qs('.project-link', card), t('projects.viewDetail'));
     qs('.project-link', card).href = projectUrl;
     const tags = qs('.project-tags', card);
@@ -76,12 +78,12 @@ function renderTimeline(events) {
     qs('.timeline-date', item).textContent = formatDateRange(event.date);
     renderInline(qs('.timeline-summary h3', item), localized(event.title));
     renderInline(qs('p', item), localized(event.description));
-    if (index >= 4) item.classList.add('timeline-extra');
+    if (index >= 8) item.classList.add('timeline-extra');
     container.appendChild(item);
   });
   const toggle = qs('.timeline-toggle');
   if (toggle) {
-    toggle.hidden = ordered.length <= 4;
+    toggle.hidden = ordered.length <= 8;
     toggle.setAttribute('aria-expanded', 'false');
     renderInline(toggle, t('timeline.showMore'));
     toggle.onclick = () => { const expanded = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!expanded)); renderInline(toggle, t(expanded ? 'timeline.showMore' : 'timeline.showLess')); container.classList.toggle('timeline-expanded', !expanded); };
@@ -172,7 +174,26 @@ function renderPublicationEntries(selector, entries) {
     const heading = document.createElement('h3');
     renderInline(heading, localized(entry.title || entry));
     const detail = document.createElement('p');
-    renderInline(detail, [formatDateRange(entry.date), localized(entry.venue)].filter(Boolean).join(' · '));
+    const dateText = formatDateRange(entry.date);
+    const venueText = localized(entry.venue);
+    if (dateText) {
+      const date = document.createElement('time');
+      date.className = 'entry-date';
+      date.textContent = dateText;
+      detail.appendChild(date);
+    }
+    if (dateText && venueText) {
+      const separator = document.createElement('span');
+      separator.className = 'entry-separator';
+      separator.textContent = ' · ';
+      detail.appendChild(separator);
+    }
+    if (venueText) {
+      const venue = document.createElement('span');
+      venue.className = 'entry-detail';
+      renderInline(venue, venueText);
+      detail.appendChild(venue);
+    }
     item.append(heading, detail);
     container.appendChild(item);
   });

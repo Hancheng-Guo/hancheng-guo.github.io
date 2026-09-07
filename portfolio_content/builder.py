@@ -3,13 +3,13 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
-from html import escape
 import json
 import os
 import re
 import tempfile
 
 from .validators import ValidationReport, validate_document
+from .static_renderer import render_cv, render_home, render_project, write_text_atomic
 
 
 def _locales(value: str | dict[str, str]) -> dict[str, str]:
@@ -27,7 +27,6 @@ def _for_language(value: Any, language: str) -> Any:
     if isinstance(value, list):
         return [_for_language(item, language) for item in value]
     return value
-
 
 _MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 _DAY = re.compile(r"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$")
@@ -55,26 +54,6 @@ def _full_date(value: str) -> str:
     except ValueError as error:
         raise ValueError("last_update_date 不是有效日期") from error
     return value
-
-
-_INLINE_LINK = re.compile(
-    r"\[\*\*(?P<bold>[^\]]+)\*\*\]\((?P<bold_url>https?://[^)\s]+)\)"
-    r"|\[(?P<label>[^\]]+)\]\((?P<url>https?://[^)\s]+)\)"
-)
-
-
-def _inline_links(value: str) -> str:
-    parts: list[str] = []
-    cursor = 0
-    for match in _INLINE_LINK.finditer(value):
-        parts.append(escape(value[cursor:match.start()]))
-        label = escape(match.group("bold") or match.group("label"))
-        url = escape(match.group("bold_url") or match.group("url"), quote=True)
-        content = f"<strong>{label}</strong>" if match.group("bold") else label
-        parts.append(f'<a href="{url}">{content}</a>')
-        cursor = match.end()
-    parts.append(escape(value[cursor:]))
-    return "".join(parts)
 
 
 @dataclass
@@ -125,11 +104,50 @@ class ProjectPage:
         if title is not None: payload["title"] = _locales(title)
         return self._block("video", **payload)
 
-    def add_link(self, link_type: str, url: str | None, *, label: str | dict[str, str] | None = None) -> "ProjectPage":
+    def _add_link(
+        self,
+        link_type: str,
+        url: str | None,
+        *,
+        label: str | dict[str, str] | None = None,
+    ) -> "ProjectPage":
         link: dict[str, Any] = {"type": link_type, "url": url}
-        if label is not None: link["label"] = _locales(label)
+        if label is not None:
+            link["label"] = _locales(label)
         self.project.setdefault("links", []).append(link)
         return self
+
+    def add_github_link(
+        self,
+        url: str | None,
+        *,
+        label: str | dict[str, str] | None = None,
+    ) -> "ProjectPage":
+        return self._add_link("github", url, label=label)
+
+    def add_doc_link(
+        self,
+        url: str | None,
+        *,
+        label: str | dict[str, str] | None = None,
+    ) -> "ProjectPage":
+        return self._add_link("techDoc", url, label=label)
+
+    def add_bilibili_link(
+        self,
+        url: str | None,
+        *,
+        label: str | dict[str, str] | None = None,
+    ) -> "ProjectPage":
+        return self._add_link("bilibili", url, label=label)
+
+    def add_youtube_link(
+        self,
+        url: str | None,
+        *,
+        label: str | dict[str, str] | None = None,
+    ) -> "ProjectPage":
+        return self._add_link("youtube", url, label=label)
 
 
 @dataclass
@@ -148,6 +166,7 @@ class Project:
 
 @dataclass
 class Portfolio:
+    favicon: str | None = None
     site_name: dict[str, str] = field(default_factory=lambda: {"en": "Lain-Ego Portfolio", "zh": "Lain-Ego 作品集"})
     author: dict[str, str] = field(default_factory=lambda: {"en": "Lain-Ego", "zh": "Lain-Ego"})
     copyright_text: dict[str, str] = field(default_factory=lambda: {"en": "All rights reserved.", "zh": "保留所有权利。"})
@@ -170,11 +189,12 @@ class Portfolio:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         return cls(projects=data.get("projects", []), schema_version=data.get("schemaVersion", 2))
 
-    def add_project(self, *, title: str | dict[str, str], summary: str | dict[str, str], thumbnail: str, project_id: str | None = None, tags: tuple[str, ...] | list[str] = (), featured: bool = False, year: int | None = None, status: str | None = None, thumbnail_alt: str | dict[str, str] | None = None) -> Project:
+    def add_project(self, *, title: str | dict[str, str], summary: str | dict[str, str], thumbnail: str, project_id: str | None = None, tags: tuple[str, ...] | list[str] = (), featured: bool = False, year: int | None = None, date: str | dict[str, str] | None = None, status: str | None = None, thumbnail_alt: str | dict[str, str] | None = None) -> Project:
         project_id = project_id or self._next_project_id()
         project = {"id": project_id, "page": f"pages/projects/{project_id}.html", "thumbnail": {"src": thumbnail, "alt": _locales(thumbnail_alt or title)}, "tags": list(tags), "locales": {"en": {"title": _locales(title).get("en", ""), "summary": _locales(summary).get("en", ""), "blocks": []}, "zh": {"title": _locales(title).get("zh", _locales(title).get("en", "")), "summary": _locales(summary).get("zh", _locales(summary).get("en", "")), "blocks": []}}, "links": []}
         if featured: project["featured"] = True
         if year is not None: project["year"] = year
+        if date is not None: project["date"] = _date_range(date)
         if status is not None: project["status"] = status
         self.projects.append(project)
         return Project(self, project)
@@ -204,11 +224,13 @@ class Portfolio:
     def add_work_experience(self, *, date: str | dict[str, str], **fields: Any) -> "Portfolio":
         self.work_experience.append({"date": _date_range(date), **fields}); return self
 
-    def add_publication(self, *, publication_type: str, date: str | dict[str, str], **fields: Any) -> "Portfolio":
+    def add_publication(self, *, publication_type: str, date: str | dict[str, str] | None = None, **fields: Any) -> "Portfolio":
         keys = {"journal": "journalArticles", "conference": "conferencePapers"}
         if publication_type not in keys:
             raise ValueError("publication_type 必须是 journal 或 conference")
-        self.publications[keys[publication_type]].append({"date": _date_range(date), **fields})
+        item = dict(fields)
+        if date is not None: item["date"] = _date_range(date)
+        self.publications[keys[publication_type]].append(item)
         return self
 
     def add_award(self, *, date: str | dict[str, str], **fields: Any) -> "Portfolio":
@@ -218,7 +240,27 @@ class Portfolio:
         self.resume.update(fields); return self
 
     def site_document(self) -> dict[str, Any]:
-        return {"schemaVersion": 1, "site": {"name": _locales(self.site_name), "author": _locales(self.author), "copyrightText": _locales(self.copyright_text), "lastUpdateDate": _full_date(self.last_update_date)}, "profile": self.profile, "education": self.education, "workExperience": self.work_experience, "publications": self.publications, "awards": self.awards, "resume": self.resume, "timeline": self.timeline, "techStack": self.tech_stack, "contacts": self.contacts}
+        site = {
+            "name": _locales(self.site_name),
+            "author": _locales(self.author),
+            "copyrightText": _locales(self.copyright_text),
+            "lastUpdateDate": _full_date(self.last_update_date),
+        }
+        if self.favicon:
+            site["favicon"] = self.favicon
+        return {
+            "schemaVersion": 1,
+            "site": site,
+            "profile": self.profile,
+            "education": self.education,
+            "workExperience": self.work_experience,
+            "publications": self.publications,
+            "awards": self.awards,
+            "resume": self.resume,
+            "timeline": self.timeline,
+            "techStack": self.tech_stack,
+            "contacts": self.contacts,
+        }
 
     def _create_page(self, project: dict[str, Any], *, template: str) -> ProjectPage:
         project_id = str(project["id"])
@@ -249,7 +291,14 @@ class Portfolio:
         return {"schemaVersion": self.schema_version, "projects": self.projects}
 
     def validate(self, *, root: str | os.PathLike[str] = ".") -> ValidationReport:
-        return validate_document(self.document(), root=Path(root))
+        root_path = Path(root)
+        report = validate_document(self.document(), root=root_path)
+        if self.favicon:
+            if str(self.favicon).startswith("http://"):
+                report.errors.append("favicon 仅允许 https URL 或本地文件")
+            elif not str(self.favicon).startswith("https://") and not (root_path / self.favicon).is_file():
+                report.errors.append(f"favicon 文件不存在: {self.favicon}")
+        return report
 
     def write(self, output: str | os.PathLike[str], *, root: str | os.PathLike[str] = ".") -> None:
         report = self.validate(root=root)
@@ -271,17 +320,21 @@ class Portfolio:
                 if str(candidate) not in active_pages and "<!-- Generated by portfolio.py; do not edit. -->" in candidate.read_text(encoding="utf-8"):
                     candidate.unlink()
         for project in self.projects:
-            if str(project.get("page", "")).startswith("pages/project.html?"):
-                continue
             destination = root_path / str(project["page"])
             destination.parent.mkdir(parents=True, exist_ok=True)
-            html = self._page_html(project)
+            html = render_project(self, project)
             with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=destination.parent, delete=False) as handle:
                 handle.write(html)
                 temporary = Path(handle.name)
             os.replace(temporary, destination)
             written.append(destination)
         return written
+
+    def write_static_fallbacks(self, *, root: str | os.PathLike[str] = ".") -> None:
+        """Generate complete, readable home and CV pages."""
+        root_path = Path(root)
+        write_text_atomic(root_path / "index.html", render_home(self))
+        write_text_atomic(root_path / "pages" / "cv.html", render_cv(self))
 
     def write_site_data(self, output: str | os.PathLike[str] = "assets/data/site.json") -> Path:
         destination = Path(output)
@@ -294,67 +347,4 @@ class Portfolio:
         return destination
 
     def _page_html(self, project: dict[str, Any]) -> str:
-        pid = escape(str(project["id"]), quote=True)
-        english = project["locales"]["en"]
-        title = escape(english["title"])
-        summary = escape(english["summary"], quote=True)
-        image = escape(project["thumbnail"]["src"], quote=True)
-        page = escape(project["page"], quote=True)
-        site_name = escape(_locales(self.site_name).get("en", "Portfolio"))
-        author = escape(_locales(self.author).get("en", site_name))
-        copyright_text = _inline_links(_locales(self.copyright_text).get("en", ""))
-        copyright_suffix = f", {copyright_text}" if copyright_text else ""
-        last_update_date = _full_date(self.last_update_date)
-        last_update_year = last_update_date[:4]
-        robots = '\n  <meta name="robots" content="noindex, nofollow">' if project.get("status") == "draft" else ""
-        structured_data = json.dumps({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            "name": english["title"],
-            "description": english["summary"],
-            "url": f"https://hancheng-guo.github.io/{project['page']}",
-            "image": f"https://hancheng-guo.github.io/{project['thumbnail']['src']}",
-        }, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
-        return f'''<!DOCTYPE html>
-<!-- Generated by portfolio.py; do not edit. -->
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title} - {site_name}</title>
-  <meta name="description" content="{summary}">{robots}
-  <meta property="og:title" content="{title} - {site_name}">
-  <meta property="og:description" content="{summary}">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://hancheng-guo.github.io/{page}">
-  <meta property="og:image" content="https://hancheng-guo.github.io/{image}">
-  <link rel="canonical" href="https://hancheng-guo.github.io/{page}">
-  <script type="application/ld+json">{structured_data}</script>
-  <link rel="icon" href="../../assets/images/Avatar.jpg">
-  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
-  <link rel="stylesheet" href="../../assets/css/style.css">
-</head>
-<body data-page="project" data-project-id="{pid}">
-  <nav><div class="container nav-container">
-    <a href="../../index.html" class="logo"><span class="logo-text">{author}</span><div class="logo-dot"></div></a>
-    <div class="nav-actions">
-      <button class="control-btn menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation" data-i18n-aria-label="nav.openMenu">☰</button>
-      <div class="nav-links" id="primary-navigation">
-        <a href="../../index.html#top" data-i18n="nav.portfolio">Portfolio</a>
-        <a href="../../index.html#projects" data-i18n="nav.project">Project</a>
-        <a href="../../index.html#publications" data-i18n="nav.publications">Publications</a>
-        <a href="../../index.html#timeline" data-i18n="nav.timeline">Timeline</a>
-        <a href="../cv.html" data-i18n="nav.resume">CV</a>
-      </div>
-      <div class="nav-controls">
-        <button class="control-btn lang-toggle" aria-label="Toggle language" data-i18n-aria-label="nav.toggleLanguage">中文</button>
-        <button class="control-btn theme-toggle" aria-label="Toggle color theme" data-i18n-aria-label="nav.toggleTheme"><span class="svg-icon icon-sun sun-icon" aria-hidden="true"></span><span class="svg-icon icon-moon moon-icon" aria-hidden="true"></span></button>
-      </div>
-    </div>
-  </div></nav>
-  <section class="section-padding"><div class="container"><div class="card project-detail-card"><div class="project-container"></div></div></div></section>
-  <footer><span class="footer-copyright">© {last_update_year} {author}{copyright_suffix}</span><span class="footer-updated">Site last updated {last_update_date}</span></footer>
-  <script type="module" src="../../assets/js/app.js"></script>
-</body>
-</html>
-'''
+        return render_project(self, project)

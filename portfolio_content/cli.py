@@ -21,12 +21,16 @@ def clean_generated_output(output: str | Path = GENERATED_OUTPUT) -> bool:
 
 
 def clean_generated_pages(root: str | Path = ".") -> list[Path]:
-    """Delete only HTML shells carrying the generator marker."""
-    page_directory = Path(root) / "pages" / "projects"
+    """Delete only HTML files carrying the generator marker."""
+    root_path = Path(root)
+    page_directory = root_path / "pages" / "projects"
     removed: list[Path] = []
-    if not page_directory.is_dir():
-        return removed
-    for candidate in page_directory.glob("*.html"):
+    candidates = [root_path / "index.html", root_path / "pages" / "cv.html"]
+    if page_directory.is_dir():
+        candidates.extend(page_directory.glob("*.html"))
+    for candidate in candidates:
+        if not candidate.is_file():
+            continue
         if GENERATED_PAGE_MARKER in candidate.read_text(encoding="utf-8"):
             candidate.unlink()
             removed.append(candidate)
@@ -47,7 +51,7 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("validate", "build", "preview"): 
         command = sub.add_parser(name); command.add_argument("source"); command.add_argument("--output", default="assets/data/projects.json"); command.add_argument("--port", type=int, default=8000)
-    sub.add_parser("clean", help="删除上一次构建生成的 assets/data/projects.json")
+    sub.add_parser("clean", help="删除上一次构建生成的 JSON 与 HTML")
     args = parser.parse_args()
     try:
         if args.command == "clean":
@@ -70,6 +74,7 @@ def main() -> int:
         portfolio.write(args.output, root=Path.cwd())
         site_output = portfolio.write_site_data()
         pages = portfolio.write_pages(root=Path.cwd())
+        portfolio.write_static_fallbacks(root=Path.cwd())
         print(f"已生成 {args.output}")
         print(f"已生成 {site_output}")
         print(f"已生成 {len(pages)} 个项目详情页")

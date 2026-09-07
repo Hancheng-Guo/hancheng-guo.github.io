@@ -22,7 +22,7 @@ CSS由vibecoding实现。
 本项目为纯前端静态网站，无后端依赖，核心由 HTML 结构、CSS 样式、JavaScript 交互三部分组成，模块职责清晰：
 
 ### 1. 核心 HTML（index.html）
-整个网站的骨架，包含：
+Python 构建生成的完整静态首页，包含：
 - 页面元信息（编码、视口、标题）
 - 主题初始化脚本（读取本地存储/系统偏好设置，设置亮色/暗黑主题）
 - 导航栏（Logo、导航链接、语言切换、主题切换按钮）
@@ -51,7 +51,7 @@ CSS由vibecoding实现。
 - `modules/lightbox.js`：项目图片预览
 
 ### 4. 集中项目数据
-`portfolio.py` 是项目内容的唯一人工维护源；运行 `python portfolio.py build` 后生成 `assets/data/projects.json`，供浏览器读取。项目卡片、详情正文、图片、标签和外部链接都不再散落于 HTML 或语言文件。
+`portfolio.py` 是网站内容的唯一人工维护源；运行 `python portfolio.py build` 后会同时生成 JSON 数据、完整首页、CV 页和每个项目详情页。JavaScript 用于语言、主题和交互增强；即使 JavaScript 尚未加载或被禁用，英文核心内容与导航仍可直接使用。
 
 ### 5. 静态资源
 - `assets/images/`：头像（Avatar.jpg）等图片资源
@@ -73,7 +73,7 @@ cd Lain-Ego0.github.io
 
 ### 2. 使用 Python 维护项目内容
 
-编辑项目根目录的 `portfolio.py`，通过 `Portfolio`、`add_project()`、项目对象的 `add_page()` 和各类 `add_*()` 函数填写内容，无需编辑 HTML 或页面路径。当前四个项目已全部由该文件构建。
+编辑项目根目录的 `portfolio.py`，通过 `Portfolio`、`add_project()`、项目对象的 `add_page()` 和各类 `add_*()` 函数填写内容，无需编辑 HTML 或页面路径。
 
 ```bash
 python portfolio.py validate
@@ -82,7 +82,7 @@ python portfolio.py preview --port 8000
 python portfolio.py clean
 ```
 
-`validate` 只检查内容；`build` 在校验通过后生成 `assets/data/projects.json` 和项目 HTML 外壳；`preview` 生成后启动本地预览；`clean` 删除这些生成产物。校验失败不会覆盖现有 JSON。清理后重新执行 `build` 即可恢复。
+`validate` 只检查内容；`build` 在校验通过后生成 JSON 和完整静态页面；`preview` 生成后启动本地预览；`clean` 删除生成的数据与项目详情页。校验失败不会覆盖现有 JSON。清理后重新执行 `build` 即可恢复。
 
 新增项目、图片、段落、列表、指标、视频及双语内容的具体写法见 [Python 内容管理完整教程](docs/PYTHON_GUIDE.md)。
 
@@ -154,13 +154,12 @@ Lain-Ego0.github.io/
 │   ├── zh.json              # 中文
 │   └── en.json              # 英文
 ├── pages/
-│   ├── project.html         # 通用项目详情页
 │   ├── cv.html              # 数据驱动的独立 CV 页
-│   └── projects/            # Python 生成的项目详情页
+│   └── projects/            # Python 生成的完整静态项目详情页
 ├── portfolio.py             # 根目录 Python 内容与命令入口
 ├── portfolio_content/       # 离线 Python 内容生成包
 ├── schemas/                 # 内容数据 Schema
-├── tests/python/            # Python 自动化测试
+├── tests/                   # Python 与浏览器自动化测试
 └── README.md                # 项目说明
 ```
 

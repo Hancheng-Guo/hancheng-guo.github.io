@@ -36,7 +36,7 @@ python portfolio.py clean
 python portfolio.py preview --port 8080
 ```
 
-`clean` 删除 `assets/data/projects.json` 以及带有 Python 生成标记的项目 HTML 外壳，不会删除 `portfolio.py`、项目图片或手写 HTML。清理后网页将暂时没有可读取的项目数据；运行 `python portfolio.py build` 即可全部重新生成并恢复。
+`clean` 删除生成的 JSON、首页、CV 页以及带有 Python 生成标记的项目详情页，不会删除 `portfolio.py`、项目图片或任何手写 HTML。运行 `python portfolio.py build` 即可全部重新生成并恢复。
 
 根目录 `portfolio.py` 已包含当前网站的全部项目，是项目内容的唯一人工维护源。生成过程会先校验数据；校验失败时，现有 JSON 不会被覆盖。
 
@@ -61,7 +61,10 @@ project = portfolio.add_project(
     thumbnail="assets/images/my-robot/cover.jpg",
     tags=("Robotics", "Python"),
     featured=True,
-    year=2026,
+    date=dict(
+        start="2026-01",
+        end="2026-06",
+    ),
 )
 
 page = project.add_page(template="minimal")
@@ -75,7 +78,10 @@ page.add_image(
     alt={"en": "Robot test result", "zh": "机器人测试结果"},
     caption={"en": "Field test", "zh": "现场测试"},
 )
-page.add_link("github", "https://github.com/your-name/my-robot")
+page.add_github_link(
+    url="https://github.com/your-name/my-robot",
+    label={"en": "**Source code**", "zh": "**源代码**"},
+)
 ```
 
 构建器按添加顺序自动分配 `project1`、`project2`、`project3` 等 ID，并维护 `pages/projects/<id>.html`，用户无需填写路径或 ID。请不要随意调整已有项目的添加顺序，否则其 URL 会随编号变化。中英文内容使用 `{"en": "...", "zh": "..."}` 的形式填写；若传入单个字符串，两种语言会显示相同内容。
@@ -156,11 +162,25 @@ page.add_video(
     poster="assets/images/my-robot/video-cover.jpg",
     title={"en": "Demo video", "zh": "演示视频"},
 )
-page.add_link("github", "https://github.com/your-name/my-robot")
-page.add_link("paper", "https://example.com/paper.pdf", label={"en": "Paper", "zh": "论文"})
+page.add_github_link(
+    url="https://github.com/your-name/my-robot",
+    label={"en": "**Source code**", "zh": "**源代码**"},
+)
+page.add_doc_link(
+    url="https://example.com/paper.pdf",
+    label={"en": "Read _paper_", "zh": "阅读 _论文_"},
+)
+page.add_bilibili_link(
+    url="https://www.bilibili.com/video/example",
+    label={"en": "**Watch on Bilibili**", "zh": "**在哔哩哔哩观看**"},
+)
+page.add_youtube_link(
+    url="https://www.youtube.com/watch?v=example",
+    label={"en": "Watch _demo_", "zh": "观看 _演示_"},
+)
 ```
 
-外部链接必须使用 `https://`。
+四个链接方法都接受可选的 `label`：可传入单个 Markdown 字符串，或传入 `{"en": "...", "zh": "..."}` 为两种语言分别设置可见按钮文字。省略 `label` 时会使用对应的默认文字。外部链接必须使用 `https://`。
 
 ## 5. 修改或删除已有项目
 
@@ -275,7 +295,7 @@ page.add_paragraph(
 
 项目额外约定 `_文字_` 表示下划线；标准斜体请写成 `*文字*`，`__文字__` 和 `**文字**` 均仍表示粗体。邮箱、网址、日期、图片路径和图标名称属于结构化参数，不按 Markdown 解析。联系方式当前可使用本地 SVG 图标名称 `github`。
 
-Education、Work Experience、Publications、Awards & Scholarships 和 Timeline 的每一项都必须提供结构化日期。单月使用 `date="YYYY-MM"`；时间段使用：
+Education、Work Experience、Awards & Scholarships 和 Timeline 的每一项都必须提供结构化日期；Publications 和 Projects 的日期可选。未给 Publication 日期时不会显示日期或多余分隔符；给 Project 日期时会显示在首页卡片 footer 的 `View Details` 同行右侧。无日期项目保留同样高度的隐藏日期槽，避免卡片尺寸或 hydration 发生跳动。单月使用 `date="YYYY-MM"`；时间段使用：
 
 ```python
 date=dict(

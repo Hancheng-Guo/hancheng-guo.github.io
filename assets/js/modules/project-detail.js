@@ -9,7 +9,8 @@ import { markdownText, renderBlock, renderInline } from './markdown.js';
 const LINK_PRESENTATION = {
   github: { icon: 'github', className: 'github' },
   techDoc: { icon: 'file-pdf', className: '' },
-  demo: { icon: 'bilibili', className: 'bilibili' },
+  bilibili: { icon: 'bilibili', className: 'bilibili' },
+  youtube: { icon: 'youtube', className: 'youtube' },
 };
 
 function createLink(link) {
@@ -107,7 +108,6 @@ async function renderProject() {
   const id = document.body.dataset.projectId || new URLSearchParams(window.location.search).get('id');
   if (!container || !id) return;
 
-  container.innerHTML = '<p class="status-view" role="status">' + t('projects.loading') + '</p>';
   let project;
   let site;
   try { [project, site] = await Promise.all([loadProject(id), loadSiteData()]); } catch (error) {

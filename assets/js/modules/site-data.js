@@ -25,6 +25,18 @@ export function applySiteIdentity(site, pageTitle = '') {
   const plainSiteName = markdownText(siteName);
   document.title = pageTitle ? `${markdownText(pageTitle)} - ${plainSiteName}` : plainSiteName;
   document.querySelectorAll('.logo-text').forEach((element) => renderInline(element, author));
+  const favicon = site?.site?.favicon;
+  let faviconLink = document.querySelector('link[rel="icon"]');
+  if (favicon) {
+    if (!faviconLink) {
+      faviconLink = document.createElement('link');
+      faviconLink.rel = 'icon';
+      document.head.appendChild(faviconLink);
+    }
+    faviconLink.href = fromRoot(favicon);
+  } else {
+    faviconLink?.remove();
+  }
 
   const lastUpdateDate = site?.site?.lastUpdateDate ?? '';
   const copyrightText = localized(site?.site?.copyrightText);

@@ -112,17 +112,32 @@
       "links": [
         {
           "type": "github",
-          "url": "https://github.com/Lain-Ego0/BRS-Parallel-Robot"
+          "url": "https://github.com/Lain-Ego0/BRS-Parallel-Robot",
+          "label": {
+            "en": "**Source code**",
+            "zh": "**项目源码**"
+          }
         },
         {
           "type": "techDoc",
-          "url": "https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home"
+          "url": "https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home",
+          "label": {
+            "en": "**Docs**",
+            "zh": "**技术文档**"
+          }
         },
         {
-          "type": "demo",
-          "url": "https://www.bilibili.com/video/BV15wu4zuEmf"
+          "type": "bilibili",
+          "url": "https://www.bilibili.com/video/BV15wu4zuEmf",
+          "label": {
+            "en": "**Demo**",
+            "zh": "**演示视频**"
+          }
         }
-      ]
+      ],
+      "date": {
+        "start": "2025-04"
+      }
     },
     {
       "id": "project2",
@@ -278,7 +293,7 @@
           "url": "https://github.com/Lain-Ego0/ROBOCON2024-R1"
         },
         {
-          "type": "demo",
+          "type": "bilibili",
           "url": "https://www.bilibili.com/video/BV1VH4y1A7aM/"
         }
       ]
