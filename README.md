@@ -1,203 +1,108 @@
-# Lain-Ego's Homepage
-这是一个轻量化、响应式的个人主页网站，支持暗黑/亮色主题切换、多语言切换，包含项目展示、时间线、技术栈和联系方式等核心模块。
-CSS由vibecoding实现。
+# Hancheng Guo Portfolio
 
-## 规划与交付文档
+一个由 Python 内容配置生成的双语静态个人主页，用于展示个人资料、项目、论文、时间线和 CV。网站无需后端或数据库，可以直接部署到 GitHub Pages。
 
-- [项目需求文档](docs/PROJECT_REQUIREMENTS.md)
-- [项目架构文档](docs/ARCHITECTURE.md)
-- [验收标准文档](docs/ACCEPTANCE_CRITERIA.md)
-- [Python 内容管理完整教程](docs/PYTHON_GUIDE.md)
-- [实施状态矩阵](docs/IMPLEMENTATION_STATUS.md)
+![首页效果](assets/images/docs/home.png)
 
-## 目录
-- [源码构成](#源码构成)
-- [环境要求](#环境要求)
-- [使用指南](#使用指南)
-- [目录结构详解](#目录结构详解)
-- [核心功能说明](#核心功能说明)
-- [自定义配置](#自定义配置)
+## 主要特性
 
-## 源码构成
-本项目为纯前端静态网站，无后端依赖，核心由 HTML 结构、CSS 样式、JavaScript 交互三部分组成，模块职责清晰：
+- 默认英文和深色主题，并记住访客的语言与主题选择。
+- 首页包含 Portfolio、Projects、Publications 和 Timeline。
+- 独立 CV 页面包含个人信息、Education、Work Experience、Publications、Tech Stack 与 Awards & Scholarships。
+- 每个项目拥有独立静态详情页、前后项目导航、图片预览和可选外部链接。
+- Python 在构建阶段生成完整 HTML 和 JSON；禁用 JavaScript 时仍能阅读核心内容。
+- JavaScript 只负责语言、主题、数据同步、平滑导航和交互增强。
+- 图标与 Markdown 解析器均保存在仓库内，不依赖运行时 CDN。
+- 响应式布局支持桌面和移动端，并尊重 `prefers-reduced-motion`。
 
-### 1. 核心 HTML（index.html）
-Python 构建生成的完整静态首页，包含：
-- 页面元信息（编码、视口、标题）
-- 主题初始化脚本（读取本地存储/系统偏好设置，设置亮色/暗黑主题）
-- 导航栏（Logo、导航链接、语言切换、主题切换按钮）
-- 核心板块（个人简介、项目、开源贡献、时间线、技术栈、联系方式）
-- 页脚
-- 外部/内部脚本/样式引入
+## 快速开始
 
-### 2. CSS 样式（assets/css/style.css）
-- 响应式布局（适配移动端/桌面端）
-- 主题样式（light/dark 两套主题变量）
-- 组件样式（导航栏、头像、各板块、按钮、网格布局等）
-- 动效样式（头像光晕、渐变文字、背景装饰等）
-
-### 3. JavaScript 交互
-#### (1) 国际化（assets/js/modules/i18n.js）
-- 实现多语言切换（如示例中的中文/英文）
-- 基于 `data-i18n` 属性匹配语言文案，替换页面文本
-
-#### (2) 模块化交互（assets/js/）
-- `app.js`：统一入口，根据页面类型加载主页或详情页逻辑
-- `modules/theme.js`：主题切换与偏好保存
-- `modules/navigation.js`：语言切换和平滑滚动
-- `modules/home.js`：主页项目、时间线、技能和联系方式渲染
-- `modules/project-detail.js`：项目详情页渲染
-- `modules/project-data.js`：集中读取项目数据
-- `modules/lightbox.js`：项目图片预览
-
-### 4. 集中项目数据
-`portfolio.py` 是网站内容的唯一人工维护源；运行 `python portfolio.py build` 后会同时生成 JSON 数据、完整首页、CV 页和每个项目详情页。JavaScript 用于语言、主题和交互增强；即使 JavaScript 尚未加载或被禁用，英文核心内容与导航仍可直接使用。
-
-### 5. 静态资源
-- `assets/images/`：头像（Avatar.jpg）等图片资源
-- 图标资源：页面实际使用的 SVG 文件保存在 `assets/icons/`，不依赖图标字体或 CDN
-
-## 环境要求
-无需复杂环境，满足以下任一条件即可运行：
-- 现代浏览器（Chrome/Firefox/Safari/Edge 最新版）
-- 静态文件服务器（如 Nginx、Live Server 插件、Python SimpleHTTPServer）
-- GitHub Pages/Gitee Pages 等静态页面托管平台
-
-## 使用指南
-### 1. 源码拉取
-```bash
-# 克隆仓库
-git clone https://github.com/Lain-Ego0/Lain-Ego0.github.io.git
-cd Lain-Ego0.github.io
-```
-
-### 2. 使用 Python 维护项目内容
-
-编辑项目根目录的 `portfolio.py`，通过 `Portfolio`、`add_project()`、项目对象的 `add_page()` 和各类 `add_*()` 函数填写内容，无需编辑 HTML 或页面路径。
+需要 Python 3.10 或更高版本：
 
 ```bash
+git clone https://github.com/Hancheng-Guo/hancheng-guo.github.io.git
+cd hancheng-guo.github.io
+
 python portfolio.py validate
 python portfolio.py build
+python portfolio.py preview
+```
+
+打开 <http://127.0.0.1:8000/> 查看网站，按 `Ctrl+C` 停止预览。Windows 若没有 `python` 命令，可以将其替换为 `py`。
+
+日常修改只需要编辑根目录的 [`portfolio.py`](portfolio.py)，不应手工修改生成的 HTML 或 JSON。完整 API、字段格式和示例见 [Python 工具手册](docs/PYTHON_GUIDE.md)。
+
+## 常用命令
+
+```bash
+# 仅校验内容和资源路径
+python portfolio.py validate
+
+# 校验并生成完整静态网站
+python portfolio.py build
+
+# 构建后在本机启动预览
 python portfolio.py preview --port 8000
+
+# 删除生成的 HTML 与 JSON
 python portfolio.py clean
 ```
 
-`validate` 只检查内容；`build` 在校验通过后生成 JSON 和完整静态页面；`preview` 生成后启动本地预览；`clean` 删除生成的数据与项目详情页。校验失败不会覆盖现有 JSON。清理后重新执行 `build` 即可恢复。
+`clean` 不会删除 `portfolio.py`、构建器或静态资源；随后执行 `build` 可以恢复全部生成文件。构建器采用临时文件和原子替换，校验失败时不会覆盖已有项目数据。
 
-新增项目、图片、段落、列表、指标、视频及双语内容的具体写法见 [Python 内容管理完整教程](docs/PYTHON_GUIDE.md)。
+## 内容与生成结果
 
-### 3. 本地运行
-#### 方式1：直接打开（简单测试）
-双击 `index.html` 文件，通过浏览器直接打开（部分交互可能因跨域/本地路径问题受限）。
+`portfolio.py` 是人工维护的唯一内容源。一次 `build` 会生成：
 
-#### 方式2：静态服务器运行（推荐）
-```bash
-# 方法1：使用 Python 3 启动简易服务器
-python -m http.server 8080
+- `index.html`：完整静态首页；
+- `pages/cv.html`：完整静态 CV 页面；
+- `pages/projects/*.html`：项目详情页；
+- `assets/data/site.json`：站点、履历和联系方式数据；
+- `assets/data/projects.json`：项目列表、正文块与链接数据。
 
-# 方法2：使用 Node.js http-server（需先安装：npm install -g http-server）
-http-server -p 8080
+生成的 HTML 会按照 DOM 层级换行和缩进，便于检查，但下一次构建仍会覆盖它们。
 
-# 方法3：VS Code 安装 Live Server 插件，右键 index.html → "Open with Live Server"
-```
-访问地址：`http://localhost:8080`
+## 项目结构
 
-### 4. 部署上线
-#### 方式1：GitHub Pages（推荐）
-1. 将代码推送到 GitHub 仓库（仓库名：`[用户名].github.io`）；
-2. 进入仓库 → Settings → Pages → 选择 `main` 分支 → 保存；
-3. 等待几分钟后，访问 `https://[用户名].github.io` 即可。
-
-#### 方式2：自定义服务器（Nginx）
-1. 将源码上传到服务器；
-2. 配置 Nginx 指向源码目录：
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com; # 替换为你的域名
-    root /path/to/Lain-Ego0.github.io; # 替换为源码路径
-    index index.html;
-
-    # 支持 SPA 路由（如需）
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
-```
-3. 重启 Nginx：`nginx -s reload`。
-
-## 目录结构详解
-```
-Lain-Ego0.github.io/
-├── index.html               # 核心HTML页面（网站入口）
-├── assets/                  # 静态资源目录
-│   ├── css/                 # 样式目录
-│   │   └── style.css        # 全局样式（含主题、布局、组件样式）
-│   ├── js/                  # 脚本目录
-│   │   ├── app.js           # 应用统一入口
-│   │   └── modules/         # 功能模块
-│   │       ├── home.js
-│   │       ├── i18n.js
-│   │       ├── lightbox.js
-│   │       ├── navigation.js
-│   │       ├── project-data.js
-│   │       ├── project-detail.js
-│   │       ├── site-data.js
-│   │       └── theme.js
-│   ├── data/
-│   │   ├── projects.json    # Python 生成的项目运行时数据
-│   │   └── site.json        # Python 生成的时间线、技术栈和联系数据
-│   └── images/              # 图片目录
-│       ├── Avatar.jpg       # 首页个人头像
-│       └── Portfolio-*.png  # 项目展示图片
-├── lang/                    # 国际化文案
-│   ├── zh.json              # 中文
-│   └── en.json              # 英文
+```text
+.
+├── portfolio.py                 # 内容配置与命令入口
+├── index.html                   # 生成的首页
 ├── pages/
-│   ├── cv.html              # 数据驱动的独立 CV 页
-│   └── projects/            # Python 生成的完整静态项目详情页
-├── portfolio.py             # 根目录 Python 内容与命令入口
-├── portfolio_content/       # 离线 Python 内容生成包
-├── schemas/                 # 内容数据 Schema
-├── tests/                   # Python 与浏览器自动化测试
-└── README.md                # 项目说明
+│   ├── cv.html                  # 生成的 CV 页面
+│   └── projects/                # 生成的项目详情页
+├── assets/
+│   ├── css/style.css            # 主题、组件和响应式样式
+│   ├── data/                    # 生成的 JSON
+│   ├── documents/               # 中英文 CV 等下载文件
+│   ├── icons/                   # 本地 SVG 图标
+│   ├── images/                  # 头像、项目图和文档截图
+│   ├── js/                      # 浏览器入口与功能模块
+│   └── vendor/                  # 本地化的前端第三方依赖
+├── portfolio_content/           # Python 构建器、校验器和渲染器
+├── lang/                        # 通用界面中英文文案
+├── schemas/                     # 生成数据的 JSON Schema
+├── tests/                       # Python 与浏览器回归测试
+└── docs/PYTHON_GUIDE.md         # 内容构建工具手册
 ```
 
-## 核心功能说明
-### 1. 主题切换
-- 初始化：读取 localStorage 中的主题偏好，无已保存偏好时默认为深色；
-- 切换逻辑：点击导航栏「月亮/太阳」图标，切换 `data-theme` 为 `dark/light`，并同步到 localStorage。
+## 测试
 
-### 2. 多语言切换
-- 点击导航栏「中文/English」按钮，通过语言模块替换所有带 `data-i18n` 属性的元素文本；
-- 无已保存偏好时默认使用英文；通用界面文案位于 `lang/zh.json` 和 `lang/en.json`。
+Python 测试不需要额外依赖：
 
-### 3. 核心板块
-- 「Intro」：个人简介（标题、描述）；
-- 「Projects」：项目展示（由 `assets/data/projects.json` 动态渲染）；
-- 「Timeline」：时间线（经历/里程碑）；
-- 「Skills」：技术栈展示；
-- 「Contact」：联系方式（社交链接等）。
+```bash
+python -m unittest discover -s tests/python -v
+```
 
-## 自定义配置
+浏览器回归脚本位于 `tests/browser/`，覆盖静态首屏、语言与主题切换、Timeline、项目卡片稳定性、CV 头像、同页平滑滚动和跨页锚点。运行它们需要 Node.js、Playwright 和可用的 Chromium/Edge 浏览器环境。
 
-`portfolio.py` 中所有面向访客显示的自定义文字均按 Markdown 解析。标题、标签和按钮支持行内 Markdown，项目正文支持完整的 GitHub Flavored Markdown（段落、列表、链接、粗体、代码块等）；本项目将 `_文字_` 扩展为下划线，斜体请使用 `*文字*`。邮箱、URL、日期、文件路径和图标名称仍按其专用格式填写。
+## 部署
 
-### 1. 修改个人信息
-- 头像：替换 `assets/images/Avatar.jpg` 即可更新首页头像；
-- 网站名称、作者和页脚信息：修改 `portfolio = Portfolio(site_name=..., author=..., copyright_text=..., last_update_date=...)`；
-- 首页姓名、简介和联系方式：修改 `portfolio.py` 中的 `set_profile()` 与 `add_contact()`，然后重新构建；
-- CV 下载按钮：在 `portfolio.py` 的 `set_resume()` 中以 `url=dict(zh=..., en=...)` 提供两种语言对应的本地 PDF；未提供时自动隐藏；
-- 页脚版权和最后更新日期：修改 `Portfolio(...)` 的 `copyright_text` 与 `last_update_date`。
+构建完成后，将源码与生成结果一起提交并推送到当前独立仓库。GitHub Pages 配置步骤：
 
-### 2. 新增/修改板块内容
-- 项目、时间线、技能和联系方式：统一修改根目录 `portfolio.py` 并运行构建。
-- 履历日期统一使用 `YYYY-MM`；时间段使用 `dict(start="YYYY-MM", end="YYYY-MM")`，由网页按当前语言格式化。
+1. 打开仓库的 **Settings → Pages**；
+2. 选择从分支部署；
+3. 选择发布分支和仓库根目录；
+4. 等待部署完成后访问 <https://hancheng-guo.github.io/>。
 
-### 3. 自定义主题
-- 修改 `assets/css/style.css` 中的 `:root`（light 主题）和 `[data-theme="dark"]`（dark 主题）下的 CSS 变量（如颜色、字体、间距等）。
-
-### 4. 新增语言
-- 在 `lang/` 中增加对应 JSON，并在 `assets/data/projects.json` 的每个项目中增加相同语言的 `locales` 数据；
-- 扩展 `assets/js/modules/i18n.js` 中的语言切换规则。
----
+部署端只提供静态文件，不需要安装 Python；Python 仅用于本地编辑和构建。
