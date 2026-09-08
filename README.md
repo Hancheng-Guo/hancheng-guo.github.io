@@ -2,6 +2,8 @@
 
 一个由 Python 内容配置生成的双语静态个人主页，用于展示个人资料、项目、论文、时间线和 CV。网站无需后端或数据库，可以直接部署到 GitHub Pages。
 
+本项目的早期版本基于 [Lain-Ego0/Lain-Ego0.github.io](https://github.com/Lain-Ego0/Lain-Ego0.github.io) 开发。原仓库为项目提供了基础页面、视觉风格和前端实现思路，在此表示感谢。当前仓库已经脱离原 fork 关系，并在此基础上独立维护；仓库关系的变更不会影响原项目的贡献归属。
+
 ![首页效果](assets/images/docs/home.png)
 
 ## 主要特性
