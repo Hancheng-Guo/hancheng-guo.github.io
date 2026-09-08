@@ -49,6 +49,51 @@ def validate_profile_assets(profile: object, *, root: Path) -> "ValidationReport
                 _local_asset(report, value, field=f"profile.{key}", root=root)
     return report
 
+
+def validate_education_items(items: object) -> "ValidationReport":
+    """Validate the structured fields used by the Education three-line view."""
+    report = ValidationReport()
+    if not isinstance(items, list):
+        report.errors.append("education 必须是数组")
+        return report
+    for index, item in enumerate(items):
+        field = f"education[{index}]"
+        if not isinstance(item, dict):
+            report.errors.append(f"{field} 必须是对象")
+            continue
+        _date_range(report, item.get("date"), field=f"{field}.date")
+        # institution/degree are accepted only as the documented migration
+        # path for pre-existing sources.
+        if not any(item.get(key) for key in ("position", "degree", "institution")):
+            report.errors.append(f"{field} 必须提供 position（或旧版 degree/institution）")
+        for key in ("position", "institute", "location", "detail", "institution", "degree"):
+            if key in item and not isinstance(item[key], (str, dict)):
+                report.errors.append(f"{field}.{key} 必须是文本或本地化对象")
+    return report
+
+
+def validate_work_experience_items(items: object) -> "ValidationReport":
+    """Validate the structured fields used by Work Experience entries."""
+    report = ValidationReport()
+    if not isinstance(items, list):
+        report.errors.append("workExperience 必须是数组")
+        return report
+    for index, item in enumerate(items):
+        field = f"workExperience[{index}]"
+        if not isinstance(item, dict):
+            report.errors.append(f"{field} 必须是对象")
+            continue
+        _date_range(report, item.get("date"), field=f"{field}.date")
+        if not item.get("position"):
+            report.errors.append(f"{field} 必须提供 position")
+        for key in ("position", "company", "location", "detail"):
+            if key in item and not isinstance(item[key], (str, dict)):
+                report.errors.append(f"{field}.{key} 必须是文本或本地化对象")
+        for legacy in ("title", "organization", "summary"):
+            if legacy in item:
+                report.errors.append(f"{field}.{legacy} 已不支持，请使用 position/company/detail")
+    return report
+
 def _https_url(report: "ValidationReport", value: object, *, field: str) -> None:
     if not isinstance(value, str) or not value.strip():
         report.errors.append(f"{field} 不能为空")

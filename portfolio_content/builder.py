@@ -8,7 +8,7 @@ import os
 import re
 import tempfile
 
-from .validators import ValidationReport, validate_document, validate_profile_assets
+from .validators import ValidationReport, validate_document, validate_education_items, validate_profile_assets, validate_work_experience_items
 from .static_renderer import pretty_html, render_cv, render_home, render_project, write_text_atomic
 
 
@@ -35,7 +35,10 @@ _UNSET = object()
 
 def _date_range(value: str | dict[str, str]) -> dict[str, str]:
     if isinstance(value, str):
-        result = {"start": value}
+        # A bare month has historically represented one fixed point in time.
+        # Preserve that rendering while allowing a dict with only ``start``
+        # to represent an ongoing interval.
+        result = {"start": value, "end": value}
     elif isinstance(value, dict):
         result = {key: str(value[key]) for key in ("start", "end") if value.get(key)}
     else:
@@ -238,11 +241,70 @@ class Portfolio:
                 fields[key] = value
         self.profile.update(fields); return self
 
-    def add_education(self, *, date: str | dict[str, str], **fields: Any) -> "Portfolio":
-        self.education.append({"date": _date_range(date), **fields}); return self
+    def add_education(
+        self,
+        *,
+        date: str | dict[str, str],
+        position: str | dict[str, str] | None = None,
+        institute: str | dict[str, str] | None = None,
+        location: str | dict[str, str] | None = None,
+        detail: str | dict[str, str] | None = None,
+        institution: str | dict[str, str] | None = None,
+        degree: str | dict[str, str] | None = None,
+        **fields: Any,
+    ) -> "Portfolio":
+        """Add an Education entry using its three-line CV presentation.
 
-    def add_work_experience(self, *, date: str | dict[str, str], **fields: Any) -> "Portfolio":
-        self.work_experience.append({"date": _date_range(date), **fields}); return self
+        ``position`` and ``institute`` are the recommended names. The older
+        ``degree`` and ``institution`` arguments remain supported and map to
+        those fields respectively, so existing portfolio sources keep their
+        intended meaning without a visual regression.
+        """
+        if position is None:
+            position = degree if degree is not None else institution
+        if institute is None:
+            institute = institution
+        if position is None:
+            raise ValueError("add_education 必须提供 position（或旧版 degree/institution）")
+        entry: dict[str, Any] = {"date": _date_range(date), "position": _locales(position)}
+        if institute is not None:
+            entry["institute"] = _locales(institute)
+        if location is not None:
+            entry["location"] = _locales(location)
+        if detail is not None:
+            entry["detail"] = _locales(detail)
+        entry.update(fields)
+        self.education.append(entry)
+        return self
+
+    def add_work_experience(
+        self,
+        *,
+        date: str | dict[str, str],
+        position: str | dict[str, str] | None = None,
+        company: str | dict[str, str] | None = None,
+        location: str | dict[str, str] | None = None,
+        detail: str | dict[str, str] | None = None,
+        status: str | None = None,
+    ) -> "Portfolio":
+        """Add a three-line Work Experience entry.
+
+        ``position`` is required; ``company``, ``location``, and ``detail``
+        are optional.
+        """
+        if position is None:
+            raise ValueError("add_work_experience 必须提供 position")
+        entry: dict[str, Any] = {"date": _date_range(date), "position": _locales(position)}
+        if company is not None:
+            entry["company"] = _locales(company)
+        if location is not None:
+            entry["location"] = _locales(location)
+        if detail is not None:
+            entry["detail"] = _locales(detail)
+        if status is not None:
+            entry["status"] = status
+        self.work_experience.append(entry)
+        return self
 
     def add_publication(self, *, publication_type: str, date: str | dict[str, str] | None = None, **fields: Any) -> "Portfolio":
         keys = {"journal": "journalArticles", "conference": "conferencePapers"}
@@ -316,6 +378,12 @@ class Portfolio:
         profile_report = validate_profile_assets(self.profile, root=root_path)
         report.errors.extend(profile_report.errors)
         report.warnings.extend(profile_report.warnings)
+        education_report = validate_education_items(self.education)
+        report.errors.extend(education_report.errors)
+        report.warnings.extend(education_report.warnings)
+        work_report = validate_work_experience_items(self.work_experience)
+        report.errors.extend(work_report.errors)
+        report.warnings.extend(work_report.warnings)
         if self.favicon:
             if str(self.favicon).startswith("http://"):
                 report.errors.append("favicon 仅允许 https URL 或本地文件")

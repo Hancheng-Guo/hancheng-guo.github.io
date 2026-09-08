@@ -47,6 +47,87 @@ function renderEntries(selector, entries, fields) {
   });
 }
 
+function renderEducationEntries(entries) {
+  const container = qs('.resume-education');
+  if (!container) return;
+  clear(container);
+  entries.filter((entry) => entry.status !== 'draft').forEach((entry) => {
+    // degree/institution are a read compatibility layer for older site data.
+    const position = localized(entry.position) || localized(entry.degree) || localized(entry.institution) || t('content.placeholder');
+    const institute = localized(entry.institute) || localized(entry.institution);
+    const location = localized(entry.location);
+    const detailText = localized(entry.detail);
+    const card = document.createElement('article');
+    card.className = 'content-entry education-entry';
+    const heading = document.createElement('h3');
+    heading.className = 'education-heading';
+    const strong = document.createElement('strong');
+    renderInline(strong, position);
+    heading.appendChild(strong);
+    [institute, location].filter(Boolean).forEach((value) => {
+      heading.append(', ');
+      const text = document.createElement('span');
+      renderInline(text, value);
+      heading.appendChild(text);
+    });
+    card.appendChild(heading);
+    const dateText = formatDateRange(entry.date);
+    if (dateText) {
+      const date = document.createElement('time');
+      date.className = 'entry-date';
+      date.textContent = dateText;
+      card.appendChild(date);
+    }
+    if (detailText) {
+      const detail = document.createElement('p');
+      detail.className = 'education-detail';
+      renderInline(detail, detailText);
+      card.appendChild(detail);
+    }
+    container.appendChild(card);
+  });
+}
+
+function renderWorkEntries(entries) {
+  const container = qs('.resume-work');
+  if (!container) return;
+  clear(container);
+  entries.filter((entry) => entry.status !== 'draft').forEach((entry) => {
+    const position = localized(entry.position) || t('content.placeholder');
+    const company = localized(entry.company);
+    const location = localized(entry.location);
+    const detailText = localized(entry.detail);
+    const card = document.createElement('article');
+    card.className = 'content-entry work-entry';
+    const heading = document.createElement('h3');
+    heading.className = 'work-heading';
+    const strong = document.createElement('strong');
+    renderInline(strong, position);
+    heading.appendChild(strong);
+    [company, location].filter(Boolean).forEach((value) => {
+      heading.append(', ');
+      const text = document.createElement('span');
+      renderInline(text, value);
+      heading.appendChild(text);
+    });
+    card.appendChild(heading);
+    const dateText = formatDateRange(entry.date);
+    if (dateText) {
+      const date = document.createElement('time');
+      date.className = 'entry-date';
+      date.textContent = dateText;
+      card.appendChild(date);
+    }
+    if (detailText) {
+      const detail = document.createElement('p');
+      detail.className = 'work-detail';
+      renderInline(detail, detailText);
+      card.appendChild(detail);
+    }
+    container.appendChild(card);
+  });
+}
+
 function appendContact(container, { label, icon, url, email = false }) {
   const item = document.createElement('div');
   item.className = `contact-item${email ? ' email-contact-item' : ''}`;
@@ -114,8 +195,8 @@ function renderProfile(profile, contacts, resume) {
 function renderResume(site) {
   applySiteIdentity(site, t('resume.title'));
   renderProfile(site.profile || {}, site.contacts || [], site.resume || {});
-  renderEntries('.resume-education', site.education || [], ['institution', 'degree']);
-  renderEntries('.resume-work', site.workExperience || [], ['title', 'organization', 'summary']);
+  renderEducationEntries(site.education || []);
+  renderWorkEntries(site.workExperience || []);
   renderEntries('.resume-journals', site.publications?.journalArticles || [], ['title', 'venue']);
   renderEntries('.resume-conferences', site.publications?.conferencePapers || [], ['title', 'venue']);
   renderEntries('.resume-awards', site.awards || [], ['title']);

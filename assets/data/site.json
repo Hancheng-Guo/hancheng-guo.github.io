@@ -34,34 +34,44 @@
         "start": "2022-09",
         "end": "2026-06"
       },
-      "institution": {
-        "zh": "Education Test",
-        "en": "Education Test"
+      "position": {
+        "zh": "测试学科 学士",
+        "en": "Bachelor of Test"
       },
-      "degree": {
-        "zh": "Education Test",
-        "en": "Education Test"
+      "institute": {
+        "zh": "测试学校",
+        "en": "University of Test"
       },
-      "status": "test"
+      "location": {
+        "zh": "中国北京",
+        "en": "China"
+      },
+      "detail": {
+        "zh": "测试文案",
+        "en": "Test"
+      }
     }
   ],
   "workExperience": [
     {
       "date": {
-        "start": "2025-10",
-        "end": "2026-03"
+        "start": "2025-10"
       },
-      "title": {
-        "zh": "Work Experience Test",
-        "en": "Work Experience Test"
+      "position": {
+        "zh": "测试实习",
+        "en": "Test of Intern"
       },
-      "organization": {
-        "zh": "Work Experience Test",
-        "en": "Work Experience Test"
+      "company": {
+        "zh": "测试公司",
+        "en": "Test of Company"
       },
-      "summary": {
-        "zh": "Work Experience Test",
-        "en": "Work Experience Test"
+      "location": {
+        "zh": "中国芜湖",
+        "en": "China"
+      },
+      "detail": {
+        "zh": "- 第一行\n- 第二行",
+        "en": "- Line 1\n- Line 2"
       }
     }
   ],
@@ -86,7 +96,8 @@
   "awards": [
     {
       "date": {
-        "start": "2025-08"
+        "start": "2025-08",
+        "end": "2025-08"
       },
       "title": {
         "zh": "Award Test",
@@ -108,7 +119,8 @@
   "timeline": [
     {
       "date": {
-        "start": "2024-05"
+        "start": "2024-05",
+        "end": "2024-05"
       },
       "title": {
         "zh": "开源 SliverWolf 桌面四足",
@@ -121,7 +133,8 @@
     },
     {
       "date": {
-        "start": "2024-07"
+        "start": "2024-07",
+        "end": "2024-07"
       },
       "title": {
         "zh": "2024 ROBOCON 全国赛",
@@ -134,7 +147,8 @@
     },
     {
       "date": {
-        "start": "2024-08"
+        "start": "2024-08",
+        "end": "2024-08"
       },
       "title": {
         "zh": "2024 福建省大学生电子设计大赛",
@@ -147,7 +161,8 @@
     },
     {
       "date": {
-        "start": "2024-11"
+        "start": "2024-11",
+        "end": "2024-11"
       },
       "title": {
         "zh": "福建省大学生智能海洋装备设计制作大赛",
@@ -160,7 +175,8 @@
     },
     {
       "date": {
-        "start": "2024-12"
+        "start": "2024-12",
+        "end": "2024-12"
       },
       "title": {
         "zh": "2024 世界航海装备大会",
@@ -173,7 +189,8 @@
     },
     {
       "date": {
-        "start": "2025-07"
+        "start": "2025-07",
+        "end": "2025-07"
       },
       "title": {
         "zh": "2025 ROBOCON 全国赛",
@@ -186,7 +203,8 @@
     },
     {
       "date": {
-        "start": "2025-08"
+        "start": "2025-08",
+        "end": "2025-08"
       },
       "title": {
         "zh": "2025 全国大学生电子设计大赛",
@@ -199,7 +217,8 @@
     },
     {
       "date": {
-        "start": "2025-09"
+        "start": "2025-09",
+        "end": "2025-09"
       },
       "title": {
         "zh": "开源 BRS 并联四足机器人",

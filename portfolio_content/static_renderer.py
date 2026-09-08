@@ -203,6 +203,9 @@ def format_date_range(value: Any, language: str = "en") -> str:
         start, end = value.get("start"), value.get("end")
     if not start:
         return ""
+    if isinstance(value, dict) and not end:
+        month = format_month(start, language)
+        return f"{start[:4]}年{int(start[5:])}月 至今" if language == "zh" else f"Since {month}"
     start_text = format_month(start, language)
     return f"{start_text} – {format_month(end, language)}" if end and end != start else start_text
 
@@ -225,8 +228,12 @@ def _icon(name: str) -> str:
         markup = icon_path.read_text(encoding="utf-8").strip()
     except OSError:
         return f'<span class="svg-icon icon-{safe_name}" aria-hidden="true"></span>'
-    if not markup.startswith("<svg"):
+    svg_start = re.search(r"<svg\b", markup)
+    if not svg_start:
         return f'<span class="svg-icon icon-{safe_name}" aria-hidden="true"></span>'
+    # Some local SVGs contain an XML declaration or repository comments.
+    # Generated pages are HTML documents, so embed the SVG element only.
+    markup = markup[svg_start.start():]
     return re.sub(
         r"<svg\b",
         f'<svg class="svg-icon svg-icon--inline icon-{safe_name}" aria-hidden="true" focusable="false"',
@@ -357,6 +364,42 @@ def _publication_entries(items: list[dict[str, Any]]) -> str:
     return "".join(_entry(item, "title", ("venue",)) for item in items)
 
 
+def _education_entry(entry: dict[str, Any]) -> str:
+    """Render the intentional three-line Education CV format.
+
+    Accept legacy raw entries as well as the canonical fields emitted by the
+    current builder. This matters for users who retained an older site.json.
+    """
+    position = entry.get("position") or entry.get("degree") or entry.get("institution") or ""
+    institute = entry.get("institute") or entry.get("institution") or ""
+    location = entry.get("location") or ""
+    detail = entry.get("detail") or ""
+    first_line = f'<strong>{markdown_inline(position)}</strong>'
+    place = [markdown_inline(value) for value in (institute, location) if localized(value)]
+    if place:
+        first_line += ", " + ", ".join(place)
+    date_text = format_date_range(entry.get("date"))
+    date_line = f'<time class="entry-date">{escape(date_text)}</time>' if date_text else ""
+    detail_line = f'<p class="education-detail">{markdown_inline(detail)}</p>' if localized(detail) else ""
+    return f'<article class="content-entry education-entry"><h3 class="education-heading">{first_line}</h3>{date_line}{detail_line}</article>'
+
+
+def _work_entry(entry: dict[str, Any]) -> str:
+    """Render Work Experience in the same three-line layout as Education."""
+    position = entry.get("position") or ""
+    company = entry.get("company") or ""
+    location = entry.get("location") or ""
+    detail = entry.get("detail") or ""
+    first_line = f'<strong>{markdown_inline(position)}</strong>'
+    place = [markdown_inline(value) for value in (company, location) if localized(value)]
+    if place:
+        first_line += ", " + ", ".join(place)
+    date_text = format_date_range(entry.get("date"))
+    date_line = f'<time class="entry-date">{escape(date_text)}</time>' if date_text else ""
+    detail_line = f'<p class="work-detail">{markdown_inline(detail)}</p>' if localized(detail) else ""
+    return f'<article class="content-entry work-entry"><h3 class="work-heading">{first_line}</h3>{date_line}{detail_line}</article>'
+
+
 def _profile_asset(profile: dict[str, Any], key: str) -> str | None:
     """Return an explicitly configured profile asset, never a placeholder."""
     value = profile.get(key)
@@ -454,8 +497,8 @@ def render_cv(portfolio: Any) -> str:
     skill_groups = [group for group in portfolio.tech_stack if group.get("status") != "draft"]
     journal_items = [item for item in portfolio.publications.get("journalArticles", []) if item.get("status") != "draft"]
     conference_items = [item for item in portfolio.publications.get("conferencePapers", []) if item.get("status") != "draft"]
-    education = "".join(_entry(item, "institution", ("degree",)) for item in education_items)
-    work = "".join(_entry(item, "title", ("organization", "summary")) for item in work_items)
+    education = "".join(_education_entry(item) for item in education_items)
+    work = "".join(_work_entry(item) for item in work_items)
     awards = "".join(_entry(item, "title", ()) for item in award_items)
     journals = _publication_entries(journal_items)
     conferences = _publication_entries(conference_items)

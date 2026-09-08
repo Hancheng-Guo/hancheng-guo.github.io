@@ -3,7 +3,7 @@ import importlib.util
 import unittest
 from pathlib import Path
 from portfolio_content import Portfolio
-from portfolio_content.static_renderer import markdown_inline, pretty_html, render_cv, render_home, render_project
+from portfolio_content.static_renderer import format_date_range, markdown_inline, pretty_html, render_cv, render_home, render_project
 from portfolio_content.validators import validate_document
 from portfolio_content.cli import clean_generated_output, clean_generated_pages
 
@@ -186,11 +186,77 @@ class BuilderTests(unittest.TestCase):
     self.assertEqual(site["site"]["author"]["zh"], "示例")
     self.assertEqual(site["site"]["lastUpdateDate"], "2026-09-07")
     self.assertEqual(site["timeline"][0]["date"], {"start": "2025-01", "end": "2025-03"})
-    self.assertEqual(site["education"][0]["date"], {"start": "2024-09"})
+    self.assertEqual(site["education"][0]["date"], {"start": "2024-09", "end": "2024-09"})
     with self.assertRaises(ValueError):
       portfolio.add_award(date="September 2025", title="Award")
     with self.assertRaises(ValueError):
       Portfolio(last_update_date="2026-02-30").site_document()
+
+  def test_education_uses_a_structured_three_line_format_with_legacy_compatibility(self):
+    portfolio = Portfolio()
+    portfolio.add_education(
+      date={"start": "2022-04", "end": "2026-06"},
+      position={"en": "Ph.D. in **Robotics**", "zh": "机器人学博士"},
+      institute={"en": "ETH Zurich", "zh": "苏黎世联邦理工学院"},
+      location={"en": "Switzerland", "zh": "瑞士"},
+      detail={"en": "Research focus: *Legged robotics*", "zh": "研究方向：**足式机器人**"},
+    )
+    item = portfolio.site_document()["education"][0]
+    self.assertEqual(item["date"], {"start": "2022-04", "end": "2026-06"})
+    self.assertEqual(item["position"]["en"], "Ph.D. in **Robotics**")
+    html = render_cv(portfolio)
+    expected = '<article class="content-entry education-entry"><h3 class="education-heading"><strong>Ph.D. in <strong>Robotics</strong></strong>, ETH Zurich, Switzerland</h3><time class="entry-date">Apr 2022 – Jun 2026</time><p class="education-detail">Research focus: <em>Legged robotics</em></p></article>'
+    self.assertIn(expected, html)
+    self.assertLess(html.index('education-heading'), html.index('entry-date'))
+    self.assertLess(html.index('entry-date'), html.index('education-detail'))
+
+    optional = Portfolio()
+    optional.add_education(date="2024-09", position="M.Sc. & <Robotics>", institute="Example Institute")
+    optional_html = render_cv(optional)
+    self.assertIn('<strong>M.Sc. &amp; &lt;Robotics&gt;</strong>, Example Institute', optional_html)
+    self.assertNotIn('Example Institute, </h3>', optional_html)
+    self.assertNotIn('education-detail', optional_html)
+
+    legacy = Portfolio()
+    legacy.add_education(date="2024-09", institution="Legacy University", degree="Legacy Degree")
+    legacy_item = legacy.site_document()["education"][0]
+    self.assertEqual(legacy_item["position"], {"en": "Legacy Degree", "zh": "Legacy Degree"})
+    self.assertEqual(legacy_item["institute"], {"en": "Legacy University", "zh": "Legacy University"})
+    self.assertIn('<strong>Legacy Degree</strong>, Legacy University', render_cv(legacy))
+    invalid = Portfolio()
+    invalid.education.append({"date": {"start": "2024-09"}})
+    self.assertIn('必须提供 position', invalid.validate(root='.').format())
+
+  def test_ongoing_dates_and_work_experience_three_line_format(self):
+    self.assertEqual(format_date_range({"start": "2022-04"}), "Since Apr 2022")
+    self.assertEqual(format_date_range({"start": "2022-04"}, "zh"), "2022年4月 至今")
+    self.assertEqual(format_date_range("2022-04"), "Apr 2022")
+    self.assertEqual(format_date_range({"start": "2022-04", "end": "2022-04"}), "Apr 2022")
+    portfolio = Portfolio()
+    portfolio.add_project(title="Project", summary="Summary", thumbnail="assets/images/Avatar.jpg", date={"start": "2024-01"})
+    portfolio.add_timeline_event(date={"start": "2024-01"}, title="Timeline", description="Detail")
+    portfolio.add_education(date={"start": "2024-01"}, position="Student")
+    portfolio.add_work_experience(
+      date={"start": "2024-01"}, position="Robotics **Engineer**", company="Example Co.", location="Zurich", detail="Built *robots*"
+    )
+    portfolio.add_publication(publication_type="journal", date={"start": "2024-01"}, title="Paper", venue="Venue")
+    portfolio.add_award(date={"start": "2024-01"}, title="Award")
+    self.assertEqual(portfolio.add_award(date="2024-02", title="Single month").awards[-1]["date"], {"start": "2024-02", "end": "2024-02"})
+    home, cv = render_home(portfolio), render_cv(portfolio)
+    self.assertGreaterEqual(home.count("Since Jan 2024"), 3)  # project, publication, timeline
+    self.assertGreaterEqual(cv.count("Since Jan 2024"), 4)  # education, work, publication, award
+    expected = '<article class="content-entry work-entry"><h3 class="work-heading"><strong>Robotics <strong>Engineer</strong></strong>, Example Co., Zurich</h3><time class="entry-date">Since Jan 2024</time><p class="work-detail">Built <em>robots</em></p></article>'
+    self.assertIn(expected, cv)
+    with self.assertRaises(TypeError):
+      Portfolio().add_work_experience(date="2024-01", title="Legacy role")
+    rejected = Portfolio()
+    rejected.work_experience.append({"date": {"start": "2024-01"}, "position": "Role", "title": "Rejected"})
+    self.assertIn('workExperience[0].title 已不支持', rejected.validate(root='.').format())
+    optional = Portfolio()
+    optional.add_work_experience(date={"start": "2024-01"}, position="Role")
+    optional_html = render_cv(optional)
+    self.assertNotIn('work-detail', optional_html)
+    self.assertNotIn('Role, </h3>', optional_html)
 
   def test_optional_publication_date_and_markdown_venue(self):
     portfolio = Portfolio()
@@ -305,6 +371,8 @@ class BuilderTests(unittest.TestCase):
       self.assertIn('href="https://orcid.org/0009-0005-2213-1604"', html)
       self.assertIn('target="_blank" rel="noopener noreferrer"', html)
       self.assertIn('aria-label="ORCID"', html)
+      self.assertNotIn('<?xml', html)
+      self.assertNotIn('Uploaded to: SVG Repo', html)
 
   def test_profile_name_and_empty_sections_follow_visible_content(self):
     empty = Portfolio()
@@ -336,7 +404,7 @@ class BuilderTests(unittest.TestCase):
     singles = Portfolio()
     singles.add_timeline_event(date="2025-01", title="Timeline", description="Visible")
     singles.add_education(date="2024-01", institution="School", degree="Degree")
-    singles.add_work_experience(date="2024-01", title="Role", organization="Org")
+    singles.add_work_experience(date="2024-01", position="Role", company="Org")
     singles.add_tech_group(title="Tools", items=[{"name": "Python"}])
     singles.add_award(date="2024-01", title="Award")
     self.assertIn('id="timeline"', render_home(singles))

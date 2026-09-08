@@ -14,6 +14,32 @@
       "type": "object",
       "required": ["date"],
       "properties": { "date": { "$ref": "#/$defs/dateRange" } }
+    },
+    "educationItem": {
+      "type": "object",
+      "required": ["date"],
+      "properties": {
+        "date": { "$ref": "#/$defs/dateRange" },
+        "position": { "type": ["string", "object"] },
+        "institute": { "type": ["string", "object"] },
+        "location": { "type": ["string", "object"] },
+        "detail": { "type": ["string", "object"] },
+        "institution": { "type": ["string", "object"] },
+        "degree": { "type": ["string", "object"] }
+      }
+    },
+    "workExperienceItem": {
+      "type": "object",
+      "required": ["date"],
+      "properties": {
+        "date": { "$ref": "#/$defs/dateRange" },
+        "position": { "type": ["string", "object"] },
+        "company": { "type": ["string", "object"] },
+        "location": { "type": ["string", "object"] },
+        "detail": { "type": ["string", "object"] },
+        "status": { "type": "string" }
+      },
+      "additionalProperties": false
     }
   },
   "type": "object",
@@ -32,8 +58,8 @@
       }
     },
     "profile": { "type": "object" },
-    "education": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
-    "workExperience": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
+    "education": { "type": "array", "items": { "$ref": "#/$defs/educationItem" } },
+    "workExperience": { "type": "array", "items": { "$ref": "#/$defs/workExperienceItem" } },
     "publications": {
       "type": "object",
       "required": ["journalArticles", "conferencePapers"],

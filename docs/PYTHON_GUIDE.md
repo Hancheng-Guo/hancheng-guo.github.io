@@ -243,16 +243,26 @@ portfolio.add_education(
         start="2022-09",
         end="2026-06",
     ),
-    institution=dict(
-        zh="示例大学",
-        en="Example University",
-    ),
-    degree=dict(
+    position=dict(
         zh="机器人工程学士",
         en="B.Eng. in Robotics",
     ),
+    institute=dict(
+        zh="示例大学",
+        en="Example University",
+    ),
+    location=dict(
+        zh="苏黎世，瑞士",
+        en="Zürich, Switzerland",
+    ),
+    detail=dict(
+        zh="研究方向：足式机器人、仿真到现实迁移、基于学习的设计与控制。",
+        en="Research focus: Legged robotics, sim-to-real transfer, learning-based design and control.",
+    ),
 )
 ```
+
+Education 固定以三行展示：**`position`**, `institute`, `location`；结构化 `date`；`detail`。`location` 与 `detail` 可省略，省略后不会留下多余标点或空行。推荐使用 `position`、`institute`、`location`、`date`、`detail`；旧版 `degree` 与 `institution` 仍兼容，分别映射为 `position` 与 `institute`。
 
 ### `add_work_experience()`
 
@@ -262,15 +272,19 @@ portfolio.add_work_experience(
         start="2025-10",
         end="2026-03",
     ),
-    title=dict(
+    position=dict(
         zh="机器人工程实习生",
         en="Robotics Engineering Intern",
     ),
-    organization=dict(
+    company=dict(
         zh="示例公司",
         en="Example Company",
     ),
-    summary=dict(
+    location=dict(
+        zh="苏黎世，瑞士",
+        en="Zürich, Switzerland",
+    ),
+    detail=dict(
         zh=(
             "负责控制算法开发与系统集成测试。"
         ),
@@ -280,6 +294,10 @@ portfolio.add_work_experience(
     ),
 )
 ```
+
+Work Experience 与 Education 使用相同的三行展示：**`position`**, `company`, `location`；结构化 `date`；`detail`。`company`、`location`、`detail` 均可省略。Work Experience 仅支持 `position`、`company`、`location`、`date`、`detail`（以及可选 `status`）；请勿使用 `title`、`organization` 或 `summary`。
+
+所有接受 `date` 的内容类型都支持进行中的结构化时间：`date=dict(start="2022-04")` 在英文显示为 `Since Apr 2022`，中文显示为 `2022年4月 至今`。提供 `end` 时仍显示完整范围；传入单个字符串（例如 `date="2025-08"`）仍显示单一月份。
 
 ### `add_publication()`
 

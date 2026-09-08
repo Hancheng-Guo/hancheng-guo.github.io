@@ -576,15 +576,22 @@ portfolio.add_education(
         start="2022-09",
         end="2026-06",
     ),
-    institution=dict(
-        zh="Education Test",
-        en="Education Test",
+    position=dict(
+        zh="测试学科 学士",
+        en="Bachelor of Test",
     ),
-    degree=dict(
-        zh="Education Test",
-        en="Education Test",
+    institute=dict(
+        zh="测试学校",
+        en="University of Test",
     ),
-    status="test",
+    location=dict(
+        zh="中国北京",
+        en="China",
+    ),
+    detail=dict(
+        zh="测试文案",
+        en="Test",
+    ),
 )
 
 # endregion
@@ -595,22 +602,27 @@ portfolio.add_education(
 portfolio.add_work_experience(
     date=dict(
         start="2025-10",
-        end="2026-03",
     ),
-    title=dict(
-        zh="Work Experience Test",
-        en="Work Experience Test",
+    position=dict(
+        zh="测试实习",
+        en="Test of Intern",
     ),
-    organization=dict(
-        zh="Work Experience Test",
-        en="Work Experience Test",
+    company=dict(
+        zh="测试公司",
+        en="Test of Company",
     ),
-    summary=dict(
+    location=dict(
+        zh="中国芜湖",
+        en="China",
+    ),
+    detail=dict(
         zh=(
-            "Work Experience Test"
+            "- 第一行\n"
+            "- 第二行"
         ),
         en=(
-            "Work Experience Test"
+            "- Line 1\n"
+            "- Line 2"
         ),
     ),
 )

@@ -14,6 +14,13 @@ export function formatDateRange(value) {
   const start = typeof value === 'string' ? value : value.start;
   const end = typeof value === 'object' ? value.end : undefined;
   if (!start) return '';
+  if (typeof value === 'object' && !end) {
+    if (currentLanguage() === 'zh') {
+      const [year, month] = start.split('-').map(Number);
+      return `${year}年${month}月 至今`;
+    }
+    return `Since ${formatMonth(start)}`;
+  }
   return end && end !== start ? `${formatMonth(start)} – ${formatMonth(end)}` : formatMonth(start);
 }
 
