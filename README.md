@@ -14,7 +14,7 @@
 - 每个项目拥有独立静态详情页、前后项目导航、图片预览和可选外部链接。
 - Python 在构建阶段生成完整 HTML 和 JSON；禁用 JavaScript 时仍能阅读核心内容。
 - JavaScript 只负责语言、主题、数据同步、平滑导航和交互增强。
-- 图标与 Markdown 解析器均保存在仓库内，不依赖运行时 CDN。
+- 图标（包括 GitHub 和 ORCID）与 Markdown 解析器均保存在仓库内，不依赖运行时 CDN。
 - 响应式布局支持桌面和移动端，并尊重 `prefers-reduced-motion`。
 
 ## 快速开始

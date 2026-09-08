@@ -289,6 +289,23 @@ class BuilderTests(unittest.TestCase):
     self.assertNotIn('avatar-container', render_home(configured))
     self.assertNotIn('data-hero-background', render_home(configured))
 
+  def test_orcid_contact_renders_as_a_safe_local_icon_link(self):
+    portfolio = Portfolio()
+    portfolio.add_contact(
+      label={"en": "ORCID", "zh": "ORCID 学术档案"},
+      icon="orcid",
+      url="https://orcid.org/0009-0005-2213-1604",
+    )
+    document = portfolio.site_document()
+    self.assertEqual(document["contacts"][0]["url"], "https://orcid.org/0009-0005-2213-1604")
+    self.assertEqual(document["contacts"][0]["icon"], "orcid")
+    self.assertEqual(document["contacts"][0]["label"], {"en": "ORCID", "zh": "ORCID 学术档案"})
+    for html in (render_home(portfolio), render_cv(portfolio)):
+      self.assertIn('class="svg-icon svg-icon--inline icon-orcid"', html)
+      self.assertIn('href="https://orcid.org/0009-0005-2213-1604"', html)
+      self.assertIn('target="_blank" rel="noopener noreferrer"', html)
+      self.assertIn('aria-label="ORCID"', html)
+
   def test_profile_name_and_empty_sections_follow_visible_content(self):
     empty = Portfolio()
     home = render_home(empty)

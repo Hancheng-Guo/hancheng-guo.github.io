@@ -201,7 +201,7 @@ portfolio.set_profile(
 
 ### `add_contact()`
 
-每次调用增加一个联系方式。当前项目内置并实际使用的社交图标是 `github`。
+每次调用增加一个联系方式。内置社交图标包括 `github` 和 `orcid`。
 
 ```python
 portfolio.add_contact(
@@ -211,6 +211,19 @@ portfolio.add_contact(
     ),
     icon="github",
     url="https://github.com/example",
+)
+```
+
+例如，可添加 ORCID 学术档案：
+
+```python
+portfolio.add_contact(
+    label=dict(
+        zh="ORCID 学术档案",
+        en="ORCID",
+    ),
+    icon="orcid",
+    url="https://orcid.org/0000-0000-0000-0000",
 )
 ```
 

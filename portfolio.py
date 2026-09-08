@@ -69,6 +69,15 @@ portfolio.add_contact(
     url="https://github.com/Hancheng-Guo",
 )
 
+portfolio.add_contact(
+    label=dict(
+        zh="ORCID 学术档案",
+        en="ORCID",
+    ),
+    icon="orcid",
+    url="https://orcid.org/0009-0005-2213-1604",
+)
+
 # endregion
 
 

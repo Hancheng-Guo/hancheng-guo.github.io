@@ -351,6 +351,14 @@
       },
       "icon": "github",
       "url": "https://github.com/Hancheng-Guo"
+    },
+    {
+      "label": {
+        "zh": "ORCID 学术档案",
+        "en": "ORCID"
+      },
+      "icon": "orcid",
+      "url": "https://orcid.org/0009-0005-2213-1604"
     }
   ]
 }
