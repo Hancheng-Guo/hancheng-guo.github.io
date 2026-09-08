@@ -85,8 +85,9 @@ function renderTimeline(events) {
   if (toggle) {
     toggle.hidden = ordered.length <= 8;
     toggle.setAttribute('aria-expanded', 'false');
-    renderInline(toggle, t('timeline.showMore'));
-    toggle.onclick = () => { const expanded = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!expanded)); renderInline(toggle, t(expanded ? 'timeline.showMore' : 'timeline.showLess')); container.classList.toggle('timeline-expanded', !expanded); };
+    const label = qs('.timeline-toggle-label', toggle);
+    renderInline(label || toggle, t('timeline.showMore'));
+    toggle.onclick = () => { const expanded = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!expanded)); renderInline(label || toggle, t(expanded ? 'timeline.showMore' : 'timeline.showLess')); container.classList.toggle('timeline-expanded', !expanded); };
   }
 }
 

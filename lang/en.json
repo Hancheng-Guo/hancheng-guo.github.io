@@ -9,7 +9,11 @@
     "resume": "CV",
     "openMenu": "Open navigation",
     "toggleLanguage": "Toggle language",
-    "toggleTheme": "Toggle color theme"
+    "toggleTheme": "Toggle color theme",
+    "switchToChinese": "切换到中文",
+    "switchToEnglish": "Switch to English",
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme"
   },
   "intro": {
     "title": "Hello, I'm Lain",

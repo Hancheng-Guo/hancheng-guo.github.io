@@ -3,7 +3,7 @@ import importlib.util
 import unittest
 from pathlib import Path
 from portfolio_content import Portfolio
-from portfolio_content.static_renderer import markdown_inline, render_cv, render_home, render_project
+from portfolio_content.static_renderer import markdown_inline, pretty_html, render_cv, render_home, render_project
 from portfolio_content.validators import validate_document
 from portfolio_content.cli import clean_generated_output, clean_generated_pages
 
@@ -19,6 +19,52 @@ class BuilderTests(unittest.TestCase):
       self.assertFalse(generated.exists())
       self.assertTrue(unrelated.exists())
       self.assertFalse(clean_generated_output(generated))
+
+  def test_static_html_is_readable_indented_and_deterministic(self):
+    import tempfile
+    with tempfile.TemporaryDirectory() as first, tempfile.TemporaryDirectory() as second:
+      portfolio = Portfolio()
+      portfolio.add_project(title={"en": "**Demo**", "zh": "演示"}, summary="Summary", thumbnail="assets/images/Avatar.jpg").add_page(template="minimal").add_paragraph("Body")
+      portfolio.write_static_fallbacks(root=first)
+      portfolio.write_pages(root=first)
+      first_build = {relative: (Path(first) / relative).read_bytes() for relative in ("index.html", "pages/cv.html", "pages/projects/project1.html")}
+      portfolio.write_static_fallbacks(root=first)
+      portfolio.write_pages(root=first)
+      portfolio.write_static_fallbacks(root=second)
+      portfolio.write_pages(root=second)
+      for relative in ("index.html", "pages/cv.html", "pages/projects/project1.html"):
+        left = (Path(first) / relative).read_text(encoding="utf-8")
+        right = (Path(second) / relative).read_text(encoding="utf-8")
+        self.assertEqual((Path(first) / relative).read_bytes(), first_build[relative])
+        self.assertEqual(left, right)
+        self.assertNotRegex(left, r"[ \t]+\n")
+        self.assertIn("\n  <head>", left)
+        self.assertIn("\n    <meta ", left)
+        self.assertIn("\n  <body", left)
+        self.assertIn("\n    <nav>", left)
+        self.assertRegex(left, r"\n    <title>[^\n]+</title>")
+        self.assertNotRegex(left, r"<title>[^\n]*\n\s*</title>")
+        self.assertRegex(left, r"\n\s+<h[1-3][^>]*>[^\n]+</h[1-3]>")
+        self.assertNotRegex(left, r"<h[1-3][^>]*>[^<\n]*\n\s+</h[1-3]>")
+        self.assertRegex(left, r"\n    <script[^>]*>[^\n]*</script>\n")
+        self.assertRegex(left, r"\n\s+<div class=\"nav-actions\">\n")
+        self.assertRegex(left, r"\n\s+<button [^\n]+>\n")
+        if relative.endswith("project1.html"):
+          self.assertIn("<strong>Demo</strong>", left)
+        self.assertIn('<script type="module"', left)
+
+  def test_pretty_html_preserves_inline_and_raw_payloads(self):
+    script = 'const comparison = left > right; const markup = "<tag data-value=\'>\'>";\n  keepThisIndent();'
+    style = '.example::before { content: ">"; }\n  .example { white-space: pre; }'
+    source = f'<!DOCTYPE html><html><head><title>Example title</title><script>{script}</script><style>{style}</style></head><body><nav><a href="/x?value=>"><span>Link</span></a><button type="button"><span>Go</span></button></nav><main><h2>Simple <strong>heading</strong></h2><p>Inline <em>text</em> and <a href="https://example.com?a=>b">link</a>.</p><pre>  preserve\n    every space</pre></main></body></html>'
+    formatted = pretty_html(source)
+    self.assertIn('<title>Example title</title>', formatted)
+    self.assertIn('<h2>Simple <strong>heading</strong></h2>', formatted)
+    self.assertIn('<p>Inline <em>text</em> and <a href="https://example.com?a=>b">link</a>.</p>', formatted)
+    self.assertIn(f'<script>{script}</script>', formatted)
+    self.assertIn(f'<style>{style}</style>', formatted)
+    self.assertIn('<pre>  preserve\n    every space</pre>', formatted)
+    self.assertNotRegex(formatted, r"[ \t]+\n")
 
   def test_project_owns_one_automatically_located_page(self):
     project = Portfolio().add_project(

@@ -160,7 +160,12 @@ body > nav {
 .project-adjacent-name { color: inherit; }
 .timeline-extra { display: none; }
 .timeline-container.timeline-expanded .timeline-extra { display: block; }
-.timeline-toggle { display: block; margin: 24px auto 0; }
+.timeline-toggle { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 200px; min-width: 200px; height: 30px; margin: 24px auto 0; padding: 4px 16px; white-space: nowrap; color: var(--text-main); background: var(--bg-card); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); font-size: .82rem; font-weight: 650; line-height: 1; position: relative; }
+.control-btn.timeline-toggle { background: var(--bg-card); border-color: var(--border-light); }
+.timeline-toggle:hover, .timeline-toggle:focus-visible { background: var(--bg-hover); border-color: var(--primary); color: var(--primary); }
+.timeline-toggle-label { position: absolute; left: 50%; transform: translateX(-50%); }
+.timeline-chevron { position: absolute; right: 12px; width: 13px; height: 13px; color: currentColor; transition: transform var(--transition-base); }
+.timeline-toggle[aria-expanded="true"] .timeline-chevron { transform: rotate(180deg); }
 .error-state { border: 1px solid var(--border-light); border-radius: var(--radius-md); }
 .hero-action-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin-top: 24px; }
 .intro-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
@@ -181,6 +186,18 @@ body > nav {
   align-items: center;
   justify-content: center;
 }
+.nav-controls .nav-control {
+  box-sizing: border-box;
+  height: 36px;
+  width: 36px;
+  min-width: 36px;
+  padding: 0;
+  border-radius: var(--radius-full);
+  position: relative;
+  overflow: hidden;
+}
+.nav-controls .nav-control .svg-icon { width: 16px; height: 16px; display: inline-block; flex: 0 0 16px; }
+.lang-toggle .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
 .control-btn:hover {
   background: var(--bg-hover);
@@ -189,14 +206,7 @@ body > nav {
 }
 
 /* 主题切换按钮特殊处理 */
-.theme-toggle {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-}
+.theme-toggle { position: relative; overflow: hidden; }
 
 .theme-toggle .svg-icon {
   position: absolute;
@@ -231,6 +241,18 @@ body > nav {
 
 .icon-sun { --icon-url: url('../icons/sun.svg'); }
 .icon-moon { --icon-url: url('../icons/moon.svg'); }
+.icon-chevron-down { --icon-url: url('../icons/chevron-down.svg'); }
+.nav-controls .lang-toggle .language-target-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+}
+
+[data-theme="dark"] .lang-toggle .language-target-icon { filter: invert(1); }
 .icon-envelope { --icon-url: url('../icons/envelope.svg'); }
 .icon-file-pdf { --icon-url: url('../icons/file-pdf.svg'); }
 .icon-github { --icon-url: url('../icons/github.svg'); }
@@ -863,9 +885,6 @@ footer span { display: block; }
 .theme-toggle {
   cursor: pointer;
   z-index: 10; /* 提高层级 */
-  /* 确保按钮有足够空间容纳图标 */
-  width: 40px; 
-  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;

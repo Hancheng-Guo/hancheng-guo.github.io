@@ -9,7 +9,11 @@
     "resume": "简历",
     "openMenu": "打开导航菜单",
     "toggleLanguage": "切换语言",
-    "toggleTheme": "切换颜色主题"
+    "toggleTheme": "切换颜色主题",
+    "switchToChinese": "切换为中文",
+    "switchToEnglish": "Switch to English",
+    "switchToLight": "切换为浅色主题",
+    "switchToDark": "切换为深色主题"
   },
   "intro": {
     "title": "你好，我是Lain",

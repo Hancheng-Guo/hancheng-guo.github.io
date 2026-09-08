@@ -9,7 +9,7 @@ import re
 import tempfile
 
 from .validators import ValidationReport, validate_document
-from .static_renderer import render_cv, render_home, render_project, write_text_atomic
+from .static_renderer import pretty_html, render_cv, render_home, render_project, write_text_atomic
 
 
 def _locales(value: str | dict[str, str]) -> dict[str, str]:
@@ -322,7 +322,7 @@ class Portfolio:
         for project in self.projects:
             destination = root_path / str(project["page"])
             destination.parent.mkdir(parents=True, exist_ok=True)
-            html = render_project(self, project)
+            html = pretty_html(render_project(self, project))
             with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=destination.parent, delete=False) as handle:
                 handle.write(html)
                 temporary = Path(handle.name)
@@ -333,8 +333,8 @@ class Portfolio:
     def write_static_fallbacks(self, *, root: str | os.PathLike[str] = ".") -> None:
         """Generate complete, readable home and CV pages."""
         root_path = Path(root)
-        write_text_atomic(root_path / "index.html", render_home(self))
-        write_text_atomic(root_path / "pages" / "cv.html", render_cv(self))
+        write_text_atomic(root_path / "index.html", pretty_html(render_home(self)))
+        write_text_atomic(root_path / "pages" / "cv.html", pretty_html(render_cv(self)))
 
     def write_site_data(self, output: str | os.PathLike[str] = "assets/data/site.json") -> Path:
         destination = Path(output)

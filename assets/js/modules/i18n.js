@@ -43,7 +43,23 @@ function translatePage() {
   });
 
   const toggle = document.querySelector('.lang-toggle');
-  if (toggle) toggle.textContent = language === 'en' ? '中文' : 'English';
+  if (toggle) {
+    toggle.dataset.language = language;
+    const label = String(t(language === 'en' ? 'nav.switchToChinese' : 'nav.switchToEnglish'));
+    toggle.setAttribute('aria-label', label);
+    toggle.setAttribute('title', label);
+    const hidden = toggle.querySelector('.visually-hidden');
+    if (hidden) hidden.textContent = label;
+    const icon = toggle.querySelector('.language-target-icon');
+    if (icon) icon.src = fromRoot(`assets/icons/language-switch-${language === 'zh' ? 'en' : 'ch'}.svg`);
+  }
+  const theme = document.querySelector('.theme-toggle');
+  if (theme) {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    const label = String(t(dark ? 'nav.switchToLight' : 'nav.switchToDark'));
+    theme.setAttribute('aria-label', label);
+    theme.setAttribute('title', label);
+  }
 }
 
 async function loadLanguage(nextLanguage) {
@@ -51,7 +67,7 @@ async function loadLanguage(nextLanguage) {
   if (!response.ok) throw new Error(`Unable to load language: ${nextLanguage}`);
   messages = await response.json();
   translatePage();
-  listeners.forEach((listener) => listener(nextLanguage));
+  await Promise.all([...listeners].map((listener) => listener(nextLanguage)));
 }
 
 export async function initLanguage() {
