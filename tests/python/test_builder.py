@@ -256,6 +256,7 @@ class BuilderTests(unittest.TestCase):
     home_without = render_home(without)
     cv_without = render_cv(without)
     self.assertNotIn('avatar-container', home_without)
+    self.assertNotIn('bg-decoration', home_without)
     self.assertNotIn('class="avatar"', home_without)
     self.assertNotIn('data-hero-background', home_without)
     self.assertNotIn('Portfolio-01-3.png', home_without)
@@ -274,6 +275,7 @@ class BuilderTests(unittest.TestCase):
     home_configured = render_home(configured)
     cv_configured = render_cv(configured)
     self.assertIn('class="avatar-container"', home_configured)
+    self.assertIn('class="bg-decoration"', home_configured)
     self.assertIn('src="assets/images/Avatar.jpg"', home_configured)
     self.assertIn('data-hero-background="true"', home_configured)
     self.assertIn('url(&quot;../images/Portfolio-01-3.png&quot;)', home_configured)
@@ -286,6 +288,44 @@ class BuilderTests(unittest.TestCase):
     configured.set_profile(avatar=None, hero_background=None)
     self.assertNotIn('avatar-container', render_home(configured))
     self.assertNotIn('data-hero-background', render_home(configured))
+
+  def test_profile_name_and_empty_sections_follow_visible_content(self):
+    empty = Portfolio()
+    home = render_home(empty)
+    cv = render_cv(empty)
+    self.assertIn('id="profile"', home)
+    self.assertIn('href="index.html#profile"', home)
+    self.assertIn('data-i18n="nav.profile">Profile', home)
+    self.assertIn('id="top"', home)  # Legacy #top links remain valid.
+    for section_id, title in (("projects", "Projects"), ("publications", "Publications"), ("timeline", "Timeline")):
+      self.assertNotIn(f'id="{section_id}"', home)
+      self.assertNotIn(f'>{title}<', home)
+      self.assertNotIn(f'#{section_id}', home)
+    for title in ("Education", "Work Experience", "Publications", "Tech Stack", "Awards &amp; Scholarships"):
+      self.assertNotIn(f'>{title}<', cv)
+
+    draft_only = Portfolio()
+    draft_only.add_project(title="Draft", summary="Hidden", thumbnail="assets/images/Avatar.jpg", status="draft")
+    self.assertNotIn('id="projects"', render_home(draft_only))
+    self.assertNotIn('#projects', render_home(draft_only))
+
+    journals = Portfolio()
+    journals.add_publication(publication_type="journal", title="Journal", venue="Venue")
+    journal_home, journal_cv = render_home(journals), render_cv(journals)
+    for html in (journal_home, journal_cv):
+      self.assertIn('Journal Articles', html)
+      self.assertNotIn('Conference Papers', html)
+
+    singles = Portfolio()
+    singles.add_timeline_event(date="2025-01", title="Timeline", description="Visible")
+    singles.add_education(date="2024-01", institution="School", degree="Degree")
+    singles.add_work_experience(date="2024-01", title="Role", organization="Org")
+    singles.add_tech_group(title="Tools", items=[{"name": "Python"}])
+    singles.add_award(date="2024-01", title="Award")
+    self.assertIn('id="timeline"', render_home(singles))
+    single_cv = render_cv(singles)
+    for title in ("Education", "Work Experience", "Tech Stack", "Awards &amp; Scholarships"):
+      self.assertIn(f'>{title}<', single_cv)
 
   def test_profile_image_paths_are_validated(self):
     missing_avatar = Portfolio(); missing_avatar.set_profile(avatar='assets/images/missing-avatar.png')

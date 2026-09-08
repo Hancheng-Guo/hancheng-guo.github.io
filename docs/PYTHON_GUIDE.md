@@ -169,7 +169,7 @@ portfolio = Portfolio(
 
 ### `set_profile()`
 
-首页 Portfolio 和 CV 左侧栏读取同一个 profile：
+首页 Profile 区域和 CV 左侧栏读取同一个 profile：
 
 ```python
 portfolio.set_profile(
@@ -197,7 +197,7 @@ portfolio.set_profile(
 
 常用字段为 `name`、`summary`、`email` 和可选的 `location`。邮箱会生成 `mailto:` 链接。
 
-`avatar` 和 `hero_background` 是可选的图片路径：`avatar` 同时用于首页头像和 CV 头像；`hero_background` 仅用于首页 Portfolio 顶部的横幅背景。两者都必须显式传入才会显示，省略后不会输出图片、空占位或默认图片；`avatar=None` 或 `hero_background=None` 可移除先前的配置。图片路径会在 `validate`/`build` 时按本地资源规则校验。
+`avatar` 和 `hero_background` 是可选的图片路径：`avatar` 同时用于首页头像和 CV 头像；`hero_background` 仅用于首页 Profile 顶部的横幅背景。两者都必须显式传入才会显示，省略后不会输出图片、空占位或默认图片；`avatar=None` 或 `hero_background=None` 可移除先前的配置。首页头像的光晕也只会在配置头像时输出。图片路径会在 `validate`/`build` 时按本地资源规则校验。
 
 ### `add_contact()`
 

@@ -1,4 +1,4 @@
-# Hancheng Guo Portfolio
+# Hancheng Guo Homepage
 
 一个由 Python 内容配置生成的双语静态个人主页，用于展示个人资料、项目、论文、时间线和 CV。网站无需后端或数据库，可以直接部署到 GitHub Pages。
 
@@ -9,7 +9,7 @@
 ## 主要特性
 
 - 默认英文和深色主题，并记住访客的语言与主题选择。
-- 首页包含 Portfolio、Projects、Publications 和 Timeline。
+- 首页包含 Profile、Projects、Publications 和 Timeline。
 - 独立 CV 页面包含个人信息、Education、Work Experience、Publications、Tech Stack 与 Awards & Scholarships。
 - 每个项目拥有独立静态详情页、前后项目导航、图片预览和可选外部链接。
 - Python 在构建阶段生成完整 HTML 和 JSON；禁用 JavaScript 时仍能阅读核心内容。

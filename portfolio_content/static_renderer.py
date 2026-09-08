@@ -284,10 +284,22 @@ def _nav(portfolio: Any, prefix: str, *, active_cv: bool = False) -> str:
     home = f"{prefix}index.html"
     cv = f"{prefix}pages/cv.html"
     active = ' class="active"' if active_cv else ""
+    visible_projects = [project for project in portfolio.projects if project.get("status") != "draft"]
+    publications = portfolio.publications
+    visible_journals = [item for item in publications.get("journalArticles", []) if item.get("status") != "draft"]
+    visible_conferences = [item for item in publications.get("conferencePapers", []) if item.get("status") != "draft"]
+    visible_timeline = [item for item in portfolio.timeline if item.get("status") != "draft"]
+    section_links = [f'<a href="{home}#profile" data-i18n="nav.profile">Profile</a>']
+    if visible_projects:
+        section_links.append(f'<a href="{home}#projects" data-i18n="nav.project">Project</a>')
+    if visible_journals or visible_conferences:
+        section_links.append(f'<a href="{home}#publications" data-i18n="nav.publications">Publications</a>')
+    if visible_timeline:
+        section_links.append(f'<a href="{home}#timeline" data-i18n="nav.timeline">Timeline</a>')
     return f'''<nav><div class="container nav-container">
   <a href="{home}" class="logo"><span class="logo-text">{author}</span><div class="logo-dot"></div></a>
   <div class="nav-actions"><button class="control-btn menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation" data-i18n-aria-label="nav.openMenu">☰</button>
-    <div class="nav-links" id="primary-navigation"><a href="{home}#top" data-i18n="nav.portfolio">Portfolio</a><a href="{home}#projects" data-i18n="nav.project">Project</a><a href="{home}#publications" data-i18n="nav.publications">Publications</a><a href="{home}#timeline" data-i18n="nav.timeline">Timeline</a><a href="{cv}"{active} data-i18n="nav.resume">CV</a></div>
+    <div class="nav-links" id="primary-navigation">{"".join(section_links)}<a href="{cv}"{active} data-i18n="nav.resume">CV</a></div>
     <div class="nav-controls"><button class="control-btn nav-control lang-toggle" type="button" aria-label="切换到中文" title="切换到中文" data-language="en" data-i18n-aria-label="nav.toggleLanguage"><img class="language-target-icon" src="{prefix}assets/icons/language-switch-ch.svg" alt="" aria-hidden="true"><span class="visually-hidden">切换到中文</span></button>{_theme_button()}</div>
   </div>
 </div></nav>'''
@@ -378,7 +390,7 @@ def _project_card(project: dict[str, Any]) -> str:
 
 
 def _timeline(portfolio: Any) -> tuple[str, bool]:
-    events = list(reversed(portfolio.timeline))
+    events = list(reversed([event for event in portfolio.timeline if event.get("status") != "draft"]))
     parts = []
     for index, event in enumerate(events):
         extra = " timeline-extra" if index >= 8 else ""
@@ -392,9 +404,12 @@ def render_home(portfolio: Any) -> str:
     hero_background = _profile_asset(profile, "hero_background")
     name = markdown_inline(profile.get("name", portfolio.author))
     summary = markdown_inline(profile.get("summary", ""))
-    projects = "".join(_project_card(project) for project in portfolio.projects if project.get("status") != "draft")
-    journals = _publication_entries(portfolio.publications.get("journalArticles", []))
-    conferences = _publication_entries(portfolio.publications.get("conferencePapers", []))
+    visible_projects = [project for project in portfolio.projects if project.get("status") != "draft"]
+    visible_journals = [item for item in portfolio.publications.get("journalArticles", []) if item.get("status") != "draft"]
+    visible_conferences = [item for item in portfolio.publications.get("conferencePapers", []) if item.get("status") != "draft"]
+    projects = "".join(_project_card(project) for project in visible_projects)
+    journals = _publication_entries(visible_journals)
+    conferences = _publication_entries(visible_conferences)
     timeline, has_more = _timeline(portfolio)
     toggle_attrs = "" if has_more else " hidden"
     favicon = _favicon(portfolio.favicon, "")
@@ -412,14 +427,20 @@ def render_home(portfolio: Any) -> str:
             "url": f"{SITE_ORIGIN}/",
         },
     )
+    project_section = f'<section id="projects" class="section-padding"><div class="container"><h2 data-i18n="projects.title">Projects</h2><div class="projects-grid">{projects}</div></div></section>' if visible_projects else ""
+    publication_categories = ""
+    if visible_journals:
+        publication_categories += f'<h3 data-i18n="publications.journal">Journal Articles</h3><div class="content-list home-journals">{journals}</div>'
+    if visible_conferences:
+        publication_categories += f'<h3 data-i18n="publications.conference">Conference Papers</h3><div class="content-list home-conferences">{conferences}</div>'
+    publication_section = f'<section id="publications" class="section-padding"><div class="container"><h2 data-i18n="publications.title">Publications</h2><div class="narrative-container">{publication_categories}</div></div></section>' if publication_categories else ""
+    timeline_section = f'<section id="timeline" class="section-padding"><div class="container"><h2 data-i18n="timeline.title">Timeline</h2><div class="timeline-container">{timeline}</div><button class="control-btn timeline-toggle" type="button" aria-expanded="false"{toggle_attrs}><span class="timeline-toggle-label" data-i18n="timeline.showMore">Show more</span>{_icon("chevron-down").replace("class=\"svg-icon", "class=\"svg-icon timeline-chevron")}</button></div></section>' if timeline else ""
+    profile_decoration = '<div class="bg-decoration" aria-hidden="true"></div>' if avatar else ""
     return f'''<!DOCTYPE html>
 {MARKER}
 <html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{title}</title>{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>{_anchor_bootstrap()}<link rel="stylesheet" href="assets/css/style.css"></head>
 <body id="top" data-page="home">{_nav(portfolio, "")}
-<main><section class="intro"{_hero_attributes(hero_background)}><div class="bg-decoration"></div><div class="container flex-center column">{f'<div class="avatar-container"><div class="avatar-glow"></div><img class="avatar" src="{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<h1 class="gradient-text hero-title">Hello, I'm {name}</h1><div class="subtitle hero-summary">{summary}</div><div class="hero-action-row"><div class="intro-actions">{_download(portfolio.resume, "")}</div><div id="contact" class="contact-links hero-contact-links" aria-label="Contact links">{_contacts(portfolio)}</div></div></div></section>
-<section id="projects" class="section-padding"><div class="container"><h2 data-i18n="projects.title">Projects</h2><div class="projects-grid">{projects}</div></div></section>
-<section id="publications" class="section-padding"><div class="container"><h2 data-i18n="publications.title">Publications</h2><div class="narrative-container"><h3 data-i18n="publications.journal">Journal Articles</h3><div class="content-list home-journals">{journals}</div><h3 data-i18n="publications.conference">Conference Papers</h3><div class="content-list home-conferences">{conferences}</div></div></div></section>
-<section id="timeline" class="section-padding"><div class="container"><h2 data-i18n="timeline.title">Timeline</h2><div class="timeline-container">{timeline}</div><button class="control-btn timeline-toggle" type="button" aria-expanded="false"{toggle_attrs}><span class="timeline-toggle-label" data-i18n="timeline.showMore">Show more</span>{_icon("chevron-down").replace('class="svg-icon', 'class="svg-icon timeline-chevron')}</button></div></section></main>
+<main><section id="profile" class="intro profile-section"{_hero_attributes(hero_background)}>{profile_decoration}<div class="container flex-center column">{f'<div class="avatar-container"><div class="avatar-glow"></div><img class="avatar" src="{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<h1 class="gradient-text hero-title">Hello, I'm {name}</h1><div class="subtitle hero-summary">{summary}</div><div class="hero-action-row"><div class="intro-actions">{_download(portfolio.resume, "")}</div><div id="contact" class="contact-links hero-contact-links" aria-label="Contact links">{_contacts(portfolio)}</div></div></div></section>{project_section}{publication_section}{timeline_section}</main>
 {_footer(portfolio)}<script type="module" src="assets/js/app.js"></script></body></html>'''
 
 
@@ -427,12 +448,28 @@ def render_cv(portfolio: Any) -> str:
     profile = portfolio.profile
     avatar = _profile_asset(profile, "avatar")
     favicon = _favicon(portfolio.favicon, "../")
-    education = "".join(_entry(item, "institution", ("degree",)) for item in portfolio.education)
-    work = "".join(_entry(item, "title", ("organization", "summary")) for item in portfolio.work_experience)
-    awards = "".join(_entry(item, "title", ()) for item in portfolio.awards)
-    journals = _publication_entries(portfolio.publications.get("journalArticles", []))
-    conferences = _publication_entries(portfolio.publications.get("conferencePapers", []))
-    skills = "".join(f'<article class="content-entry"><h3>{markdown_inline(group.get("title"))}</h3><p>{"<span class=\"entry-separator\"> · </span>".join(markdown_inline(item.get("name")) for item in group.get("items", []))}</p></article>' for group in portfolio.tech_stack)
+    education_items = [item for item in portfolio.education if item.get("status") != "draft"]
+    work_items = [item for item in portfolio.work_experience if item.get("status") != "draft"]
+    award_items = [item for item in portfolio.awards if item.get("status") != "draft"]
+    skill_groups = [group for group in portfolio.tech_stack if group.get("status") != "draft"]
+    journal_items = [item for item in portfolio.publications.get("journalArticles", []) if item.get("status") != "draft"]
+    conference_items = [item for item in portfolio.publications.get("conferencePapers", []) if item.get("status") != "draft"]
+    education = "".join(_entry(item, "institution", ("degree",)) for item in education_items)
+    work = "".join(_entry(item, "title", ("organization", "summary")) for item in work_items)
+    awards = "".join(_entry(item, "title", ()) for item in award_items)
+    journals = _publication_entries(journal_items)
+    conferences = _publication_entries(conference_items)
+    skills = "".join(f'<article class="content-entry"><h3>{markdown_inline(group.get("title"))}</h3><p>{"<span class=\"entry-separator\"> · </span>".join(markdown_inline(item.get("name")) for item in group.get("items", []))}</p></article>' for group in skill_groups)
+    education_section = f'<section class="narrative-container"><h2 data-i18n="education.title">Education</h2><div class="content-list resume-education">{education}</div></section>' if education else ""
+    work_section = f'<section class="narrative-container"><h2 data-i18n="work.title">Work Experience</h2><div class="content-list resume-work">{work}</div></section>' if work else ""
+    publication_categories = ""
+    if journals:
+        publication_categories += f'<h3 data-i18n="publications.journal">Journal Articles</h3><div class="content-list resume-journals">{journals}</div>'
+    if conferences:
+        publication_categories += f'<h3 data-i18n="publications.conference">Conference Papers</h3><div class="content-list resume-conferences">{conferences}</div>'
+    publications_section = f'<section class="narrative-container"><h2 data-i18n="publications.title">Publications</h2>{publication_categories}</section>' if publication_categories else ""
+    skills_section = f'<section class="narrative-container"><h2 data-i18n="skills.title">Tech Stack</h2><div class="content-list resume-skills">{skills}</div></section>' if skills else ""
+    awards_section = f'<section class="narrative-container"><h2 data-i18n="awards.title">Awards &amp; Scholarships</h2><div class="content-list resume-awards">{awards}</div></section>' if awards else ""
     name = markdown_inline(profile.get("name", portfolio.author))
     summary = markdown_inline(profile.get("summary", ""))
     cv_title_source = f"CV - {localized(portfolio.site_name)}"
@@ -448,7 +485,7 @@ def render_cv(portfolio: Any) -> str:
 {MARKER}
 <html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{cv_title}</title>{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script><link rel="stylesheet" href="../assets/css/style.css"></head>
 <body data-page="resume">{_nav(portfolio, "../", active_cv=True)}<main class="section-padding"><div class="container resume-page"><a class="back-link" href="../index.html">&lt; <span data-i18n="resume.back">Back to Home</span></a><h1 data-i18n="resume.title">CV</h1><div class="resume-layout"><aside class="resume-sidebar"><div class="resume-profile-heading">{f'<div class="resume-avatar-wrap"><div class="avatar-glow" aria-hidden="true"></div><img tabindex="0" class="resume-profile-avatar" src="../{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<div class="resume-profile-identity"><h2 class="resume-profile-name">{name}</h2><div class="resume-download">{_download(portfolio.resume, "../")}</div></div></div><div class="resume-profile-details"><p>{summary}</p></div><div class="contact-links resume-contact-links" aria-label="Contact links">{_contacts(portfolio, "../")}</div></aside><div class="resume-main">
-<section class="narrative-container"><h2 data-i18n="education.title">Education</h2><div class="content-list resume-education">{education}</div></section><section class="narrative-container"><h2 data-i18n="work.title">Work Experience</h2><div class="content-list resume-work">{work}</div></section><section class="narrative-container"><h2 data-i18n="publications.title">Publications</h2><h3 data-i18n="publications.journal">Journal Articles</h3><div class="content-list resume-journals">{journals}</div><h3 data-i18n="publications.conference">Conference Papers</h3><div class="content-list resume-conferences">{conferences}</div></section><section class="narrative-container"><h2 data-i18n="skills.title">Tech Stack</h2><div class="content-list resume-skills">{skills}</div></section><section class="narrative-container"><h2 data-i18n="awards.title">Awards &amp; Scholarships</h2><div class="content-list resume-awards">{awards}</div></section></div></div></div></main>{_footer(portfolio)}<script type="module" src="../assets/js/resume.js"></script></body></html>'''
+{education_section}{work_section}{publications_section}{skills_section}{awards_section}</div></div></div></main>{_footer(portfolio)}<script type="module" src="../assets/js/resume.js"></script></body></html>'''
 LINK_PRESENTATION = {
     "github": ("github", "Code"),
     "techDoc": ("file-pdf", "Docs"),

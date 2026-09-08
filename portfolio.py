@@ -26,9 +26,12 @@ portfolio = Portfolio(
     # favicon="assets/images/Avatar.jpg",
 )
 
+
+# region Profile
+
 portfolio.set_profile(
     avatar="assets/images/Avatar.jpg",
-    hero_background="assets/images/Portfolio-01-2.png",
+    hero_background="assets/images/Portfolio-01-3.png",
     name=dict(
         zh="郭瀚丞",
         en="Hancheng Guo",
@@ -66,6 +69,10 @@ portfolio.add_contact(
     url="https://github.com/Hancheng-Guo",
 )
 
+# endregion
+
+
+# region Project
 
 project_1 = portfolio.add_project(
     title=dict(
@@ -83,12 +90,6 @@ project_1 = portfolio.add_project(
             "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, "
             "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, "
             "31st in Obstacle, and 34th in Cross-country among 180+ teams."
-            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
-            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
-            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
-            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
-            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
-            "hello, hello, hello, hello, hello, hello, hello, hello, hello. "
         ),
     ),
     thumbnail="assets/images/Portfolio-01.png",
@@ -371,6 +372,10 @@ page_3.add_bilibili_link(
     url="https://www.bilibili.com/video/BV1VH4y1A7aM/",
 )
 
+# endregion
+
+
+# region Publication
 
 portfolio.add_publication(
     publication_type="journal",
@@ -405,6 +410,10 @@ portfolio.add_publication(
     ),
 )
 
+# endregion
+
+
+# region Timeline
 
 portfolio.add_timeline_event(
     date="2024-05",
@@ -548,6 +557,10 @@ portfolio.add_timeline_event(
     ),
 )
 
+# endregion
+
+
+# region Education
 
 portfolio.add_education(
     date=dict(
@@ -564,6 +577,11 @@ portfolio.add_education(
     ),
     status="test",
 )
+
+# endregion
+
+
+# region Work Experience
 
 portfolio.add_work_experience(
     date=dict(
@@ -587,6 +605,11 @@ portfolio.add_work_experience(
         ),
     ),
 )
+
+# endregion
+
+
+# region Skill
 
 portfolio.add_tech_group(
     title=dict(
@@ -705,6 +728,11 @@ portfolio.add_tech_group(
     ],
 )
 
+# endregion
+
+
+# region Award
+
 portfolio.add_award(
     date="2025-08",
     title=dict(
@@ -713,6 +741,8 @@ portfolio.add_award(
     ),
     status="test",
 )
+
+# endregion
 
 
 if __name__ == "__main__":

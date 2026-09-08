@@ -32,7 +32,7 @@
       "locales": {
         "en": {
           "title": "ROBOCON 2025 Quadruped Robot Challenge",
-          "summary": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams.hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello, hello. ",
+          "summary": "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, 31st in Obstacle, and 34th in Cross-country among 180+ teams.",
           "blocks": [
             {
               "type": "image",

@@ -193,7 +193,7 @@ function renderContacts(contacts, profile = {}) {
   if (socialGroup.childElementCount) container.appendChild(socialGroup);
 }
 
-function renderPortfolio(site) {
+function renderProfile(site) {
   applySiteIdentity(site);
   const profile = site.profile || {};
   const name = localized(profile.name);
@@ -226,7 +226,7 @@ function renderPublicationEntries(selector, entries) {
   const container = qs(selector);
   if (!container) return;
   clear(container);
-  (entries || []).forEach((entry) => {
+  (entries || []).filter((entry) => entry.status !== 'draft').forEach((entry) => {
     const item = document.createElement('article');
     item.className = 'content-entry';
     const heading = document.createElement('h3');
@@ -270,7 +270,7 @@ async function renderHome() {
   }
   renderTimeline(site.timeline || []);
   renderPublications(site);
-  renderPortfolio(site);
+  renderProfile(site);
   renderContacts(site.contacts || [], site.profile || {});
 }
 

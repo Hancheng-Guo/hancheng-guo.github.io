@@ -16,7 +16,7 @@ function renderEntries(selector, entries, fields) {
   const container = qs(selector);
   if (!container) return;
   clear(container);
-  entries.forEach((entry) => {
+  entries.filter((entry) => entry.status !== 'draft').forEach((entry) => {
     const card = document.createElement('article');
     card.className = 'content-entry';
     const heading = document.createElement('h3');
@@ -120,8 +120,9 @@ function renderResume(site) {
   renderEntries('.resume-conferences', site.publications?.conferencePapers || [], ['title', 'venue']);
   renderEntries('.resume-awards', site.awards || [], ['title']);
   const skills = qs('.resume-skills');
+  if (!skills) { qs('#resume-status')?.remove(); return; }
   clear(skills);
-  (site.techStack || []).forEach((group) => {
+  (site.techStack || []).filter((group) => group.status !== 'draft').forEach((group) => {
     const card = document.createElement('article');
     card.className = 'content-entry';
     const heading = document.createElement('h3');
