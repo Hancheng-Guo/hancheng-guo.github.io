@@ -250,6 +250,51 @@ class BuilderTests(unittest.TestCase):
     missing = Portfolio(favicon="assets/icons/missing.svg")
     self.assertFalse(missing.validate(root=".").ok)
 
+  def test_profile_images_are_explicit_optional_assets(self):
+    without = Portfolio()
+    without.set_profile(name="No images")
+    home_without = render_home(without)
+    cv_without = render_cv(without)
+    self.assertNotIn('avatar-container', home_without)
+    self.assertNotIn('class="avatar"', home_without)
+    self.assertNotIn('data-hero-background', home_without)
+    self.assertNotIn('Portfolio-01-3.png', home_without)
+    self.assertNotIn('resume-avatar-wrap', cv_without)
+    self.assertNotIn('resume-profile-avatar', cv_without)
+    self.assertNotIn('Avatar.jpg', cv_without)
+    self.assertNotIn('avatar', without.site_document()['profile'])
+    self.assertNotIn('hero_background', without.site_document()['profile'])
+
+    configured = Portfolio()
+    configured.set_profile(
+      name="Images configured",
+      avatar="assets/images/Avatar.jpg",
+      hero_background="assets/images/Portfolio-01-3.png",
+    )
+    home_configured = render_home(configured)
+    cv_configured = render_cv(configured)
+    self.assertIn('class="avatar-container"', home_configured)
+    self.assertIn('src="assets/images/Avatar.jpg"', home_configured)
+    self.assertIn('data-hero-background="true"', home_configured)
+    self.assertIn('url(&quot;../images/Portfolio-01-3.png&quot;)', home_configured)
+    self.assertIn('class="resume-avatar-wrap"', cv_configured)
+    self.assertIn('src="../assets/images/Avatar.jpg"', cv_configured)
+    self.assertEqual(configured.site_document()['profile']['avatar'], 'assets/images/Avatar.jpg')
+    self.assertEqual(configured.site_document()['profile']['hero_background'], 'assets/images/Portfolio-01-3.png')
+    self.assertTrue(configured.validate(root='.').ok)
+
+    configured.set_profile(avatar=None, hero_background=None)
+    self.assertNotIn('avatar-container', render_home(configured))
+    self.assertNotIn('data-hero-background', render_home(configured))
+
+  def test_profile_image_paths_are_validated(self):
+    missing_avatar = Portfolio(); missing_avatar.set_profile(avatar='assets/images/missing-avatar.png')
+    self.assertIn('profile.avatar 文件不存在', missing_avatar.validate(root='.').format())
+    missing_background = Portfolio(); missing_background.set_profile(hero_background='assets/images/missing-hero.png')
+    self.assertIn('profile.hero_background 文件不存在', missing_background.validate(root='.').format())
+    remote = Portfolio(); remote.set_profile(avatar='https://example.com/avatar.png')
+    self.assertIn('profile.avatar 必须是本地文件', remote.validate(root='.').format())
+
   def test_typed_link_methods_cover_all_supported_icons(self):
     portfolio = Portfolio()
     project = portfolio.add_project(

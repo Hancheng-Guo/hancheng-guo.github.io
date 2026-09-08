@@ -29,6 +29,7 @@
   
   --gradient-title: linear-gradient(135deg, #0f172a 0%, #3b82f6 100%);
   --decoration-blob: #e2e8f0;
+  --hero-fade-color: #f8fafc;
 }
 
 /* [Dark Mode] 深色模式变量覆盖 */
@@ -51,6 +52,19 @@
   
   --gradient-title: linear-gradient(135deg, #f8fafc 0%, #60a5fa 100%);
   --decoration-blob: #1e293b;
+  --hero-fade-color: #0f172a;
+}
+
+@property --hero-fade-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f8fafc;
+}
+
+@property --decoration-blob {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #e2e8f0;
 }
 
 /* =========================================
@@ -223,20 +237,75 @@ body > nav {
    4. Hero Section / Intro
    ========================================= */
 .intro {
+  /* Own this registered color on the element that transitions it.  Letting
+     both the element and its pseudo-element transition an inherited value
+     made the fade finish one transition after the page background. */
+  --hero-fade-color: #f8fafc;
   padding: 100px 0 60px;
   position: relative;
   text-align: center;
   overflow: hidden;
+  isolation: isolate;
+  background-color: var(--bg-body);
+  transition: background-color 0.4s ease, --hero-fade-color 0.4s ease, --decoration-blob 0.4s ease;
 }
+
+[data-theme="dark"] .intro { --hero-fade-color: #0f172a; }
+
+/* The local panoramic project image is deliberately a CSS layer: cover keeps
+   its aspect ratio while crop, rather than distortion, adapts it to viewport
+   width.  This is confined to the home intro and fades into each theme's page
+   background before the following section. */
+.intro::before,
+.intro::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.intro::before {
+  background: center 42% / cover no-repeat;
+  opacity: .38;
+  transition: opacity 0.4s ease;
+  /* `.intro` is an isolated stacking context.  Negative layers are painted
+     beneath its opaque background, which made a configured hero URL resolve
+     successfully but remain invisible.  Keep the imagery above the section
+     paint and put the actual content above both visual layers instead. */
+  z-index: 0;
+}
+
+.intro[data-hero-background]::before { background-image: var(--hero-background-image); }
+
+.intro::after {
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--hero-fade-color) 2%, transparent) 0%, color-mix(in srgb, var(--hero-fade-color) 36%, transparent) 55%, var(--hero-fade-color) 100%);
+  /* The parent owns the sole color transition, keeping this layer on the
+     same clock as body rather than running a second, trailing transition. */
+  z-index: 1;
+}
+
+.intro > .container { position: relative; z-index: 3; }
 
 .svg-icon {
   display: inline-block;
   width: 1.05em;
   height: 1.05em;
   flex: 0 0 auto;
+}
+
+/* JavaScript-created glyphs use an external mask while served over HTTP.
+   Generated fallback markup uses inline SVG so direct file previews do not
+   lose every icon to file-origin mask restrictions. */
+.svg-icon:not(.svg-icon--inline) {
   background-color: currentColor;
   -webkit-mask: var(--icon-url) center / contain no-repeat;
   mask: var(--icon-url) center / contain no-repeat;
+}
+
+.svg-icon--inline {
+  fill: currentColor;
+  color: currentColor;
+  vertical-align: -.125em;
 }
 
 .icon-sun { --icon-url: url('../icons/sun.svg'); }
@@ -299,7 +368,7 @@ body > nav {
   height: 800px;
   background: radial-gradient(circle, var(--decoration-blob) 0%, transparent 70%);
   opacity: 0.5;
-  z-index: -1;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -436,6 +505,7 @@ h2::after {
   transition: var(--transition-base);
   /* 解决 Safari 下圆角溢出问题 */
   transform: translateZ(0); 
+  position: relative;
 }
 
 .card:hover {
@@ -465,11 +535,45 @@ h2::after {
   background-color: var(--bg-hover);
 }
 
-.card:hover .project-thumbnail { transform: scale(1.05); }
+/* Image zoom is independent of summary expansion.  Every project card keeps
+   the familiar hover/focus affordance, while only expandable cards alter copy
+   layout or add the thumbnail-to-surface blend below. */
+.projects-grid .card:is(:focus, :focus-within) .project-thumbnail {
+  transform: scale(1.05);
+}
+.card.project-card-expandable:is(:hover, :focus, :focus-within) .project-thumbnail {
+  border-bottom-color: transparent;
+}
 
 .project-thumbnail-wrapper { overflow: hidden; }
 
-.project-info { padding: 24px; }
+.project-info {
+  --project-copy-active-bottom: 88px;
+  /* Hydration measures the expanded copy and sets both of these per card.
+     The fallback is only for the no-JS compact state. */
+  --project-thumbnail-fade-height: 0px;
+  --project-thumbnail-fade-solid-stop: 0px;
+  padding: 24px;
+  position: relative;
+  isolation: isolate;
+  min-height: var(--project-info-base-height, auto);
+}
+
+/* Metadata occupies this grid row in both compact and expanded states. Only
+   the copy becomes an overlay, so leaving hover/focus cannot reparent tags or
+   the footer between positioning contexts for a single frame. */
+.projects-grid .card.project-card-enhanced .project-info {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: var(--project-info-base-height);
+}
+.projects-grid .card.project-card-enhanced .project-copy { grid-row: 1; }
+.projects-grid .card.project-card-enhanced .project-meta { grid-row: 2; }
+
+.project-copy { position: relative; z-index: 1; }
+/* Metadata is a persistent foreground layer.  The expanded copy can pass
+   behind it, but never obscure tags, the action link, or the date. */
+.project-meta { position: relative; z-index: 3; }
 
 .project-info h3 {
   font-size: 1.25rem;
@@ -485,6 +589,57 @@ h2::after {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Expanding the copy out of normal flow makes the visual information panel
+   reach into the thumbnail without changing the card, grid, tags or footer
+   geometry.  Its bottom edge is measured after hydration so wrapped tags are
+   respected too; the fallback variable covers the static/no-JS layout. */
+.projects-grid .card.project-card-expandable:focus .project-info::before,
+.projects-grid .card.project-card-expandable:focus-within .project-info::before { opacity: 1; }
+.projects-grid .card.project-card-expandable:focus .project-copy,
+.projects-grid .card.project-card-expandable:focus-within .project-copy {
+  position: absolute;
+  inset-inline: 24px;
+  bottom: var(--project-copy-active-bottom);
+  z-index: 2;
+}
+.projects-grid .card.project-card-expandable:focus .project-summary,
+.projects-grid .card.project-card-expandable:focus-within .project-summary {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+.project-info::before {
+  content: '';
+  position: absolute;
+  /* The measured solid stop is placed just above the active copy.  This
+     makes the image surface become the card surface before either title or
+     summary glyphs arrive, while preserving one continuous fade instead of
+     putting a rectangular backing behind the text. */
+  top: calc(-1 * var(--project-thumbnail-fade-height));
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom, transparent 0, color-mix(in srgb, var(--bg-card) 42%, transparent) calc(var(--project-thumbnail-fade-solid-stop) * .52), var(--bg-card) var(--project-thumbnail-fade-solid-stop), var(--bg-card) 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+  z-index: 0;
+}
+
+@media (hover: hover) {
+  .projects-grid .card:hover .project-thumbnail { transform: scale(1.05); }
+  .projects-grid .card.project-card-expandable:hover .project-info::before { opacity: 1; }
+  .projects-grid .card.project-card-expandable:hover .project-copy {
+    position: absolute;
+    inset-inline: 24px;
+    bottom: var(--project-copy-active-bottom);
+    z-index: 2;
+  }
+  .projects-grid .card.project-card-expandable:hover .project-summary {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
 }
 
 .project-link {
@@ -926,4 +1081,12 @@ body > nav {
 /* Adjust paragraph margin in project info to accommodate tags */
 .project-info p {
   margin-bottom: 16px; 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-info::before,
+  .project-thumbnail,
+  .project-link::after {
+    transition-duration: 0s;
+  }
 }

@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 import json
 import os
+import posixpath
 import re
 import tempfile
 
@@ -213,7 +214,25 @@ def format_full_date(value: str, language: str = "en") -> str:
 
 def _icon(name: str) -> str:
     safe_name = re.sub(r"[^a-z0-9-]", "", name.lower())
-    return f'<span class="svg-icon icon-{safe_name}" aria-hidden="true"></span>'
+    # Keep the generated document useful when it is opened directly from disk.
+    # Chromium-family browsers block external SVGs used as CSS masks for a
+    # ``file://`` document, which used to make every static control glyph
+    # disappear.  These are first-party, allow-listed assets, so embed their
+    # SVG markup in generated HTML; hydrated pages may still use the compact
+    # CSS-mask spans created by JavaScript over HTTP.
+    icon_path = Path(__file__).resolve().parents[1] / "assets" / "icons" / f"{safe_name}.svg"
+    try:
+        markup = icon_path.read_text(encoding="utf-8").strip()
+    except OSError:
+        return f'<span class="svg-icon icon-{safe_name}" aria-hidden="true"></span>'
+    if not markup.startswith("<svg"):
+        return f'<span class="svg-icon icon-{safe_name}" aria-hidden="true"></span>'
+    return re.sub(
+        r"<svg\b",
+        f'<svg class="svg-icon svg-icon--inline icon-{safe_name}" aria-hidden="true" focusable="false"',
+        markup,
+        count=1,
+    )
 
 
 def _favicon(path: str | None, prefix: str) -> str:
@@ -326,6 +345,24 @@ def _publication_entries(items: list[dict[str, Any]]) -> str:
     return "".join(_entry(item, "title", ("venue",)) for item in items)
 
 
+def _profile_asset(profile: dict[str, Any], key: str) -> str | None:
+    """Return an explicitly configured profile asset, never a placeholder."""
+    value = profile.get(key)
+    return value.strip() if isinstance(value, str) and value.strip() else None
+
+
+def _hero_attributes(hero_background: str | None) -> str:
+    if not hero_background:
+        return ""
+    # This value is consumed by the stylesheet's pseudo-element, so browsers
+    # resolve its URL relative to ``assets/css/style.css``.  Translate the
+    # configured repository-relative asset path to that base.  A leading site
+    # slash would instead break direct file previews and project-site mounts.
+    css_path = posixpath.relpath(hero_background.lstrip("/"), start="assets/css")
+    css_url = f"url({json.dumps(css_path)})"
+    return f' data-hero-background="true" style="--hero-background-image: {escape(css_url, quote=True)}"'
+
+
 def _project_card(project: dict[str, Any]) -> str:
     content = project["locales"]["en"]
     date_text = format_date_range(project.get("date"))
@@ -337,7 +374,7 @@ def _project_card(project: dict[str, Any]) -> str:
     # client renderer uses this exact node too, which prevents hydration from
     # changing the footer's layout or DOM shape.
     date_element = f'<time class="project-date">{escape(date_text)}</time>' if date_text else '<time class="project-date" hidden></time>'
-    return f'''<article class="card" tabindex="0" data-project-href="{href}"><div class="project-thumbnail-wrapper"><img class="project-thumbnail" src="{escape(str(image.get("src", "")), quote=True)}" alt="{alt}" loading="lazy" decoding="async"></div><div class="project-info"><h3>{markdown_inline(content.get("title"))}</h3><p class="project-summary">{markdown_inline(content.get("summary"))}</p><div class="project-tags">{tags}</div><div class="project-card-footer"><a class="project-link" href="{href}">View Details</a>{date_element}</div></div></article>'''
+    return f'''<article class="card" tabindex="0" data-project-href="{href}"><div class="project-thumbnail-wrapper"><img class="project-thumbnail" src="{escape(str(image.get("src", "")), quote=True)}" alt="{alt}" loading="lazy" decoding="async"></div><div class="project-info"><div class="project-copy"><h3>{markdown_inline(content.get("title"))}</h3><p class="project-summary">{markdown_inline(content.get("summary"))}</p></div><div class="project-meta"><div class="project-tags">{tags}</div><div class="project-card-footer"><a class="project-link" href="{href}">View Details</a>{date_element}</div></div></div></article>'''
 
 
 def _timeline(portfolio: Any) -> tuple[str, bool]:
@@ -351,6 +388,8 @@ def _timeline(portfolio: Any) -> tuple[str, bool]:
 
 def render_home(portfolio: Any) -> str:
     profile = portfolio.profile
+    avatar = _profile_asset(profile, "avatar")
+    hero_background = _profile_asset(profile, "hero_background")
     name = markdown_inline(profile.get("name", portfolio.author))
     summary = markdown_inline(profile.get("summary", ""))
     projects = "".join(_project_card(project) for project in portfolio.projects if project.get("status") != "draft")
@@ -365,7 +404,7 @@ def render_home(portfolio: Any) -> str:
         description=profile.get("summary", ""),
         canonical_path="",
         og_type="website",
-        image_path="assets/images/Avatar.jpg",
+        image_path=avatar,
         structured_data={
             "@context": "https://schema.org",
             "@type": "Person",
@@ -377,15 +416,16 @@ def render_home(portfolio: Any) -> str:
 {MARKER}
 <html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{title}</title>{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>{_anchor_bootstrap()}<link rel="stylesheet" href="assets/css/style.css"></head>
 <body id="top" data-page="home">{_nav(portfolio, "")}
-<main><section class="intro"><div class="bg-decoration"></div><div class="container flex-center column"><div class="avatar-container"><div class="avatar-glow"></div><img class="avatar" src="assets/images/Avatar.jpg" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div><h1 class="gradient-text hero-title">Hello, I'm {name}</h1><div class="subtitle hero-summary">{summary}</div><div class="hero-action-row"><div class="intro-actions">{_download(portfolio.resume, "")}</div><div id="contact" class="contact-links hero-contact-links" aria-label="Contact links">{_contacts(portfolio)}</div></div></div></section>
+<main><section class="intro"{_hero_attributes(hero_background)}><div class="bg-decoration"></div><div class="container flex-center column">{f'<div class="avatar-container"><div class="avatar-glow"></div><img class="avatar" src="{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<h1 class="gradient-text hero-title">Hello, I'm {name}</h1><div class="subtitle hero-summary">{summary}</div><div class="hero-action-row"><div class="intro-actions">{_download(portfolio.resume, "")}</div><div id="contact" class="contact-links hero-contact-links" aria-label="Contact links">{_contacts(portfolio)}</div></div></div></section>
 <section id="projects" class="section-padding"><div class="container"><h2 data-i18n="projects.title">Projects</h2><div class="projects-grid">{projects}</div></div></section>
 <section id="publications" class="section-padding"><div class="container"><h2 data-i18n="publications.title">Publications</h2><div class="narrative-container"><h3 data-i18n="publications.journal">Journal Articles</h3><div class="content-list home-journals">{journals}</div><h3 data-i18n="publications.conference">Conference Papers</h3><div class="content-list home-conferences">{conferences}</div></div></div></section>
-<section id="timeline" class="section-padding"><div class="container"><h2 data-i18n="timeline.title">Timeline</h2><div class="timeline-container">{timeline}</div><button class="control-btn timeline-toggle" type="button" aria-expanded="false"{toggle_attrs}><span class="timeline-toggle-label" data-i18n="timeline.showMore">Show more</span><span class="svg-icon icon-chevron-down timeline-chevron" aria-hidden="true"></span></button></div></section></main>
+<section id="timeline" class="section-padding"><div class="container"><h2 data-i18n="timeline.title">Timeline</h2><div class="timeline-container">{timeline}</div><button class="control-btn timeline-toggle" type="button" aria-expanded="false"{toggle_attrs}><span class="timeline-toggle-label" data-i18n="timeline.showMore">Show more</span>{_icon("chevron-down").replace('class="svg-icon', 'class="svg-icon timeline-chevron')}</button></div></section></main>
 {_footer(portfolio)}<script type="module" src="assets/js/app.js"></script></body></html>'''
 
 
 def render_cv(portfolio: Any) -> str:
     profile = portfolio.profile
+    avatar = _profile_asset(profile, "avatar")
     favicon = _favicon(portfolio.favicon, "../")
     education = "".join(_entry(item, "institution", ("degree",)) for item in portfolio.education)
     work = "".join(_entry(item, "title", ("organization", "summary")) for item in portfolio.work_experience)
@@ -402,12 +442,12 @@ def render_cv(portfolio: Any) -> str:
         description=f"CV and academic profile by {localized(portfolio.author)}.",
         canonical_path="pages/cv.html",
         og_type="profile",
-        image_path="assets/images/Avatar.jpg",
+        image_path=avatar,
     )
     return f'''<!DOCTYPE html>
 {MARKER}
 <html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{cv_title}</title>{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script><link rel="stylesheet" href="../assets/css/style.css"></head>
-<body data-page="resume">{_nav(portfolio, "../", active_cv=True)}<main class="section-padding"><div class="container resume-page"><a class="back-link" href="../index.html">&lt; <span data-i18n="resume.back">Back to Home</span></a><h1 data-i18n="resume.title">CV</h1><div class="resume-layout"><aside class="resume-sidebar"><div class="resume-profile-heading"><div class="resume-avatar-wrap"><div class="avatar-glow" aria-hidden="true"></div><img tabindex="0" class="resume-profile-avatar" src="../assets/images/Avatar.jpg" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div><div class="resume-profile-identity"><h2 class="resume-profile-name">{name}</h2><div class="resume-download">{_download(portfolio.resume, "../")}</div></div></div><div class="resume-profile-details"><p>{summary}</p></div><div class="contact-links resume-contact-links" aria-label="Contact links">{_contacts(portfolio, "../")}</div></aside><div class="resume-main">
+<body data-page="resume">{_nav(portfolio, "../", active_cv=True)}<main class="section-padding"><div class="container resume-page"><a class="back-link" href="../index.html">&lt; <span data-i18n="resume.back">Back to Home</span></a><h1 data-i18n="resume.title">CV</h1><div class="resume-layout"><aside class="resume-sidebar"><div class="resume-profile-heading">{f'<div class="resume-avatar-wrap"><div class="avatar-glow" aria-hidden="true"></div><img tabindex="0" class="resume-profile-avatar" src="../{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<div class="resume-profile-identity"><h2 class="resume-profile-name">{name}</h2><div class="resume-download">{_download(portfolio.resume, "../")}</div></div></div><div class="resume-profile-details"><p>{summary}</p></div><div class="contact-links resume-contact-links" aria-label="Contact links">{_contacts(portfolio, "../")}</div></aside><div class="resume-main">
 <section class="narrative-container"><h2 data-i18n="education.title">Education</h2><div class="content-list resume-education">{education}</div></section><section class="narrative-container"><h2 data-i18n="work.title">Work Experience</h2><div class="content-list resume-work">{work}</div></section><section class="narrative-container"><h2 data-i18n="publications.title">Publications</h2><h3 data-i18n="publications.journal">Journal Articles</h3><div class="content-list resume-journals">{journals}</div><h3 data-i18n="publications.conference">Conference Papers</h3><div class="content-list resume-conferences">{conferences}</div></section><section class="narrative-container"><h2 data-i18n="skills.title">Tech Stack</h2><div class="content-list resume-skills">{skills}</div></section><section class="narrative-container"><h2 data-i18n="awards.title">Awards &amp; Scholarships</h2><div class="content-list resume-awards">{awards}</div></section></div></div></div></main>{_footer(portfolio)}<script type="module" src="../assets/js/resume.js"></script></body></html>'''
 LINK_PRESENTATION = {
     "github": ("github", "Code"),

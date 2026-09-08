@@ -24,7 +24,9 @@
       "zh": "机器人开发爱好者，大三在读，目前于人形机器人公司实习。专注于 MCU 与 Linux 开发、运动控制、强化学习和机器人感知。",
       "en": "Robot development enthusiast and junior-year student. Interning at a humanoid robot company, with a focus on MCU and Linux development, motion control, reinforcement learning, and robot perception."
     },
-    "email": "hc.guo.tect@gmail.com"
+    "email": "hc.guo.tect@gmail.com",
+    "avatar": "assets/images/Avatar.jpg",
+    "hero_background": "assets/images/Portfolio-01-2.png"
   },
   "education": [
     {
@@ -66,36 +68,18 @@
   "publications": {
     "journalArticles": [
       {
-        "title": {
-          "zh": "[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
-          "en": "[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)"
-        },
-        "venue": {
-          "zh": "**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, \"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi,\" in *IEEE Transactions on Aerospace and Electronic Systems*, vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.",
-          "en": "**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, \"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi,\" in *IEEE Transactions on Aerospace and Electronic Systems*, vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838."
-        }
+        "title": "[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
+        "venue": "**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, \"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi,\" in *IEEE Transactions on Aerospace and Electronic Systems*, vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838."
       }
     ],
     "conferencePapers": [
       {
-        "title": {
-          "zh": "[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
-          "en": "[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)"
-        },
-        "venue": {
-          "zh": "Z. Chen, **H. Guo** and X. Zhang, \"Children Presence Detection System in Vehicles via Wi-Fi Devices,\" *2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, 2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443.",
-          "en": "Z. Chen, **H. Guo** and X. Zhang, \"Children Presence Detection System in Vehicles via Wi-Fi Devices,\" *2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, 2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443."
-        }
+        "title": "[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
+        "venue": "Z. Chen, **H. Guo** and X. Zhang, \"Children Presence Detection System in Vehicles via Wi-Fi Devices,\" *2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, 2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443."
       },
       {
-        "title": {
-          "zh": "[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
-          "en": "[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)"
-        },
-        "venue": {
-          "zh": "Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, \"A WiPD-DL Network for in-Vehicle Secure Channel Detection,\" *2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, 2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649.",
-          "en": "Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, \"A WiPD-DL Network for in-Vehicle Secure Channel Detection,\" *2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, 2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649."
-        }
+        "title": "[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
+        "venue": "Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, \"A WiPD-DL Network for in-Vehicle Secure Channel Detection,\" *2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, 2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649."
       }
     ]
   },
@@ -119,8 +103,7 @@
     "url": {
       "zh": "assets/documents/简历测试.pdf",
       "en": "assets/documents/CVTest.pdf"
-    },
-    "status": "test"
+    }
   },
   "timeline": [
     {
@@ -185,7 +168,7 @@
       },
       "description": {
         "zh": "代表福建理工大学参展并展示仿生波士顿大龙虾机器人，获新华社等媒体报道。",
-        "en": "Represented Fujian University of Technology and exhibited the bionic Boston lobster robot,\nreceiving national media coverage."
+        "en": "Represented Fujian University of Technology and exhibited the bionic Boston lobster robot, receiving national media coverage."
       }
     },
     {

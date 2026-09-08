@@ -43,7 +43,7 @@ async function renderProjects() {
         <img class="project-thumbnail" loading="lazy" decoding="async">
       </div>
       <div class="project-info">
-        <h3></h3><p class="project-summary"></p><div class="project-tags"></div><div class="project-card-footer"><a class="project-link"></a><time class="project-date"></time></div>
+        <div class="project-copy"><h3></h3><p class="project-summary"></p></div><div class="project-meta"><div class="project-tags"></div><div class="project-card-footer"><a class="project-link"></a><time class="project-date"></time></div></div>
       </div>`;
     const image = qs('.project-thumbnail', card);
     image.src = fromRoot(project.thumbnail.src);
@@ -62,7 +62,64 @@ async function renderProjects() {
       renderInline(badge, localized(tag));
       tags.appendChild(badge);
     });
+    // The overlay is useful only when the three-line compact treatment has
+    // actually hidden content.  Short summaries must remain bit-for-bit in
+    // their normal layout on hover and focus.
+    const syncCopyOffset = () => {
+      const info = qs('.project-info', card);
+      const summary = qs('.project-summary', card);
+      const copy = qs('.project-copy', card);
+      card.classList.remove('project-card-enhanced');
+      card.classList.remove('project-card-expandable');
+      const tagsTop = tags.getBoundingClientRect().top;
+      const infoBottom = info.getBoundingClientRect().bottom;
+      card.style.setProperty('--project-info-base-height', `${info.getBoundingClientRect().height}px`);
+      card.style.setProperty('--project-copy-active-bottom', `${Math.max(0, infoBottom - tagsTop)}px`);
+      // scrollHeight is measured while the normal three-line clamp is active.
+      // A small tolerance avoids a false positive from fractional line metrics.
+      const expandable = summary.scrollHeight > summary.clientHeight + 1;
+      card.classList.toggle('project-card-expandable', expandable);
+      if (!expandable) {
+        info.style.setProperty('--project-thumbnail-fade-height', '0px');
+        info.style.setProperty('--project-thumbnail-fade-solid-stop', '0px');
+        return;
+      }
+
+      // Measure the copy as it will appear after expansion without changing
+      // the card's compact geometry.  The resulting fade is deliberately
+      // per-card: longer wrapped summaries reach farther into the thumbnail,
+      // and become fully card-coloured just before their first glyph.
+      const previousClamp = summary.style.webkitLineClamp;
+      const previousOverflow = summary.style.overflow;
+      summary.style.webkitLineClamp = 'unset';
+      summary.style.overflow = 'visible';
+      const expandedCopyHeight = copy.getBoundingClientRect().height;
+      summary.style.webkitLineClamp = previousClamp;
+      summary.style.overflow = previousOverflow;
+
+      const copyTopWhenExpanded = info.getBoundingClientRect().height
+        - Math.max(0, infoBottom - tagsTop) - expandedCopyHeight;
+      // Keep a twenty-pixel fully opaque safety margin above text.  Even when
+      // the expanded copy fits below the thumbnail, the image edge itself is
+      // solid card colour so its old border cannot be distinguished.
+      const solidSurfaceY = Math.min(0, copyTopWhenExpanded - 20);
+      const fadeHeight = Math.max(64, -solidSurfaceY + 64);
+      const solidStop = fadeHeight + solidSurfaceY;
+      info.style.setProperty('--project-thumbnail-fade-height', `${fadeHeight}px`);
+      info.style.setProperty('--project-thumbnail-fade-solid-stop', `${solidStop}px`);
+      card.classList.add('project-card-enhanced');
+    };
     grid.appendChild(card);
+    syncCopyOffset();
+    // Observe the thumbnail wrapper rather than the card itself: changing the
+    // enhancement class can affect card descendants, whereas wrapper width is
+    // the input that determines text wrapping. This prevents observer loops.
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(syncCopyOffset).observe(qs('.project-thumbnail-wrapper', card));
+    } else {
+      window.addEventListener('resize', syncCopyOffset, { passive: true });
+    }
+    document.fonts?.ready?.then(syncCopyOffset);
   });
 }
 

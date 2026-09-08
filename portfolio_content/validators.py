@@ -29,6 +29,26 @@ def _local_asset(report: "ValidationReport", value: object, *, field: str, root:
     elif not (root / value).is_file():
         report.errors.append(f"{field} 文件不存在: {value}")
 
+
+def validate_profile_assets(profile: object, *, root: Path) -> "ValidationReport":
+    """Validate optional profile media paths with the same rules as thumbnails.
+
+    These fields deliberately stay optional: their absence means the matching
+    visual is omitted, rather than falling back to a bundled placeholder.
+    """
+    report = ValidationReport()
+    if not isinstance(profile, dict):
+        report.errors.append("profile 必须是对象")
+        return report
+    for key in ("avatar", "hero_background"):
+        if key in profile:
+            value = profile[key]
+            if isinstance(value, str) and value.startswith(("https://", "http://")):
+                report.errors.append(f"profile.{key} 必须是本地文件")
+            else:
+                _local_asset(report, value, field=f"profile.{key}", root=root)
+    return report
+
 def _https_url(report: "ValidationReport", value: object, *, field: str) -> None:
     if not isinstance(value, str) or not value.strip():
         report.errors.append(f"{field} 不能为空")

@@ -8,7 +8,7 @@ import os
 import re
 import tempfile
 
-from .validators import ValidationReport, validate_document
+from .validators import ValidationReport, validate_document, validate_profile_assets
 from .static_renderer import pretty_html, render_cv, render_home, render_project, write_text_atomic
 
 
@@ -30,6 +30,7 @@ def _for_language(value: Any, language: str) -> Any:
 
 _MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 _DAY = re.compile(r"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$")
+_UNSET = object()
 
 
 def _date_range(value: str | dict[str, str]) -> dict[str, str]:
@@ -215,7 +216,26 @@ class Portfolio:
     def add_contact(self, *, label: str | dict[str, str], icon: str, url: str) -> None:
         self.contacts.append({"label": _locales(label), "icon": icon, "url": url})
 
-    def set_profile(self, **fields: Any) -> "Portfolio":
+    def set_profile(
+        self,
+        *,
+        avatar: str | None | object = _UNSET,
+        hero_background: str | None | object = _UNSET,
+        **fields: Any,
+    ) -> "Portfolio":
+        """Update profile content and optional visual assets.
+
+        ``avatar`` and ``hero_background`` are opt-in local asset paths.
+        If either key is omitted, its corresponding image is not rendered.
+        Passing ``None`` removes a previously configured image.
+        """
+        for key, value in (("avatar", avatar), ("hero_background", hero_background)):
+            if value is _UNSET:
+                continue
+            if value is None:
+                self.profile.pop(key, None)
+            else:
+                fields[key] = value
         self.profile.update(fields); return self
 
     def add_education(self, *, date: str | dict[str, str], **fields: Any) -> "Portfolio":
@@ -293,6 +313,9 @@ class Portfolio:
     def validate(self, *, root: str | os.PathLike[str] = ".") -> ValidationReport:
         root_path = Path(root)
         report = validate_document(self.document(), root=root_path)
+        profile_report = validate_profile_assets(self.profile, root=root_path)
+        report.errors.extend(profile_report.errors)
+        report.warnings.extend(profile_report.warnings)
         if self.favicon:
             if str(self.favicon).startswith("http://"):
                 report.errors.append("favicon 仅允许 https URL 或本地文件")

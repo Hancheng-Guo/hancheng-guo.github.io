@@ -27,6 +27,8 @@ portfolio = Portfolio(
 )
 
 portfolio.set_profile(
+    avatar="assets/images/Avatar.jpg",
+    hero_background="assets/images/Portfolio-01-2.png",
     name=dict(
         zh="郭瀚丞",
         en="Hancheng Guo",
@@ -44,117 +46,6 @@ portfolio.set_profile(
     email="hc.guo.tect@gmail.com",
 )
 
-portfolio.add_contact(
-    label=dict(
-        zh="代码仓库",
-        en="GitHub",
-    ),
-    icon="github",
-    url="https://github.com/Hancheng-Guo",
-)
-
-portfolio.add_education(
-    date=dict(
-        start="2022-09",
-        end="2026-06",
-    ),
-    institution=dict(
-        zh="Education Test",
-        en="Education Test",
-    ),
-    degree=dict(
-        zh="Education Test",
-        en="Education Test",
-    ),
-    status="test",
-)
-
-portfolio.add_work_experience(
-    date=dict(
-        start="2025-10",
-        end="2026-03",
-    ),
-    title=dict(
-        zh="Work Experience Test",
-        en="Work Experience Test",
-    ),
-    organization=dict(
-        zh="Work Experience Test",
-        en="Work Experience Test",
-    ),
-    summary=dict(
-        zh=(
-            "Work Experience Test"
-        ),
-        en=(
-            "Work Experience Test"
-        ),
-    ),
-)
-
-portfolio.add_publication(
-    publication_type="journal",
-    title=dict(
-        zh="[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
-        en="[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
-    ),
-    venue=dict(
-        zh=('**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, '
-            '"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi," '
-            'in *IEEE Transactions on Aerospace and Electronic Systems*, '
-            'vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.'),
-        en=('**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, '
-            '"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi," '
-            'in *IEEE Transactions on Aerospace and Electronic Systems*, '
-            'vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.'),
-    ),
-)
-
-portfolio.add_publication(
-    publication_type="conference",
-    title=dict(
-        zh="[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
-        en="[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
-    ),
-    venue=dict(
-        zh=('Z. Chen, **H. Guo** and X. Zhang, '
-            '"Children Presence Detection System in Vehicles via Wi-Fi Devices," '
-            '*2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, '
-            '2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443.'),
-        en=('Z. Chen, **H. Guo** and X. Zhang, '
-            '"Children Presence Detection System in Vehicles via Wi-Fi Devices," '
-            '*2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, '
-            '2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443.'),
-    ),
-)
-
-portfolio.add_publication(
-    publication_type="conference",
-    title=dict(
-        zh="[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
-        en="[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
-    ),
-    venue=dict(
-        zh=('Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, '
-            '"A WiPD-DL Network for in-Vehicle Secure Channel Detection," '
-            '*2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, '
-            '2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649.'),
-        en=('Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, '
-            '"A WiPD-DL Network for in-Vehicle Secure Channel Detection," '
-            '*2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, '
-            '2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649.'),
-    ),
-)
-
-portfolio.add_award(
-    date="2025-08",
-    title=dict(
-        zh="Award Test",
-        en="Award Test",
-    ),
-    status="test",
-)
-
 portfolio.set_resume(
     label=dict(
         zh="下载简历",
@@ -164,7 +55,15 @@ portfolio.set_resume(
         zh="assets/documents/简历测试.pdf",
         en="assets/documents/CVTest.pdf",
     ),
-    status="test",
+)
+
+portfolio.add_contact(
+    label=dict(
+        zh="代码仓库",
+        en="GitHub",
+    ),
+    icon="github",
+    url="https://github.com/Hancheng-Guo",
 )
 
 
@@ -176,14 +75,20 @@ project_1 = portfolio.add_project(
     date="2025-04",
     summary=dict(
         zh=(
-            "2025赛季ROBOCON足式机器人全栈研发。负责从类植保无人机碳管装配工艺机械建模、\n"
-            "力控制算法到3D雷达建图自主导航技术。带领团队在全国180余支队伍中取得竞速赛第30名、\n"
+            "2025赛季ROBOCON足式机器人全栈研发。负责从类植保无人机碳管装配工艺机械建模、"
+            "力控制算法到3D雷达建图自主导航技术。带领团队在全国180余支队伍中取得竞速赛第30名、"
             "障碍赛第31名、越野赛34名的优异成绩。"
         ),
         en=(
-            "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling,\n"
-            "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed,\n"
+            "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, "
+            "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, "
             "31st in Obstacle, and 34th in Cross-country among 180+ teams."
+            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
+            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
+            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
+            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
+            "hello, hello, hello, hello, hello, hello, hello, hello, hello, "
+            "hello, hello, hello, hello, hello, hello, hello, hello, hello. "
         ),
     ),
     thumbnail="assets/images/Portfolio-01.png",
@@ -220,17 +125,17 @@ page_1.add_image(
 page_1.add_paragraph(
     text=dict(
         zh=(
-            "作为我真正入门强化学习控制的第一个项目，我选择了四足机器狗这个相对成熟的课题。\n"
+            "作为我真正入门强化学习控制的第一个项目，我选择了四足机器狗这个相对成熟的课题。"
             "\n"
-            "机器狗有相当多的开源项目可以借鉴，因此可能有人会选择下载下来，跑通它，修改一下其中的内容，\n"
-            "并包装成自己的项目，但我不想这样——因为学习不到一些被忽略的关键部分。\n"
+            "机器狗有相当多的开源项目可以借鉴，因此可能有人会选择下载下来，跑通它，修改一下其中的内容，"
+            "并包装成自己的项目，但我不想这样——因为学习不到一些被忽略的关键部分。"
             "\n"
-            "在过往的科研经历中，我深知理解全流程的重要性，所以我选择基于 Stable-Baseline3 与 Mujoco 库，\n"
+            "在过往的科研经历中，我深知理解全流程的重要性，所以我选择基于 Stable-Baseline3 与 Mujoco 库，"
             "自己搭建机器狗的 RL 训练流程。"
         ),
         en=(
-            "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling,\n"
-            "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed,\n"
+            "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, "
+            "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, "
             "31st in Obstacle, and 34th in Cross-country among 180+ teams."
         ),
     ),
@@ -245,16 +150,16 @@ page_1.add_heading(
 page_1.add_paragraph(
     text=dict(
         zh=(
-            "ROBOCON 作为机器人领域的顶尖赛事，对机械可靠性、电控稳定性、视觉准确性提出了较高的要求。\n"
+            "ROBOCON 作为机器人领域的顶尖赛事，对机械可靠性、电控稳定性、视觉准确性提出了较高的要求。"
             "\n"
-            "在 2025 赛季我基本完整负责了足式机器人一队从机械建模、运动控制到自主导航的全栈研发，\n"
-            "采用类植保无人机碳管装配工艺机构、力控制算法与 3D 雷达建图导航技术，取得 2025 年\n"
-            "ROBOCON（江阴）足式机器人竞速赛全国 30 名、障碍赛全国 31 名、越野赛全国 34 名，\n"
+            "在 2025 赛季我基本完整负责了足式机器人一队从机械建模、运动控制到自主导航的全栈研发，"
+            "采用类植保无人机碳管装配工艺机构、力控制算法与 3D 雷达建图导航技术，取得 2025 年"
+            "ROBOCON（江阴）足式机器人竞速赛全国 30 名、障碍赛全国 31 名、越野赛全国 34 名，"
             "共三项国二。"
         ),
         en=(
-            "During the 2025 season, I worked across mechanical modeling, motion control, and autonomous\n"
-            "navigation. The robot combined a carbon-tube structure, force-control algorithms,\n"
+            "During the 2025 season, I worked across mechanical modeling, motion control, and autonomous "
+            "navigation. The robot combined a carbon-tube structure, force-control algorithms, "
             "and 3D LiDAR mapping, earning three National Second Prizes."
         ),
     ),
@@ -310,14 +215,14 @@ project_2 = portfolio.add_project(
     ),
     summary=dict(
         zh=(
-            "浮力可控多自由度龙虾水下机器人。负责控制系统开发（步进蠕动泵、电机/舵机驱动、\n"
-            "陀螺仪融合、IIC编码器闭环），设计异形多旋翼矢量推进模型实现全向移动。\n"
+            "浮力可控多自由度龙虾水下机器人。负责控制系统开发（步进蠕动泵、电机/舵机驱动、"
+            "陀螺仪融合、IIC编码器闭环），设计异形多旋翼矢量推进模型实现全向移动。"
             "硬件方面负责驱动选型与防水设计。获福建省大学生智能海洋装备大赛特等奖。"
         ),
         en=(
-            "Buoyancy-controllable multi-DOF underwater robot. Developed control system (stepper pumps,\n"
-            "motor/servo drive, gyro fusion, IIC encoder loop) and vector propulsion model for omnidirectional\n"
-            "movement. Handled hardware selection and waterproofing. Won Special Prize in Fujian Intelligent\n"
+            "Buoyancy-controllable multi-DOF underwater robot. Developed control system (stepper pumps, "
+            "motor/servo drive, gyro fusion, IIC encoder loop) and vector propulsion model for omnidirectional "
+            "movement. Handled hardware selection and waterproofing. Won Special Prize in Fujian Intelligent "
             "Marine Equipment Competition."
         ),
     ),
@@ -354,25 +259,25 @@ page_2.add_image(
 page_2.add_paragraph(
     text=dict(
         zh=(
-            "本项目为浮力可控的多自由度龙虾水下机器人。\n"
+            "本项目为浮力可控的多自由度龙虾水下机器人。"
             "\n"
-            "软件部分负责控制系统开发，设计了一套集成步进蠕动泵、电机与舵机驱动、陀螺仪数据处理以及\n"
-            "读取 IIC 编码器闭环控制 360 度舵机的下位机框架，同时设计异形多旋翼的矢量推进模型，\n"
-            "完善全向移动功能。在硬件设计部分负责了驱动器选型、降压电路以及防水设计等工作。\n"
+            "软件部分负责控制系统开发，设计了一套集成步进蠕动泵、电机与舵机驱动、陀螺仪数据处理以及"
+            "读取 IIC 编码器闭环控制 360 度舵机的下位机框架，同时设计异形多旋翼的矢量推进模型，"
+            "完善全向移动功能。在硬件设计部分负责了驱动器选型、降压电路以及防水设计等工作。"
             "\n"
-            "作品获 2024 年福建省大学生智能海洋装备设计制作大赛水下机器人赛道特等奖，同时进一步代表\n"
+            "作品获 2024 年福建省大学生智能海洋装备设计制作大赛水下机器人赛道特等奖，同时进一步代表"
             "福建理工大学参展 2024 世界航海装备大会，获得新华社、光明日报等媒体报道。"
         ),
         en=(
-            "This project features a buoyancy-controllable multi-DOF lobster underwater robot.\n"
+            "This project features a buoyancy-controllable multi-DOF lobster underwater robot."
             "\n"
-            "On the software side, I was responsible for control system development, integrating stepper\n"
-            "peristaltic pumps, motor and servo drives, gyroscope processing, and IIC encoder feedback for\n"
-            "closed-loop control. I also designed a vector propulsion model for omnidirectional movement.\n"
-            "On the hardware side, I handled driver selection, step-down circuit design, and waterproofing.\n"
+            "On the software side, I was responsible for control system development, integrating stepper "
+            "peristaltic pumps, motor and servo drives, gyroscope processing, and IIC encoder feedback for "
+            "closed-loop control. I also designed a vector propulsion model for omnidirectional movement. "
+            "On the hardware side, I handled driver selection, step-down circuit design, and waterproofing."
             "\n"
-            "The project won the Special Prize in the 2024 Fujian University Student Intelligent Marine\n"
-            "Equipment Design Competition and represented Fujian University of Technology at the\n"
+            "The project won the Special Prize in the 2024 Fujian University Student Intelligent Marine "
+            "Equipment Design Competition and represented Fujian University of Technology at the "
             "2024 World Maritime Equipment Conference."
         ),
     ),
@@ -407,12 +312,12 @@ project_3 = portfolio.add_project(
     ),
     summary=dict(
         zh=(
-            "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，\n"
+            "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，"
             "定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。"
         ),
         en=(
-            "Smart planting and harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper\n"
-            "lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic\n"
+            "Smart planting and harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper "
+            "lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic "
             "design and hardware wiring, supporting dual-robot synergy."
         ),
     ),
@@ -445,16 +350,16 @@ page_3.add_image(
 page_3.add_paragraph(
     text=dict(
         zh=(
-            "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。\n"
+            "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。"
             "\n"
-            "通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，\n"
-            "使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，\n"
+            "通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，"
+            "使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，"
             "支持与另一台自主运行机器人协同作业，高效完成任务。"
         ),
         en=(
-            "Based on FreeRTOS, I developed the control system for an integrated intelligent planting and\n"
-            "harvesting agricultural robot. By controlling DJI3508 motors, I completed the gripper lifting,\n"
-            "omnidirectional chassis, and positioning functions with ±5 mm accuracy. I also participated in\n"
+            "Based on FreeRTOS, I developed the control system for an integrated intelligent planting and "
+            "harvesting agricultural robot. By controlling DJI3508 motors, I completed the gripper lifting, "
+            "omnidirectional chassis, and positioning functions with ±5 mm accuracy. I also participated in "
             "pneumatic system design and hardware wiring for collaborative dual-robot operation."
         ),
     ),
@@ -464,6 +369,40 @@ page_3.add_github_link(
 )
 page_3.add_bilibili_link(
     url="https://www.bilibili.com/video/BV1VH4y1A7aM/",
+)
+
+
+portfolio.add_publication(
+    publication_type="journal",
+    title="[_RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi_](https://ieeexplore.ieee.org/document/10971911)",
+    venue=(
+        '**H. Guo**, Z. Chen, M. Huang and X. Y. Zhang, '
+        '"RapidPD: Rapid Human and Pet Presence Detection System for Smart Vehicles via Wi-Fi," '
+        'in *IEEE Transactions on Aerospace and Electronic Systems*, '
+        'vol. 61, no. 4, pp. 10459-10470, Aug. 2025, doi: 10.1109/TAES.2025.3562838.'
+    ),
+)
+
+portfolio.add_publication(
+    publication_type="conference",
+    title="[_Children Presence Detection System in Vehicles via Wi-Fi Devices_](https://ieeexplore.ieee.org/abstract/document/11310443)",
+    venue=(
+        'Z. Chen, **H. Guo** and X. Zhang, '
+        '"Children Presence Detection System in Vehicles via Wi-Fi Devices," '
+        '*2025 IEEE 102nd Vehicular Technology Conference (VTC2025-Fall)*, Chengdu, China, '
+        '2025, pp. 1-5, doi: 10.1109/VTC2025-Fall65116.2025.11310443.'
+    ),
+)
+
+portfolio.add_publication(
+    publication_type="conference",
+    title="[_A WiPD-DL Network for in-Vehicle Secure Channel Detection_](https://ieeexplore.ieee.org/abstract/document/11352220)",
+    venue=(
+        'Z. Chen, **H. Guo**, J. Wen and X. Y. Zhang, '
+        '"A WiPD-DL Network for in-Vehicle Secure Channel Detection," '
+        '*2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP)*, Chongqing, China, '
+        '2025, pp. 1-6, doi: 10.1109/WCSP68525.2025.1010649.'
+    ),
 )
 
 
@@ -539,7 +478,7 @@ portfolio.add_timeline_event(
             "代表福建理工大学参展并展示仿生波士顿大龙虾机器人，获新华社等媒体报道。"
         ),
         en=(
-            "Represented Fujian University of Technology and exhibited the bionic Boston lobster robot,\n"
+            "Represented Fujian University of Technology and exhibited the bionic Boston lobster robot, "
             "receiving national media coverage."
         ),
     ),
@@ -609,6 +548,45 @@ portfolio.add_timeline_event(
     ),
 )
 
+
+portfolio.add_education(
+    date=dict(
+        start="2022-09",
+        end="2026-06",
+    ),
+    institution=dict(
+        zh="Education Test",
+        en="Education Test",
+    ),
+    degree=dict(
+        zh="Education Test",
+        en="Education Test",
+    ),
+    status="test",
+)
+
+portfolio.add_work_experience(
+    date=dict(
+        start="2025-10",
+        end="2026-03",
+    ),
+    title=dict(
+        zh="Work Experience Test",
+        en="Work Experience Test",
+    ),
+    organization=dict(
+        zh="Work Experience Test",
+        en="Work Experience Test",
+    ),
+    summary=dict(
+        zh=(
+            "Work Experience Test"
+        ),
+        en=(
+            "Work Experience Test"
+        ),
+    ),
+)
 
 portfolio.add_tech_group(
     title=dict(
@@ -725,6 +703,15 @@ portfolio.add_tech_group(
             ),
         ),
     ],
+)
+
+portfolio.add_award(
+    date="2025-08",
+    title=dict(
+        zh="Award Test",
+        en="Award Test",
+    ),
+    status="test",
 )
 
 
