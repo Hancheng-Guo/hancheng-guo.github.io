@@ -1006,7 +1006,10 @@ footer span { display: block; }
   .timeline-item { display: grid; grid-template-columns: minmax(220px, .85fr) minmax(0, 1.5fr); gap: 40px; align-items: start; }
   .timeline-item.timeline-extra { display: none; }
   .timeline-container.timeline-expanded .timeline-extra { display: grid; }
+  .timeline-item { --timeline-date-line-height: 1.36rem; --timeline-date-gap: 6px; }
+  .timeline-date { line-height: var(--timeline-date-line-height); margin-bottom: var(--timeline-date-gap); }
   .timeline-summary h3 { font-size: 1.1rem; color: var(--text-main); }
+  .timeline-content { padding-top: calc(var(--timeline-date-line-height) + var(--timeline-date-gap)); }
 }
 
 @media (min-width: 1024px) {
