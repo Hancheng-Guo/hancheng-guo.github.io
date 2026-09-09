@@ -380,7 +380,8 @@ def _education_entry(entry: dict[str, Any]) -> str:
         first_line += ", " + ", ".join(place)
     date_text = format_date_range(entry.get("date"))
     date_line = f'<time class="entry-date">{escape(date_text)}</time>' if date_text else ""
-    detail_line = f'<p class="education-detail">{markdown_inline(detail)}</p>' if localized(detail) else ""
+    has_list = bool(re.search(r"(?m)^\s*-\s+", str(localized(detail) or "")))
+    detail_line = (f'<div class="education-detail markdown-body">{markdown_block(detail)}</div>' if has_list else f'<p class="education-detail">{markdown_inline(detail)}</p>') if localized(detail) else ""
     return f'<article class="content-entry education-entry"><h3 class="education-heading">{first_line}</h3>{date_line}{detail_line}</article>'
 
 
@@ -396,7 +397,8 @@ def _work_entry(entry: dict[str, Any]) -> str:
         first_line += ", " + ", ".join(place)
     date_text = format_date_range(entry.get("date"))
     date_line = f'<time class="entry-date">{escape(date_text)}</time>' if date_text else ""
-    detail_line = f'<p class="work-detail">{markdown_inline(detail)}</p>' if localized(detail) else ""
+    has_list = bool(re.search(r"(?m)^\s*-\s+", str(localized(detail) or "")))
+    detail_line = (f'<div class="work-detail markdown-body">{markdown_block(detail)}</div>' if has_list else f'<p class="work-detail">{markdown_inline(detail)}</p>') if localized(detail) else ""
     return f'<article class="content-entry work-entry"><h3 class="work-heading">{first_line}</h3>{date_line}{detail_line}</article>'
 
 
@@ -437,7 +439,7 @@ def _timeline(portfolio: Any) -> tuple[str, bool]:
     parts = []
     for index, event in enumerate(events):
         extra = " timeline-extra" if index >= 8 else ""
-        parts.append(f'<div class="timeline-item{extra}"><div class="timeline-dot"></div><div class="timeline-summary"><span class="timeline-date">{escape(format_date_range(event.get("date")))}</span><h3>{markdown_inline(event.get("title"))}</h3></div><div class="timeline-content"><p>{markdown_inline(event.get("description"))}</p></div></div>')
+        parts.append(f'<div class="timeline-item{extra}"><div class="timeline-dot"></div><div class="timeline-summary"><span class="timeline-date">{escape(format_date_range(event.get("date")))}</span><h3>{markdown_inline(event.get("title"))}</h3></div><div class="timeline-content markdown-body">{markdown_block(event.get("description"))}</div></div>')
     return "".join(parts), len(events) > 8
 
 
@@ -542,8 +544,9 @@ def _project_blocks(blocks: list[dict[str, Any]]) -> str:
     for block in blocks:
         kind = block.get("type")
         if kind == "heading":
-            level = min(6, max(2, int(block.get("level", 2))))
-            parts.append(f'<h{level}>{markdown_inline(block.get("text"))}</h{level}>')
+            level = block.get("level", 2)
+            level = level if type(level) is int and 2 <= level <= 5 else 2
+            parts.append(f'<h{level} class="project-content-heading">{markdown_inline(block.get("text"))}</h{level}>')
         elif kind == "paragraph":
             parts.append(f'<div class="project-detail-desc markdown-body">{markdown_block(block.get("text"))}</div>')
         elif kind == "image":

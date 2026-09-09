@@ -76,6 +76,8 @@ class ProjectPage:
         return self
 
     def add_heading(self, text: str | dict[str, str], *, level: int = 2, languages: tuple[str, ...] = ("en", "zh")) -> "ProjectPage":
+        if type(level) is not int or not 2 <= level <= 5:
+            raise ValueError("level 必须是 2 到 5 之间的整数")
         return self._block("heading", languages=languages, level=level, text=_locales(text))
 
     def add_paragraph(self, text: str | dict[str, str], *, languages: tuple[str, ...] = ("en", "zh")) -> "ProjectPage":

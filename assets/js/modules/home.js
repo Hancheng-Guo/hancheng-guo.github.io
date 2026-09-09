@@ -4,7 +4,7 @@ import { currentLanguage, onLanguageChange, t } from './i18n.js';
 import { fromRoot } from './paths.js';
 import { loadProjects } from './project-data.js';
 import { applySiteIdentity, loadSiteData } from './site-data.js';
-import { markdownText, renderInline } from './markdown.js';
+import { markdownText, renderBlock, renderInline } from './markdown.js';
 
 function localized(value) {
   if (typeof value === 'string') return value;
@@ -131,10 +131,10 @@ function renderTimeline(events) {
   ordered.forEach((event, index) => {
     const item = document.createElement('div');
     item.className = 'timeline-item';
-    item.innerHTML = '<div class="timeline-dot"></div><div class="timeline-summary"><span class="timeline-date"></span><h3></h3></div><div class="timeline-content"><p></p></div>';
+    item.innerHTML = '<div class="timeline-dot"></div><div class="timeline-summary"><span class="timeline-date"></span><h3></h3></div><div class="timeline-content markdown-body"></div>';
     qs('.timeline-date', item).textContent = formatDateRange(event.date);
     renderInline(qs('.timeline-summary h3', item), localized(event.title));
-    renderInline(qs('p', item), localized(event.description));
+    renderBlock(qs('.timeline-content', item), localized(event.description));
     if (index >= 8) item.classList.add('timeline-extra');
     container.appendChild(item);
   });

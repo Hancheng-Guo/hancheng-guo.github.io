@@ -297,6 +297,8 @@ portfolio.add_work_experience(
 
 Work Experience 与 Education 使用相同的三行展示：**`position`**, `company`, `location`；结构化 `date`；`detail`。`company`、`location`、`detail` 均可省略。Work Experience 仅支持 `position`、`company`、`location`、`date`、`detail`（以及可选 `status`）；请勿使用 `title`、`organization` 或 `summary`。
 
+在 `detail`、Timeline 描述和项目段落等长文案中，可使用连续的 `- ` 行创建无序列表；列表项仍支持粗体、斜体和安全链接。
+
 所有接受 `date` 的内容类型都支持进行中的结构化时间：`date=dict(start="2022-04")` 在英文显示为 `Since Apr 2022`，中文显示为 `2022年4月 至今`。提供 `end` 时仍显示完整范围；传入单个字符串（例如 `date="2025-08"`）仍显示单一月份。
 
 ### `add_publication()`
@@ -496,7 +498,7 @@ page.add_heading(
 )
 ```
 
-`level` 必须在 2 到 6 之间。
+`level` 必须在 2 到 5 之间的整数。
 
 ### 段落
 

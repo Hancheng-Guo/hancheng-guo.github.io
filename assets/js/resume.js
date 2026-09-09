@@ -4,7 +4,7 @@ import { currentLanguage, initLanguage, onLanguageChange, t } from './modules/i1
 import { initNavigation, revealInitialAnchor } from './modules/navigation.js';
 import { applySiteIdentity, loadSiteData } from './modules/site-data.js';
 import { initTheme } from './modules/theme.js';
-import { markdownText, renderInline } from './modules/markdown.js';
+import { markdownText, renderBlock, renderInline } from './modules/markdown.js';
 import { fromRoot } from './modules/paths.js';
 
 function localized(value) {
@@ -79,9 +79,10 @@ function renderEducationEntries(entries) {
       card.appendChild(date);
     }
     if (detailText) {
-      const detail = document.createElement('p');
-      detail.className = 'education-detail';
-      renderInline(detail, detailText);
+      const hasList = /(^|\n)\s*-\s+/.test(detailText);
+      const detail = document.createElement(hasList ? 'div' : 'p');
+      detail.className = `education-detail${hasList ? ' markdown-body' : ''}`;
+      (hasList ? renderBlock : renderInline)(detail, detailText);
       card.appendChild(detail);
     }
     container.appendChild(card);
@@ -119,9 +120,10 @@ function renderWorkEntries(entries) {
       card.appendChild(date);
     }
     if (detailText) {
-      const detail = document.createElement('p');
-      detail.className = 'work-detail';
-      renderInline(detail, detailText);
+      const hasList = /(^|\n)\s*-\s+/.test(detailText);
+      const detail = document.createElement(hasList ? 'div' : 'p');
+      detail.className = `work-detail${hasList ? ' markdown-body' : ''}`;
+      (hasList ? renderBlock : renderInline)(detail, detailText);
       card.appendChild(detail);
     }
     container.appendChild(card);

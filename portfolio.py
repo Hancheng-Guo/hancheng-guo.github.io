@@ -174,6 +174,40 @@ page_1.add_paragraph(
         ),
     ),
 )
+page_1.add_heading(
+    text=dict(
+        zh="测试标题",
+        en="Heading Test",
+    ),
+    level=4,
+)
+page_1.add_paragraph(
+    text=dict(
+        zh=(
+            "测试文本。"
+        ),
+        en=(
+            "Test Text."
+        ),
+    ),
+)
+page_1.add_heading(
+    text=dict(
+        zh="测试标题",
+        en="Heading Test",
+    ),
+    level=5,
+)
+page_1.add_paragraph(
+    text=dict(
+        zh=(
+            "测试文本。"
+        ),
+        en=(
+            "Test Text."
+        ),
+    ),
+)
 page_1.add_image(
     "assets/images/Portfolio-01-3.png",
     alt=dict(
@@ -562,6 +596,25 @@ portfolio.add_timeline_event(
         en=(
             "Responsible for mechanical design, control-algorithm development,\n"
             "and system-integration testing for the HTDW4438 bionic quadruped robot."
+        ),
+    ),
+)
+portfolio.add_timeline_event(
+    date=dict(
+        start="2026-09"
+    ),
+    title=dict(
+        zh="测试时间线",
+        en="Timeline Test",
+    ),
+    description=dict(
+        zh=(
+            "- 第一行\n"
+            "- 第二行"
+        ),
+        en=(
+            "- Line 1\n"
+            "- Line 2"
         ),
     ),
 )

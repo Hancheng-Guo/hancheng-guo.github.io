@@ -242,6 +242,19 @@
         "zh": "负责 HTDW4438 仿生四足机器人的机械设计、控制算法开发与系统集成测试。",
         "en": "Responsible for mechanical design, control-algorithm development,\nand system-integration testing for the HTDW4438 bionic quadruped robot."
       }
+    },
+    {
+      "date": {
+        "start": "2026-09"
+      },
+      "title": {
+        "zh": "测试时间线",
+        "en": "Timeline Test"
+      },
+      "description": {
+        "zh": "- 第一行\n- 第二行",
+        "en": "- Line 1\n- Line 2"
+      }
     }
   ],
   "techStack": [

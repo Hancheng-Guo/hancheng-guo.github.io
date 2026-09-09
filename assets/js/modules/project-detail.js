@@ -50,7 +50,9 @@ function renderBlocks(container, blocks = []) {
     if (!block || typeof block !== 'object') return;
     const type = block.type;
     if (type === 'heading') {
-      const heading = document.createElement(`h${Math.min(6, Math.max(2, Number(block.level) || 2))}`);
+      const level = Number(block.level);
+      const heading = document.createElement(`h${Number.isInteger(level) && level >= 2 && level <= 5 ? level : 2}`);
+      heading.className = 'project-content-heading';
       renderInline(heading, block.text || ''); container.appendChild(heading);
     } else if (type === 'paragraph') {
       const content = document.createElement('div');

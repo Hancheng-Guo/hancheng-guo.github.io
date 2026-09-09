@@ -110,8 +110,8 @@ def _validate_block(report: "ValidationReport", block: object, *, field: str, ro
         report.errors.append(f"{field}.text 必须是文本")
     if kind == "heading":
         level = block.get("level", 2)
-        if not isinstance(level, int) or not 2 <= level <= 6:
-            report.errors.append(f"{field}.level 必须是 2 到 6 之间的整数")
+        if type(level) is not int or not 2 <= level <= 5:
+            report.errors.append(f"{field}.level 必须是 2 到 5 之间的整数")
     if kind == "image":
         _local_asset(report, block.get("src"), field=f"{field}.src", root=root)
         if not isinstance(block.get("alt"), str): report.errors.append(f"{field}.alt 必须是文本")

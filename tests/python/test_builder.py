@@ -132,6 +132,21 @@ class BuilderTests(unittest.TestCase):
       portfolio.write(output, root='.')
       self.assertEqual(json.loads(output.read_text(encoding="utf-8"))["schemaVersion"], 2)
 
+  def test_project_heading_level_is_limited_to_two_through_five(self):
+    portfolio = Portfolio()
+    project = portfolio.add_project(title="Demo", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    page = project.add_page(template="minimal")
+    for level in (2, 3, 4, 5):
+      page.add_heading("Heading", level=level)
+    for level in (1, 6, 2.5, True, "3"):
+      with self.assertRaises(ValueError):
+        page.add_heading("Invalid", level=level)
+    html = render_project(portfolio, project.data)
+    for level in (2, 3, 4, 5):
+      self.assertIn(f'<h{level} class="project-content-heading">Heading</h{level}>', html)
+    self.assertNotIn("<h1>", html)
+    self.assertNotIn("<h6>", html)
+
   def test_duplicate_ids_fail_validation(self):
     portfolio = Portfolio()
     for _ in range(2): portfolio.add_project(project_id="demo", title="Demo", summary="Summary", thumbnail="x.png")
@@ -257,6 +272,27 @@ class BuilderTests(unittest.TestCase):
     optional_html = render_cv(optional)
     self.assertNotIn('work-detail', optional_html)
     self.assertNotIn('Role, </h3>', optional_html)
+
+  def test_long_form_markdown_lists_are_safe_and_do_not_change_plain_details(self):
+    portfolio = Portfolio()
+    items = "- **Bold** item\n- *Italic* [safe](https://example.com) [bad](javascript:alert(1)) <script>alert(1)</script>"
+    portfolio.add_education(date={"start": "2024-01"}, position="Student", detail=items)
+    portfolio.add_work_experience(date={"start": "2024-01"}, position="Engineer", detail=items)
+    portfolio.add_timeline_event(date={"start": "2024-01"}, title="Event", description=items)
+    project = portfolio.add_project(title="Project", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    project.add_page(template="minimal").add_paragraph(items)
+    cv, home, project_html = render_cv(portfolio), render_home(portfolio), render_project(portfolio, project.data)
+    for html in (cv, home, project_html):
+      self.assertIn('<ul>', html)
+      self.assertIn('<li><strong>Bold</strong> item</li>', html)
+      self.assertIn('<em>Italic</em> <a href="https://example.com">safe</a>', html)
+      self.assertNotIn('javascript:', html)
+      self.assertIn('&lt;script&gt;alert(1)&lt;/script&gt;', html)
+    plain = Portfolio()
+    plain.add_education(date={"start": "2024-01"}, position="Student", detail="A - plain inline hyphen")
+    plain_html = render_cv(plain)
+    self.assertIn('<p class="education-detail">A - plain inline hyphen</p>', plain_html)
+    self.assertNotIn('<ul>', plain_html)
 
   def test_optional_publication_date_and_markdown_venue(self):
     portfolio = Portfolio()
