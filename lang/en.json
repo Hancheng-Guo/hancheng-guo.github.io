@@ -1,8 +1,7 @@
 {
   "nav": {
-    "projects": "Project",
+    "projects": "Projects",
     "profile": "Profile",
-    "project": "Project",
     "publications": "Publications",
     "timeline": "Timeline",
     "skills": "Tech Stack",
@@ -48,7 +47,6 @@
   },
   "education": { "title": "Education" },
   "work": { "title": "Work Experience" },
-  "publications": { "title": "Publications", "journal": "Journal Articles", "conference": "Conference Papers" },
   "awards": { "title": "Awards & Scholarships" },
   "resume": { "title": "CV", "view": "View CV", "back": "Back to Home", "loading": "Loading CV…", "error": "CV data could not be loaded." },
   "content": { "placeholder": "Test content" },

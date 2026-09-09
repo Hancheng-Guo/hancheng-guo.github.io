@@ -8,6 +8,19 @@ from portfolio_content.validators import validate_document
 from portfolio_content.cli import clean_generated_output, clean_generated_pages
 
 class BuilderTests(unittest.TestCase):
+  def test_translation_json_has_no_duplicate_keys(self):
+    def reject_duplicates(pairs):
+      result = {}
+      for key, value in pairs:
+        if key in result:
+          raise ValueError(f"Duplicate translation key: {key}")
+        result[key] = value
+      return result
+
+    for path in (Path("lang/en.json"), Path("lang/zh.json")):
+      with self.subTest(path=path):
+        json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=reject_duplicates)
+
   def test_clean_removes_only_generated_output_and_is_idempotent(self):
     import tempfile
     with tempfile.TemporaryDirectory() as folder:
@@ -478,6 +491,17 @@ class BuilderTests(unittest.TestCase):
     self.assertIn('href="index.html#profile"', home)
     self.assertIn('data-i18n="nav.profile">Profile', home)
     self.assertIn('id="top"', home)  # Legacy #top links remain valid.
+
+    navigable = Portfolio()
+    project = navigable.add_project(title="Demo", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    project.add_page(template="minimal")
+    for html, href in (
+      (render_home(navigable), 'index.html#projects'),
+      (render_cv(navigable), '../index.html#projects'),
+      (render_project(navigable, project.data), '../../index.html#projects'),
+    ):
+      self.assertIn(f'<a href="{href}" data-i18n="nav.projects">Projects</a>', html)
+      self.assertNotIn('data-i18n="nav.project"', html)
     for section_id, title in (("projects", "Projects"), ("publications", "Publications"), ("timeline", "Timeline")):
       self.assertNotIn(f'id="{section_id}"', home)
       self.assertNotIn(f'>{title}<', home)

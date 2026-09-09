@@ -1,2 +1,8 @@
 __pycache__/
 .vscode
+
+# Atomic build intermediates (left behind only if a write is interrupted)
+/tmp*
+/pages/tmp*
+/pages/projects/tmp*
+/assets/data/tmp*

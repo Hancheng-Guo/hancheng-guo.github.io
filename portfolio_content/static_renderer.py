@@ -320,7 +320,7 @@ def _nav(portfolio: Any, prefix: str, *, active_cv: bool = False) -> str:
     visible_timeline = [item for item in portfolio.timeline if item.get("status") != "draft"]
     section_links = [f'<a href="{home}#profile" data-i18n="nav.profile">Profile</a>']
     if visible_projects:
-        section_links.append(f'<a href="{home}#projects" data-i18n="nav.project">Project</a>')
+        section_links.append(f'<a href="{home}#projects" data-i18n="nav.projects">Projects</a>')
     if visible_journals or visible_conferences:
         section_links.append(f'<a href="{home}#publications" data-i18n="nav.publications">Publications</a>')
     if visible_timeline:

@@ -2,7 +2,6 @@
   "nav": {
     "projects": "项目",
     "profile": "个人简介",
-    "project": "项目",
     "publications": "出版物",
     "timeline": "时间轴",
     "skills": "技术栈",
@@ -37,7 +36,7 @@
     "draft": "该项目仍为草稿，内容有待确认。",
     "empty": "暂时没有已发布的项目。"
   },
-  "publications": { "title": "出版物", "journal": "期刊文章", "conference": "会议论文", "empty": "暂无已发布出版物。" },
+  "publications": { "title": "发表成果", "journal": "期刊论文", "conference": "会议论文", "empty": "暂无已发布出版物。" },
   "timeline": {
     "title": "经历时间轴",
     "showMore": "展开更多",
@@ -48,7 +47,6 @@
   },
   "education": { "title": "教育经历" },
   "work": { "title": "工作经历" },
-  "publications": { "title": "发表成果", "journal": "期刊论文", "conference": "会议论文" },
   "awards": { "title": "奖项与奖学金" },
   "resume": { "title": "个人简历", "view": "查看简历", "back": "返回主页", "loading": "正在加载简历…", "error": "简历数据加载失败。" },
   "content": { "placeholder": "测试内容" },
