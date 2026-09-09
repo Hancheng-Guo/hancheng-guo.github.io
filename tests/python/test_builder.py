@@ -515,7 +515,7 @@ class BuilderTests(unittest.TestCase):
     self.assertIn("<u>underline</u>", detail)
     self.assertIn("<em>italic</em>", detail)
     self.assertNotIn("Loading project", detail)
-    self.assertIn("< Back to Projects", detail.replace("&lt;", "<"))
+    self.assertIn('class="motion-link-arrow" aria-hidden="true">&lt;</span><span>Back to Projects</span>', detail)
 
   def test_markdown_escapes_html_and_preserves_snake_case(self):
     rendered = markdown_inline("snake_case _underlined_ <script>alert(1)</script>")

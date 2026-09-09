@@ -162,7 +162,7 @@ body > nav {
 
 .nav-controls { display: flex; align-items: center; gap: 12px; }
 .control-btn.menu-toggle { display: none; }
-.back-link { display: inline-flex; margin-bottom: 28px; color: var(--primary); font-weight: 650; }
+.back-link { display: inline-flex; align-items: center; gap: .35em; margin-bottom: 28px; color: var(--primary); font-weight: 650; }
 .back-link:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
 .status-view { padding: 32px; text-align: center; color: var(--text-muted); }
 .project-adjacent { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 40px; border-top: 1px solid var(--border-light); padding-top: 24px; }
@@ -170,7 +170,8 @@ body > nav {
 .project-adjacent-link.previous { grid-column: 1; align-items: flex-start; }
 .project-adjacent-link.next { grid-column: 2; align-items: flex-end; text-align: right; }
 .project-adjacent-link:hover, .project-adjacent-link:focus-visible { color: var(--primary); border-color: transparent; background: var(--bg-hover); }
-.project-adjacent-label { color: var(--primary); font-weight: 650; }
+.project-adjacent-label { display: inline-flex; gap: .35em; color: var(--primary); font-weight: 650; }
+.project-adjacent-link.next .motion-link-arrow { order: 2; }
 .project-adjacent-name { color: inherit; }
 .timeline-extra { display: none; }
 .timeline-container.timeline-expanded .timeline-extra { display: block; }
@@ -660,7 +661,10 @@ h2::after {
 .project-link::after { content: '>'; transition: transform 0.2s; }
 .project-card-footer { display: flex; justify-content: space-between; align-items: center; min-height: 28px; gap: 12px; }
 .project-card-footer .project-date { margin: 0; font-size: .82rem; color: var(--text-muted); }
-.project-link:hover::after { transform: translateX(4px); }
+.project-link:hover::after, .project-link:focus-visible::after { transform: translateX(4px); }
+.motion-link-arrow { display: inline-block; transition: transform 0.2s; }
+.back-link:hover .motion-link-arrow, .back-link:focus-visible .motion-link-arrow, .project-adjacent-link.previous:hover .motion-link-arrow, .project-adjacent-link.previous:focus-visible .motion-link-arrow { transform: translateX(-4px); }
+.project-adjacent-link.next:hover .motion-link-arrow, .project-adjacent-link.next:focus-visible .motion-link-arrow { transform: translateX(4px); }
 
 /* 子页面：详情大图样式 (新增) */
 .project-detail-card {
@@ -1119,4 +1123,5 @@ body > nav {
   .project-link::after {
     transition-duration: 0s;
   }
+  .motion-link-arrow { transition-duration: 0s; }
 }

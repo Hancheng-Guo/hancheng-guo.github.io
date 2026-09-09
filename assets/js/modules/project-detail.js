@@ -127,7 +127,8 @@ async function renderProject() {
   const backLink = document.createElement('a');
   backLink.className = 'back-link';
   backLink.href = fromRoot('index.html#projects');
-  renderInline(backLink, `&lt; ${t('projects.back')}`);
+  backLink.innerHTML = '<span class="motion-link-arrow" aria-hidden="true">&lt;</span><span></span>';
+  renderInline(backLink.lastElementChild, t('projects.back'));
   container.appendChild(backLink);
   if (project.status === 'draft') {
     const notice = document.createElement('p');
@@ -148,14 +149,15 @@ async function renderProject() {
   const adjacent = document.createElement('nav');
   adjacent.className = 'project-adjacent';
   adjacent.setAttribute('aria-label', t('projects.navigation'));
-  [[position > 0, `< ${t('projects.previous')}`, position - 1, 'previous'], [position >= 0 && position < projects.length - 1, `${t('projects.next')} >`, position + 1, 'next']].forEach(([show, label, index, direction]) => {
+  [[position > 0, t('projects.previous'), '<', position - 1, 'previous'], [position >= 0 && position < projects.length - 1, t('projects.next'), '>', position + 1, 'next']].forEach(([show, label, arrow, index, direction]) => {
     if (!show) return;
     const link = document.createElement('a');
     link.className = `project-adjacent-link ${direction}`;
     link.href = fromRoot(projects[index].page);
     const directionLabel = document.createElement('span');
     directionLabel.className = 'project-adjacent-label';
-    renderInline(directionLabel, label.replace('<', '&lt;'));
+    directionLabel.innerHTML = `<span class="motion-link-arrow" aria-hidden="true">${arrow === '<' ? '&lt;' : '&gt;'}</span><span></span>`;
+    renderInline(directionLabel.lastElementChild, label);
     const projectName = document.createElement('span');
     projectName.className = 'project-adjacent-name';
     renderInline(projectName, projects[index].locales[currentLanguage()]?.title || projects[index].locales.en.title);
