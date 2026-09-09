@@ -523,6 +523,8 @@ h2::after {
 
 .projects-grid .card {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Each project card is an operable link surface, so use the same pointer
@@ -559,7 +561,7 @@ h2::after {
   border-bottom-color: transparent;
 }
 
-.project-thumbnail-wrapper { overflow: hidden; }
+.project-thumbnail-wrapper { overflow: hidden; flex: 0 0 auto; }
 
 .project-info {
   --project-copy-active-bottom: 88px;
@@ -571,15 +573,16 @@ h2::after {
   position: relative;
   isolation: isolate;
   min-height: var(--project-info-base-height, auto);
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  flex: 1;
 }
 
 /* Metadata occupies this grid row in both compact and expanded states. Only
    the copy becomes an overlay, so leaving hover/focus cannot reparent tags or
    the footer between positioning contexts for a single frame. */
 .projects-grid .card.project-card-enhanced .project-info {
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  height: var(--project-info-base-height);
+  min-height: var(--project-info-base-height);
 }
 .projects-grid .card.project-card-enhanced .project-copy { grid-row: 1; }
 .projects-grid .card.project-card-enhanced .project-meta { grid-row: 2; }
