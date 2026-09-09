@@ -95,6 +95,7 @@
         },
         "cvFields": {
           "type": "array",
+          "minItems": 0,
           "uniqueItems": true,
           "items": { "enum": ["profile", "education", "work experience", "publications", "tech stack", "awards and scholarships"] }
         }

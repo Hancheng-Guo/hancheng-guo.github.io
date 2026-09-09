@@ -9,7 +9,7 @@ import re
 import tempfile
 
 from .validators import ValidationReport, validate_contact_icons, validate_document, validate_education_items, validate_profile_assets, validate_work_experience_items
-from .static_renderer import pretty_html, render_cv, render_home, render_project, write_text_atomic
+from .static_renderer import MARKER, pretty_html, render_cv, render_home, render_project, write_text_atomic
 
 
 def _locales(value: str | dict[str, str]) -> dict[str, str]:
@@ -55,6 +55,13 @@ def _normalise_fields(value: Any, *, allowed: tuple[str, ...], name: str) -> tup
     # Profile is structural rather than optional.  Its position is fixed so
     # callers cannot accidentally turn the main profile into a later section.
     return tuple(["profile", *[field for field in result if field != "profile"]])
+
+
+def _normalise_cv_fields(value: Any) -> tuple[str, ...]:
+    """Normalise a CV layout, preserving an explicit empty layout as disabled."""
+    if isinstance(value, (tuple, list)) and not value:
+        return ()
+    return _normalise_fields(value, allowed=CV_FIELDS, name="cv fields")
 
 
 def _date_range(value: str | dict[str, str]) -> dict[str, str]:
@@ -220,7 +227,7 @@ class Portfolio:
         # Dataclass construction is public too, so it follows the same
         # contract as the two setters instead of allowing unvalidated layouts.
         self.home_fields = _normalise_fields(self.home_fields, allowed=HOME_FIELDS, name="home fields")
-        self.cv_fields = _normalise_fields(self.cv_fields, allowed=CV_FIELDS, name="cv fields")
+        self.cv_fields = _normalise_cv_fields(self.cv_fields)
 
     @classmethod
     def load(cls, path: str | os.PathLike[str]) -> "Portfolio":
@@ -282,9 +289,9 @@ class Portfolio:
         self.home_fields = _normalise_fields(fields, allowed=HOME_FIELDS, name="home fields")
         return self
 
-    def set_cv_field(self, fields: tuple[str, ...] | list[str]) -> "Portfolio":
-        """Set visible CV sections and their order (Profile sidebar stays present)."""
-        self.cv_fields = _normalise_fields(fields, allowed=CV_FIELDS, name="cv fields")
+    def set_cv_field(self, fields: tuple[str, ...] | list[str] = ()) -> "Portfolio":
+        """Set CV sections; an empty sequence disables the web CV page entirely."""
+        self.cv_fields = _normalise_cv_fields(fields)
         return self
 
     def add_education(
@@ -475,10 +482,14 @@ class Portfolio:
         return written
 
     def write_static_fallbacks(self, *, root: str | os.PathLike[str] = ".") -> None:
-        """Generate complete, readable home and CV pages."""
+        """Generate the home page and, when enabled, the readable CV page."""
         root_path = Path(root)
         write_text_atomic(root_path / "index.html", pretty_html(render_home(self)))
-        write_text_atomic(root_path / "pages" / "cv.html", pretty_html(render_cv(self)))
+        cv_path = root_path / "pages" / "cv.html"
+        if self.cv_fields:
+            write_text_atomic(cv_path, pretty_html(render_cv(self)))
+        elif cv_path.is_file() and MARKER in cv_path.read_text(encoding="utf-8"):
+            cv_path.unlink()
 
     def write_site_data(self, output: str | os.PathLike[str] = "assets/data/site.json") -> Path:
         destination = Path(output)

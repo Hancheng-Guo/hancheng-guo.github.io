@@ -177,7 +177,7 @@ portfolio = Portfolio(
 
 ## 页面分区与顺序
 
-`set_home_field()` 和 `set_cv_field()` 用一个 tuple 或 list 同时决定分区是否显示及排列顺序。Profile 是页面的基础内容，始终显示在首位；即使省略或把它写在其他位置，构建器也会自动放回首位。没有已发布内容的已选分区不会输出空壳。
+`set_home_field()` 和非空的 `set_cv_field()` 用一个 tuple 或 list 同时决定分区是否显示及排列顺序。Profile 是启用页面的基础内容，始终显示在首位；即使省略或把它写在其他位置，构建器也会自动放回首位。没有已发布内容的已选分区不会输出空壳。
 
 ```python
 portfolio.set_home_field(("profile", "timeline", "projects"))
@@ -187,6 +187,18 @@ portfolio.set_cv_field(("profile", "education", "work experience", "tech stack",
 首页可用值为 `profile`、`projects`、`publications`、`timeline`；默认顺序是 `("profile", "projects", "publications", "timeline")`。CV 可用值为 `profile`、`education`、`work experience`、`publications`、`tech stack`、`awards and scholarships`；默认顺序是 `("profile", "education", "work experience", "publications", "tech stack", "awards and scholarships")`。
 
 大小写、首尾空白和连接符不敏感，例如 `"work_experience"`、`"Work-Experience"` 都等同于 `"work experience"`。未知或重复的名称、字符串参数及非字符串成员会在配置时明确报错。再次调用会完整替换上一次配置。无需编辑生成的 JSON。
+
+### 关闭网页 CV
+
+以下三种写法都会关闭网页 CV：不生成 `pages/cv.html`，并从全站导航移除 CV 项。
+
+```python
+portfolio.set_cv_field()
+# 或 portfolio.set_cv_field(())
+# 或 portfolio.set_cv_field([])
+```
+
+空配置是关闭信号；`portfolio.set_cv_field(("profile",))` 不会关闭页面，而是生成只含 Profile 的 CV。关闭后再次传入任一非空配置即可重新启用。这个开关与 `set_resume()` 独立，首页的 PDF 下载链接和 PDF 文件不会被删除。构建只会删除带生成标记的旧 `pages/cv.html`，不会删除同路径的手工页面。
 
 ## Profile 与联系方式
 

@@ -44,7 +44,7 @@ python portfolio.py preview
 
 ## 页面分区与顺序
 
-首页和 CV 的内容分区可在 `portfolio.py` 中配置；Profile 始终保留在首位，其余项目按写入顺序显示。未设置时使用当前默认布局。
+首页和 CV 的内容分区可在 `portfolio.py` 中配置；启用的页面会将 Profile 保留在首位，其余项目按写入顺序显示。未设置时使用当前默认布局。
 
 ```python
 portfolio.set_home_field(("profile", "projects", "publications", "timeline"))
@@ -52,6 +52,8 @@ portfolio.set_cv_field(("profile", "education", "work experience", "publications
 ```
 
 省略某项会隐藏该分区（不会产生空白区）；完整可用值和示例见[工具手册的页面分区与顺序](docs/PYTHON_GUIDE.md#页面分区与顺序)。
+
+如不需要网页 CV，可使用任一种空配置：`portfolio.set_cv_field()`、`portfolio.set_cv_field(())` 或 `portfolio.set_cv_field([])`。构建会移除受管的 `pages/cv.html`，全站导航也不再显示 CV；`set_cv_field(("profile",))` 则仍会生成只含 Profile 的 CV。此开关不影响 `set_resume()` 配置的 PDF 下载按钮或资源；之后传入任一非空配置即可重新启用网页 CV。
 
 ## 项目卡片与详情页
 

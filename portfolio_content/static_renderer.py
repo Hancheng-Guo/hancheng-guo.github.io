@@ -327,6 +327,7 @@ def _nav(portfolio: Any, prefix: str, *, active_cv: bool = False) -> str:
     visible_conferences = [item for item in publications.get("conferencePapers", []) if item.get("status") != "draft"]
     visible_timeline = [item for item in portfolio.timeline if item.get("status") != "draft"]
     home_fields = _layout_fields(portfolio, "home_fields", _DEFAULT_HOME_FIELDS)
+    cv_enabled = bool(_layout_fields(portfolio, "cv_fields", _DEFAULT_CV_FIELDS))
     available_links = {
         "profile": f'<a href="{home}#profile" data-i18n="nav.profile">Profile</a>',
         "projects": f'<a href="{home}#projects" data-i18n="nav.projects">Projects</a>' if visible_projects else "",
@@ -337,7 +338,7 @@ def _nav(portfolio: Any, prefix: str, *, active_cv: bool = False) -> str:
     return f'''<nav><div class="container nav-container">
   <a href="{home}" class="logo"><span class="logo-text">{author}</span><div class="logo-dot"></div></a>
   <div class="nav-actions"><button class="control-btn menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation" data-i18n-aria-label="nav.openMenu">☰</button>
-    <div class="nav-links" id="primary-navigation">{"".join(section_links)}<a href="{cv}"{active} data-i18n="nav.resume">CV</a></div>
+    <div class="nav-links" id="primary-navigation">{"".join(section_links)}{f'<a href="{cv}"{active} data-i18n="nav.resume">CV</a>' if cv_enabled else ''}</div>
     <div class="nav-controls"><button class="control-btn nav-control lang-toggle" type="button" aria-label="切换到中文" title="切换到中文" data-language="en" data-i18n-aria-label="nav.toggleLanguage"><img class="language-target-icon" src="{prefix}assets/icons/language-switch-ch.svg" alt="" aria-hidden="true"><span class="visually-hidden">切换到中文</span></button>{_theme_button()}</div>
   </div>
 </div></nav>'''
