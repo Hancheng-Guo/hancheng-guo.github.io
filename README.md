@@ -30,7 +30,7 @@ python portfolio.py build
 python portfolio.py preview
 ```
 
-打开 <http://127.0.0.1:8000/> 查看网站，按 `Ctrl+C` 停止预览。Windows 若没有 `python` 命令，可以将其替换为 `py`。
+打开 <http://127.0.0.1:8000/> 查看网站，按 `Ctrl+C` 停止预览。
 
 日常修改只需要编辑根目录的 [`portfolio.py`](portfolio.py)，不应手工修改生成的 HTML 或 JSON。完整 API、字段格式和示例见 [Python 工具手册](docs/PYTHON_GUIDE.md)。
 

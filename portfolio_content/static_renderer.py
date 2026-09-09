@@ -435,7 +435,7 @@ def _project_card(project: dict[str, Any]) -> str:
     # client renderer uses this exact node too, which prevents hydration from
     # changing the footer's layout or DOM shape.
     date_element = f'<time class="project-date">{escape(date_text)}</time>' if date_text else '<time class="project-date" hidden></time>'
-    return f'''<article class="card" tabindex="0" data-project-href="{href}"><div class="project-thumbnail-wrapper"><img class="project-thumbnail" src="{escape(str(image.get("src", "")), quote=True)}" alt="{alt}" loading="lazy" decoding="async"></div><div class="project-info"><div class="project-copy"><h3>{markdown_inline(content.get("title"))}</h3><p class="project-summary">{markdown_inline(content.get("summary"))}</p></div><div class="project-meta"><div class="project-tags">{tags}</div><div class="project-card-footer"><a class="project-link" href="{href}">View Details{_link_chevron("right")}</a>{date_element}</div></div></div></article>'''
+    return f'''<article class="card" tabindex="0" role="link" aria-label="View Details: {escape(markdown_text(content.get("title")), quote=True)}" data-project-href="{href}"><div class="project-thumbnail-wrapper"><img class="project-thumbnail" src="{escape(str(image.get("src", "")), quote=True)}" alt="{alt}" loading="lazy" decoding="async"></div><div class="project-info"><div class="project-copy"><h3>{markdown_inline(content.get("title"))}</h3><p class="project-summary">{markdown_inline(content.get("summary"))}</p></div><div class="project-meta"><div class="project-tags">{tags}</div><div class="project-card-footer"><span class="project-link">View Details{_link_chevron("right")}</span>{date_element}</div></div></div></article>'''
 
 
 def _timeline(portfolio: Any) -> tuple[str, bool]:

@@ -527,6 +527,12 @@ h2::after {
   box-sizing: border-box;
 }
 
+/* Each project card is an operable link surface, so use the same pointer
+   affordance as a button without changing its existing keyboard behavior. */
+.projects-grid .card:is(:hover, :focus, :focus-within) {
+  cursor: pointer;
+}
+
 .projects-grid .card:focus-visible {
   border-color: var(--primary-glow);
   box-shadow: var(--shadow-hover);
@@ -665,7 +671,9 @@ h2::after {
 .chevron-left { transform: rotate(90deg); }
 .chevron-right { transform: rotate(-90deg); }
 .back-link:hover .chevron-left, .back-link:focus-visible .chevron-left, .project-adjacent-link.previous:hover .chevron-left, .project-adjacent-link.previous:focus-visible .chevron-left { transform: translateX(-4px) rotate(90deg); }
-.project-link:hover .chevron-right, .project-link:focus-visible .chevron-right, .project-adjacent-link.next:hover .chevron-right, .project-adjacent-link.next:focus-visible .chevron-right { transform: translateX(4px) rotate(-90deg); }
+.projects-grid .card:is(:hover, :focus, :focus-within) .project-link .chevron-right,
+.project-adjacent-link.next:hover .chevron-right,
+.project-adjacent-link.next:focus-visible .chevron-right { transform: translateX(4px) rotate(-90deg); }
 
 /* 子页面：详情大图样式 (新增) */
 .project-detail-card {

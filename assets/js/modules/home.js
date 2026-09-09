@@ -31,6 +31,8 @@ async function renderProjects() {
     card.className = 'card';
     const projectUrl = fromRoot(project.page);
     card.tabIndex = 0;
+    card.setAttribute('role', 'link');
+    card.setAttribute('aria-label', `${t('projects.viewDetail')}: ${markdownText(content.title)}`);
     card.addEventListener('click', (event) => {
       if (!event.target.closest('a')) window.location.href = projectUrl;
     });
@@ -45,7 +47,7 @@ async function renderProjects() {
         <img class="project-thumbnail" loading="lazy" decoding="async">
       </div>
       <div class="project-info">
-        <div class="project-copy"><h3></h3><p class="project-summary"></p></div><div class="project-meta"><div class="project-tags"></div><div class="project-card-footer"><a class="project-link"></a><time class="project-date"></time></div></div>
+        <div class="project-copy"><h3></h3><p class="project-summary"></p></div><div class="project-meta"><div class="project-tags"></div><div class="project-card-footer"><span class="project-link"></span><time class="project-date"></time></div></div>
       </div>`;
     const image = qs('.project-thumbnail', card);
     image.src = fromRoot(project.thumbnail.src);
@@ -56,7 +58,6 @@ async function renderProjects() {
     // footer cannot reflow while project data is loading.
     const date = qs('.project-date', card); date.textContent = project.date ? formatDateRange(project.date) : ''; date.hidden = !project.date;
     renderInline(qs('.project-link', card), t('projects.viewDetail')); qs('.project-link', card).appendChild(linkChevron('right'));
-    qs('.project-link', card).href = projectUrl;
     const tags = qs('.project-tags', card);
     (project.tags || []).forEach((tag) => {
       const badge = document.createElement('span');

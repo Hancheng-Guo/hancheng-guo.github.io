@@ -53,6 +53,14 @@ class BuilderTests(unittest.TestCase):
           self.assertIn("<strong>Demo</strong>", left)
         self.assertIn('<script type="module"', left)
 
+  def test_project_card_uses_a_plain_detail_cue_and_a_keyboard_operable_card(self):
+    portfolio = Portfolio()
+    portfolio.add_project(title="Demo", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    home = render_home(portfolio)
+    self.assertIn('<article class="card" tabindex="0" role="link" aria-label="View Details: Demo"', home)
+    self.assertIn('<span class="project-link">View Details', home)
+    self.assertNotIn('<a class="project-link"', home)
+
   def test_pretty_html_preserves_inline_and_raw_payloads(self):
     script = 'const comparison = left > right; const markup = "<tag data-value=\'>\'>";\n  keepThisIndent();'
     style = '.example::before { content: ">"; }\n  .example { white-space: pre; }'
