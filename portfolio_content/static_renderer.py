@@ -287,7 +287,7 @@ def _anchor_bootstrap() -> str:
     perform its native fragment scroll during parsing without ever exposing a
     top-of-page frame.  The timeout is a no-JS-error safety net.
     """
-    return '''<style>html[data-anchor-pending] body{opacity:0}html[data-anchor-pending].anchor-ready body{opacity:1;transition:opacity .14s ease}</style><script>(function(){var r=document.documentElement,h=location.hash;if(!h||h==='#top'||(matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))return;r.dataset.anchorPending='true';setTimeout(function(){r.classList.add('anchor-ready')},350)})()</script>'''
+    return '''<style>html[data-anchor-pending] body{opacity:0}html[data-anchor-pending].anchor-ready body{opacity:1;animation:portfolio-anchor-reveal .14s ease}@keyframes portfolio-anchor-reveal{from{opacity:0}to{opacity:1}}</style><script>(function(){var r=document.documentElement,h=location.hash;if(!h||h==='#top'||(matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))return;r.dataset.anchorPending='true';setTimeout(function(){r.classList.add('anchor-ready')},350)})()</script>'''
 
 
 def _nav(portfolio: Any, prefix: str, *, active_cv: bool = False) -> str:
