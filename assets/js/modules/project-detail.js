@@ -6,6 +6,8 @@ import { loadProject, loadProjects } from './project-data.js';
 import { applySiteIdentity, loadSiteData } from './site-data.js';
 import { markdownText, renderBlock, renderInline } from './markdown.js';
 
+function linkChevron(direction) { const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); icon.setAttribute('class', `svg-icon svg-icon--inline motion-link-arrow link-chevron chevron-${direction}`); icon.setAttribute('aria-hidden', 'true'); icon.setAttribute('focusable', 'false'); icon.setAttribute('viewBox', '0 0 24 24'); icon.setAttribute('fill', 'none'); icon.setAttribute('stroke', 'currentColor'); icon.setAttribute('stroke-width', '3'); icon.setAttribute('stroke-linecap', 'round'); icon.setAttribute('stroke-linejoin', 'round'); const path = document.createElementNS('http://www.w3.org/2000/svg', 'path'); path.setAttribute('d', 'm6 9 6 6 6-6'); icon.appendChild(path); return icon; }
+
 const LINK_PRESENTATION = {
   github: { icon: 'github', className: 'github' },
   techDoc: { icon: 'file-pdf', className: '' },
@@ -127,7 +129,7 @@ async function renderProject() {
   const backLink = document.createElement('a');
   backLink.className = 'back-link';
   backLink.href = fromRoot('index.html#projects');
-  backLink.innerHTML = '<span class="motion-link-arrow" aria-hidden="true">&lt;</span><span></span>';
+  backLink.append(linkChevron('left'), document.createElement('span'));
   renderInline(backLink.lastElementChild, t('projects.back'));
   container.appendChild(backLink);
   if (project.status === 'draft') {
@@ -149,14 +151,14 @@ async function renderProject() {
   const adjacent = document.createElement('nav');
   adjacent.className = 'project-adjacent';
   adjacent.setAttribute('aria-label', t('projects.navigation'));
-  [[position > 0, t('projects.previous'), '<', position - 1, 'previous'], [position >= 0 && position < projects.length - 1, t('projects.next'), '>', position + 1, 'next']].forEach(([show, label, arrow, index, direction]) => {
+  [[position > 0, t('projects.previous'), position - 1, 'previous'], [position >= 0 && position < projects.length - 1, t('projects.next'), position + 1, 'next']].forEach(([show, label, index, direction]) => {
     if (!show) return;
     const link = document.createElement('a');
     link.className = `project-adjacent-link ${direction}`;
     link.href = fromRoot(projects[index].page);
     const directionLabel = document.createElement('span');
     directionLabel.className = 'project-adjacent-label';
-    directionLabel.innerHTML = `<span class="motion-link-arrow" aria-hidden="true">${arrow === '<' ? '&lt;' : '&gt;'}</span><span></span>`;
+    directionLabel.append(linkChevron(direction === 'previous' ? 'left' : 'right'), document.createElement('span'));
     renderInline(directionLabel.lastElementChild, label);
     const projectName = document.createElement('span');
     projectName.className = 'project-adjacent-name';

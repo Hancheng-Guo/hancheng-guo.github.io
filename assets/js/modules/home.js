@@ -6,6 +6,8 @@ import { loadProjects } from './project-data.js';
 import { applySiteIdentity, loadSiteData } from './site-data.js';
 import { markdownText, renderBlock, renderInline } from './markdown.js';
 
+function linkChevron(direction) { const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); icon.setAttribute('class', `svg-icon svg-icon--inline motion-link-arrow link-chevron chevron-${direction}`); icon.setAttribute('aria-hidden', 'true'); icon.setAttribute('focusable', 'false'); icon.setAttribute('viewBox', '0 0 24 24'); icon.setAttribute('fill', 'none'); icon.setAttribute('stroke', 'currentColor'); icon.setAttribute('stroke-width', '3'); icon.setAttribute('stroke-linecap', 'round'); icon.setAttribute('stroke-linejoin', 'round'); const path = document.createElementNS('http://www.w3.org/2000/svg', 'path'); path.setAttribute('d', 'm6 9 6 6 6-6'); icon.appendChild(path); return icon; }
+
 function localized(value) {
   if (typeof value === 'string') return value;
   return value?.[currentLanguage()] ?? value?.en ?? '';
@@ -53,7 +55,7 @@ async function renderProjects() {
     // Keep the static fallback and hydrated DOM structurally identical so the
     // footer cannot reflow while project data is loading.
     const date = qs('.project-date', card); date.textContent = project.date ? formatDateRange(project.date) : ''; date.hidden = !project.date;
-    renderInline(qs('.project-link', card), t('projects.viewDetail'));
+    renderInline(qs('.project-link', card), t('projects.viewDetail')); qs('.project-link', card).appendChild(linkChevron('right'));
     qs('.project-link', card).href = projectUrl;
     const tags = qs('.project-tags', card);
     (project.tags || []).forEach((tag) => {

@@ -242,6 +242,10 @@ def _icon(name: str) -> str:
     )
 
 
+def _link_chevron(direction: str) -> str:
+    return _icon("chevron-down").replace('class="svg-icon', f'class="svg-icon motion-link-arrow link-chevron chevron-{direction}')
+
+
 def _favicon(path: str | None, prefix: str) -> str:
     return f'  <link rel="icon" href="{prefix}{escape(path, quote=True)}">\n' if path else ""
 
@@ -431,7 +435,7 @@ def _project_card(project: dict[str, Any]) -> str:
     # client renderer uses this exact node too, which prevents hydration from
     # changing the footer's layout or DOM shape.
     date_element = f'<time class="project-date">{escape(date_text)}</time>' if date_text else '<time class="project-date" hidden></time>'
-    return f'''<article class="card" tabindex="0" data-project-href="{href}"><div class="project-thumbnail-wrapper"><img class="project-thumbnail" src="{escape(str(image.get("src", "")), quote=True)}" alt="{alt}" loading="lazy" decoding="async"></div><div class="project-info"><div class="project-copy"><h3>{markdown_inline(content.get("title"))}</h3><p class="project-summary">{markdown_inline(content.get("summary"))}</p></div><div class="project-meta"><div class="project-tags">{tags}</div><div class="project-card-footer"><a class="project-link" href="{href}">View Details</a>{date_element}</div></div></div></article>'''
+    return f'''<article class="card" tabindex="0" data-project-href="{href}"><div class="project-thumbnail-wrapper"><img class="project-thumbnail" src="{escape(str(image.get("src", "")), quote=True)}" alt="{alt}" loading="lazy" decoding="async"></div><div class="project-info"><div class="project-copy"><h3>{markdown_inline(content.get("title"))}</h3><p class="project-summary">{markdown_inline(content.get("summary"))}</p></div><div class="project-meta"><div class="project-tags">{tags}</div><div class="project-card-footer"><a class="project-link" href="{href}">View Details{_link_chevron("right")}</a>{date_element}</div></div></div></article>'''
 
 
 def _timeline(portfolio: Any) -> tuple[str, bool]:
@@ -529,7 +533,7 @@ def render_cv(portfolio: Any) -> str:
     return f'''<!DOCTYPE html>
 {MARKER}
 <html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{cv_title}</title>{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script><link rel="stylesheet" href="../assets/css/style.css"></head>
-<body data-page="resume">{_nav(portfolio, "../", active_cv=True)}<main class="section-padding"><div class="container resume-page"><a class="back-link" href="../index.html"><span class="motion-link-arrow" aria-hidden="true">&lt;</span><span data-i18n="resume.back">Back to Home</span></a><h1 data-i18n="resume.title">CV</h1><div class="resume-layout"><aside class="resume-sidebar"><div class="resume-profile-heading">{f'<div class="resume-avatar-wrap"><div class="avatar-glow" aria-hidden="true"></div><img tabindex="0" class="resume-profile-avatar" src="../{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<div class="resume-profile-identity"><h2 class="resume-profile-name">{name}</h2><div class="resume-download">{_download(portfolio.resume, "../")}</div></div></div><div class="resume-profile-details"><p>{summary}</p></div><div class="contact-links resume-contact-links" aria-label="Contact links">{_contacts(portfolio, "../")}</div></aside><div class="resume-main">
+<body data-page="resume">{_nav(portfolio, "../", active_cv=True)}<main class="section-padding"><div class="container resume-page"><a class="back-link" href="../index.html">{_link_chevron("left")}<span data-i18n="resume.back">Back to Home</span></a><h1 data-i18n="resume.title">CV</h1><div class="resume-layout"><aside class="resume-sidebar"><div class="resume-profile-heading">{f'<div class="resume-avatar-wrap"><div class="avatar-glow" aria-hidden="true"></div><img tabindex="0" class="resume-profile-avatar" src="../{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<div class="resume-profile-identity"><h2 class="resume-profile-name">{name}</h2><div class="resume-download">{_download(portfolio.resume, "../")}</div></div></div><div class="resume-profile-details"><p>{summary}</p></div><div class="contact-links resume-contact-links" aria-label="Contact links">{_contacts(portfolio, "../")}</div></aside><div class="resume-main">
 {education_section}{work_section}{publications_section}{skills_section}{awards_section}</div></div></div></main>{_footer(portfolio)}<script type="module" src="../assets/js/resume.js"></script></body></html>'''
 LINK_PRESENTATION = {
     "github": ("github", "Code"),
@@ -579,10 +583,10 @@ def render_project(portfolio: Any, project: dict[str, Any]) -> str:
     adjacent = []
     if position > 0:
         previous = visible[position - 1]
-        adjacent.append(f'<a class="project-adjacent-link previous" href="../../{escape(str(previous["page"]), quote=True)}"><span class="project-adjacent-label"><span class="motion-link-arrow" aria-hidden="true">&lt;</span><span>Previous</span></span><span class="project-adjacent-name">{markdown_inline(previous["locales"]["en"]["title"])}</span></a>')
+        adjacent.append(f'<a class="project-adjacent-link previous" href="../../{escape(str(previous["page"]), quote=True)}"><span class="project-adjacent-label">{_link_chevron("left")}<span>Previous</span></span><span class="project-adjacent-name">{markdown_inline(previous["locales"]["en"]["title"])}</span></a>')
     if 0 <= position < len(visible) - 1:
         following = visible[position + 1]
-        adjacent.append(f'<a class="project-adjacent-link next" href="../../{escape(str(following["page"]), quote=True)}"><span class="project-adjacent-label"><span class="motion-link-arrow" aria-hidden="true">&gt;</span><span>Next</span></span><span class="project-adjacent-name">{markdown_inline(following["locales"]["en"]["title"])}</span></a>')
+        adjacent.append(f'<a class="project-adjacent-link next" href="../../{escape(str(following["page"]), quote=True)}"><span class="project-adjacent-label">{_link_chevron("right")}<span>Next</span></span><span class="project-adjacent-name">{markdown_inline(following["locales"]["en"]["title"])}</span></a>')
     links = []
     for link in project.get("links", []):
         presentation = LINK_PRESENTATION.get(str(link.get("type")))
@@ -612,7 +616,7 @@ def render_project(portfolio: Any, project: dict[str, Any]) -> str:
     )
     return f'''<!DOCTYPE html>
 {MARKER}
-<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{page_title}</title>{robots}{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script><link rel="stylesheet" href="../../assets/css/style.css"></head><body data-page="project" data-project-id="{escape(str(project.get("id")), quote=True)}">{_nav(portfolio, "../../")}<main class="section-padding"><div class="container"><div class="card project-detail-card"><div class="project-container"><a class="back-link" href="../../index.html#projects"><span class="motion-link-arrow" aria-hidden="true">&lt;</span><span>Back to Projects</span></a><h2>{markdown_inline(content.get("title"))}</h2>{_project_blocks(content.get("blocks", []))}{links_html}<nav class="project-adjacent" aria-label="Project navigation">{"".join(adjacent)}</nav></div></div></div></main>{_footer(portfolio)}<script type="module" src="../../assets/js/app.js"></script></body></html>'''
+<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{page_title}</title>{robots}{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script><link rel="stylesheet" href="../../assets/css/style.css"></head><body data-page="project" data-project-id="{escape(str(project.get("id")), quote=True)}">{_nav(portfolio, "../../")}<main class="section-padding"><div class="container"><div class="card project-detail-card"><div class="project-container"><a class="back-link" href="../../index.html#projects">{_link_chevron("left")}<span>Back to Projects</span></a><h2>{markdown_inline(content.get("title"))}</h2>{_project_blocks(content.get("blocks", []))}{links_html}<nav class="project-adjacent" aria-label="Project navigation">{"".join(adjacent)}</nav></div></div></div></main>{_footer(portfolio)}<script type="module" src="../../assets/js/app.js"></script></body></html>'''
 
 
 def write_text_atomic(path: Path, content: str) -> None:
