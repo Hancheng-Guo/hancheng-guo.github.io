@@ -1,17 +1,27 @@
 # Portfolio Python 工具手册
 
-本文档说明如何通过根目录的 `portfolio.py` 配置并生成网站。内容按功能类别组织，可以从头阅读，也可以作为 API 速查手册使用。
+本文档面向维护网站内容的人，说明如何通过根目录的 `portfolio.py` 配置、预览并生成网站。内容按实际工作顺序组织：先理解内容源与构建流程，再学习通用字段，随后按页面区域查找 API，最后处理维护、测试和故障排查。
 
-## 1. 工作模型
+## 如何阅读本手册
+
+- **第一次维护本站**：依次阅读“工作模型”“命令行”“通用数据格式”，然后进入要修改的页面章节。
+- **只想新增项目**：先读 [Projects](#projects)；需要详情页时再读 [ProjectPage 内容块](#projectpage-内容块)和[项目外部链接](#项目外部链接)。
+- **只想更新个人经历**：阅读 [Profile 与联系方式](#profile-与联系方式)及 [CV 与履历](#cv-与履历)。
+- **准备提交或部署**：查看[构建产物与运行时](#构建产物与运行时)和[发布前检查](#发布前检查)。
+- **命令报错或页面未更新**：查看[常见问题](#常见问题)。
+
+所有命令和示例均假设当前目录是仓库根目录，文件以 UTF-8 保存。正文中的 `portfolio` 指根目录 `portfolio.py` 暴露的 `Portfolio` 实例。
+
+## 工作模型
 
 ```text
 编辑 portfolio.py
         ↓
 validate：检查字段、日期、URL 和本地资源
         ↓
-build：生成完整 HTML 与 JSON
+preview：构建并在浏览器中检查效果
         ↓
-preview：启动本地静态服务器
+build：生成准备提交的 HTML 与 JSON
         ↓
 提交生成结果并部署
 ```
@@ -20,15 +30,15 @@ preview：启动本地静态服务器
 
 - `index.html`
 - `pages/cv.html`
-- `pages/projects/*.html`
+- `pages/projects/*.html`（仅限调用过 `add_page()` 的项目）
 - `assets/data/site.json`
 - `assets/data/projects.json`
 
-![首页首屏](../assets/images/docs/home.png)
+构建产物和内容源应一起提交：部署环境只负责提供静态文件，不会执行 `portfolio.py`。开发时优先运行 `preview` 形成“修改—刷新—检查”的循环，准备提交时再运行完整校验与测试。
 
-## 2. 命令行
+## 命令行
 
-所有命令都在项目根目录执行。
+日常内容构建只需要 Python 3.10 或更高版本，不需要安装额外 Python 包。所有命令都在项目根目录执行。
 
 ### 校验
 
@@ -63,7 +73,7 @@ python portfolio.py clean
 
 `clean` 只删除带生成标记的 HTML 和两份生成 JSON；不会删除 `portfolio.py`、构建器、图片、图标或 PDF。再次运行 `build` 即可恢复。
 
-## 3. 通用数据格式
+## 通用数据格式
 
 ### 双语文字
 
@@ -129,7 +139,7 @@ date=dict(
 
 月份格式必须是 `YYYY-MM`，且结束月份不能早于开始月份。`last_update_date` 使用 `YYYY-MM-DD`。Education、Work Experience、Awards 和 Timeline 必须提供日期；Publication 与 Project 日期可省略。
 
-## 4. Portfolio 站点配置
+## Portfolio 站点配置
 
 根目录必须暴露名为 `portfolio` 的 `Portfolio` 实例：
 
@@ -151,7 +161,7 @@ portfolio = Portfolio(
         en="All rights reserved.",
     ),
     last_update_date="2026-09-07",
-    # favicon="assets/images/favicon.png",
+    favicon="assets/images/favicon.png",
 )
 ```
 
@@ -165,7 +175,7 @@ portfolio = Portfolio(
 
 页脚第一行格式是 `© {year} {author}, {copyright_text}`；`copyright_text` 为空时不会保留多余逗号。
 
-## 5. Profile 与联系方式
+## Profile 与联系方式
 
 ### `set_profile()`
 
@@ -229,7 +239,7 @@ portfolio.add_contact(
 
 首页和 CV 会复用同一组联系方式。
 
-## 6. CV 与履历
+## CV 与履历
 
 Education、Work Experience、Tech Stack 与 Awards & Scholarships 只显示在 CV 页面。Publications 同时显示在首页和 CV。
 
@@ -376,7 +386,7 @@ portfolio.set_resume(
 
 PDF 应先放入 `assets/documents/`。未配置当前语言 URL 时，不生成对应下载按钮。
 
-## 7. Timeline
+## Timeline
 
 首页 Timeline 默认展示最新八项，其余内容通过 Show more 按钮展开。
 
@@ -402,7 +412,7 @@ portfolio.add_timeline_event(
 
 条目按添加顺序保存，并在页面中以最新内容优先的方式显示。
 
-## 8. Projects
+## Projects
 
 ![项目区域](../assets/images/docs/projects.png)
 
@@ -507,7 +517,7 @@ published.add_page(template="minimal")
 
 如果一个项目以前调用过 `add_page()`，后来将该调用删除，下一次 `build` 会删除它此前生成的 HTML，但仅限包含生成标记的受管文件；同目录中的手工 HTML 不会被误删。详情页的“上一个/下一个”导航也会自动跳过无详情页项目。
 
-## 9. ProjectPage 内容块
+## ProjectPage 内容块
 
 内容块按照调用顺序显示，方法均返回当前 `ProjectPage`，因此可以链式调用；为了可读性，示例采用逐条调用。
 
@@ -631,8 +641,6 @@ page.add_metrics(
 )
 ```
 
-指标应当真实、可验证。
-
 ### 视频
 
 ```python
@@ -648,7 +656,7 @@ page.add_video(
 
 视频 URL 必须使用 HTTPS；`poster` 和 `title` 可省略。
 
-## 10. 项目外部链接
+## 项目外部链接
 
 链接按钮根据方法选择正确的本地图标。`label` 可省略；省略时使用默认文字。
 
@@ -688,7 +696,7 @@ page.add_youtube_link(
 
 空 URL 不会显示按钮；非空外部 URL 必须使用 HTTPS。
 
-## 11. 修改、删除和草稿
+## 修改、删除和草稿
 
 - 修改项目：直接编辑其 `add_project()` 和 `page.add_*()` 调用。
 - 删除项目：删除整段项目定义，下一次 `build` 会移除不再存在的受管详情页。
@@ -698,7 +706,7 @@ page.add_youtube_link(
 
 不要为同一项目调用两次 `add_page()`，否则构建器会报错。
 
-## 12. 构建产物与运行时
+## 构建产物与运行时
 
 `build` 同时写入静态 HTML 和 JSON。浏览器中的 JavaScript 会从 JSON 重新同步页面内容，并提供：
 
@@ -711,7 +719,9 @@ page.add_youtube_link(
 
 核心英文内容已经写入 HTML，因此 JavaScript 被禁用或尚未加载时不会出现空白页或 “Loading project”。
 
-## 13. 发布前检查
+## 发布前检查
+
+先运行不依赖浏览器的校验、构建和 Python 回归：
 
 ```bash
 python portfolio.py validate
@@ -719,7 +729,26 @@ python portfolio.py build
 python -m unittest discover -s tests/python -v
 ```
 
-随后人工检查：
+如果修改了样式、导航、主题、语言或卡片行为，还应启动预览服务器，并在另一个终端运行相关浏览器回归。浏览器脚本默认访问 `127.0.0.1:8765`，并需要 Node.js、`playwright` 和可用的 Chromium/Edge：
+
+```bash
+python portfolio.py preview --port 8765
+
+# 在另一个终端中按改动范围运行
+node tests/browser/static-smoke.cjs
+node tests/browser/controls-timeline.cjs
+node tests/browser/profile-theme-sync.cjs
+node tests/browser/project-page-presence.cjs
+```
+
+| 脚本 | 主要覆盖范围 |
+|---|---|
+| `static-smoke.cjs` | 静态首屏、水合、响应式、语言/主题和主要页面交互 |
+| `controls-timeline.cjs` | 导航控件与 Timeline 展开/收起 |
+| `profile-theme-sync.cjs` | 直接访问 hash、CV 往返后的 Profile 主题同步 |
+| `project-page-presence.cjs` | 有/无详情页项目卡片的文案、焦点、指针与导航行为 |
+
+自动化测试通过后再做人工检查：
 
 1. 首页、CV，以及所有调用过 `add_page()` 的项目详情页；
 2. 英文与中文；
@@ -729,21 +758,21 @@ python -m unittest discover -s tests/python -v
 6. 图片 alt、项目返回和前后导航；
 7. Timeline 的八项默认显示和展开按钮。
 
-## 14. 常见问题
+## 常见问题
 
 ### 图片或 PDF 不存在
 
 路径必须从项目根目录开始，例如 `assets/images/project/cover.jpg`，并注意 GitHub Pages 区分文件名大小写。
 
-### `Duplicate project id`
+### 错误： `Duplicate project id`
 
 两个项目使用了相同 ID。修改其中一个 `project_id`，或让构建器自动分配。
 
-### `already has a page`
+### 错误： `already has a page`
 
 同一项目调用了两次 `add_page()`。每个项目只保留一个详情页。
 
-### `Invalid URL`
+### 错误： `Invalid URL`
 
 外部链接需要使用 `https://`。项目链接还允许 `mailto:`，但推荐邮件统一写在 profile。
 
