@@ -44,7 +44,7 @@ python portfolio.py validate
 python portfolio.py build
 ```
 
-校验通过后生成首页、CV、项目详情页和两份 JSON。相同输入会生成稳定、格式化的 UTF-8 文件。
+校验通过后生成首页、CV、两份 JSON，以及所有调用过 `project.add_page()` 的项目详情页。相同输入会生成稳定、格式化的 UTF-8 文件；已取消 `add_page()` 的受管项目页会在构建时清理。
 
 ### 预览
 
@@ -482,7 +482,30 @@ page = project.add_page(
 
 预置标题会先集中写入页面；需要严格控制内容顺序时使用 `minimal`。
 
-若不调用 `add_page()`，项目会保留为仅首页展示的卡片：不会显示“View Details / 查看详情”，不会成为可聚焦链接，也不会生成子页面。
+若不调用 `add_page()`，项目会保留为仅首页展示的卡片：左下角显示 “Details Coming Soon ...”（中文为“详情即将上线…”），可以通过键盘聚焦以查看焦点反馈，但不具有链接或按钮语义。点击、Enter 和 Space 均不会跳转，hover/focus 时也不会显示手型光标，并且不会生成子页面。
+
+两种卡片状态由是否调用 `add_page()` 自动决定，不需要手工设置字段：
+
+```python
+# 仅首页卡片：显示 Coming Soon 状态，不生成详情页
+coming_soon = portfolio.add_project(
+    project_id="coming-soon",
+    title=dict(zh="即将公开的项目", en="Upcoming Project"),
+    summary=dict(zh="项目简介。", en="Project summary."),
+    thumbnail="assets/images/upcoming.jpg",
+)
+
+# 完整项目：生成详情页并启用整张卡片的鼠标与键盘导航
+published = portfolio.add_project(
+    project_id="published-project",
+    title=dict(zh="已公开项目", en="Published Project"),
+    summary=dict(zh="项目简介。", en="Project summary."),
+    thumbnail="assets/images/published.jpg",
+)
+published.add_page(template="minimal")
+```
+
+如果一个项目以前调用过 `add_page()`，后来将该调用删除，下一次 `build` 会删除它此前生成的 HTML，但仅限包含生成标记的受管文件；同目录中的手工 HTML 不会被误删。详情页的“上一个/下一个”导航也会自动跳过无详情页项目。
 
 ## 9. ProjectPage 内容块
 
@@ -668,7 +691,8 @@ page.add_youtube_link(
 ## 11. 修改、删除和草稿
 
 - 修改项目：直接编辑其 `add_project()` 和 `page.add_*()` 调用。
-- 删除项目：删除整段项目定义，下一次 `build` 会移除不再存在的生成详情页。
+- 删除项目：删除整段项目定义，下一次 `build` 会移除不再存在的受管详情页。
+- 暂不发布详情：保留 `add_project()`，不调用（或移除）该项目的 `add_page()`；首页卡片会显示 Coming Soon 状态，构建会清理旧的受管详情页。
 - 临时删除：可以调用 `portfolio.remove_project("project-id")`。
 - 草稿：为项目传入 `status="draft"`。草稿不会出现在首页和项目前后导航，但详情页仍会生成并标记为不可索引。
 
@@ -697,7 +721,7 @@ python -m unittest discover -s tests/python -v
 
 随后人工检查：
 
-1. 首页、CV 和每个项目详情页；
+1. 首页、CV，以及所有调用过 `add_page()` 的项目详情页；
 2. 英文与中文；
 3. 深色与浅色主题；
 4. 桌面和移动端；
