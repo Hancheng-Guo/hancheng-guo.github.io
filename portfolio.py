@@ -26,6 +26,11 @@ portfolio = Portfolio(
     # favicon="assets/images/Avatar.jpg",
 )
 
+# Page sections are configured here. Profile is always present first; the
+# remaining entries choose both what is shown and its order on each page.
+portfolio.set_home_field(("projects", "publications", "timeline"))
+portfolio.set_cv_field(("education", "work experience", "publications", "tech stack", "awards and scholarships"))
+
 
 # region Profile
 

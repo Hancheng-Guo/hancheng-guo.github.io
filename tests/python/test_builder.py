@@ -601,6 +601,46 @@ class BuilderTests(unittest.TestCase):
     self.assertNotIn("Loading project", detail)
     self.assertIn('class="svg-icon motion-link-arrow link-chevron chevron-left svg-icon--inline', detail)
 
+  def test_page_fields_normalize_filter_reorder_and_keep_profile(self):
+    portfolio = Portfolio()
+    portfolio.add_project(title="Project", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    portfolio.add_publication(publication_type="journal", title="Journal", venue="Venue")
+    portfolio.add_timeline_event(date="2025-01", title="Timeline", description="Event")
+    portfolio.add_education(date="2020-01", position="Education")
+    portfolio.add_work_experience(date="2021-01", position="Work")
+    portfolio.add_tech_group(title="Skills", items=[{"name": "Python"}])
+    portfolio.add_award(date="2022-01", title="Award")
+
+    portfolio.set_home_field(["publications"])
+    self.assertIs(portfolio.set_home_field([" TIMELINE ", "PROJECTS"]), portfolio)
+    portfolio.set_cv_field(["publications"])
+    self.assertIs(portfolio.set_cv_field(["work_experience", "PROFILE", "Awards-and-scholarships", "education"]), portfolio)
+    self.assertEqual(portfolio.home_fields, ("profile", "timeline", "projects"))
+    self.assertEqual(portfolio.cv_fields, ("profile", "work experience", "awards and scholarships", "education"))
+    self.assertEqual(portfolio.site_document()["layout"], {
+      "homeFields": ["profile", "timeline", "projects"],
+      "cvFields": ["profile", "work experience", "awards and scholarships", "education"],
+    })
+
+    home, cv = render_home(portfolio), render_cv(portfolio)
+    self.assertLess(home.index('id="timeline"'), home.index('id="projects"'))
+    self.assertLess(home.index('data-i18n="nav.timeline"'), home.index('data-i18n="nav.projects"'))
+    self.assertNotIn('id="publications"', home)
+    self.assertNotIn('#publications', home)
+    self.assertLess(cv.index('resume-work'), cv.index('resume-awards'))
+    self.assertLess(cv.index('resume-awards'), cv.index('resume-education'))
+    self.assertNotIn('resume-journals', cv)
+    self.assertIn('resume-sidebar', cv)
+
+  def test_page_field_validation_rejects_ambiguous_layouts(self):
+    portfolio = Portfolio()
+    for fields in ("projects", ("projects", "projects"), ("unknown",), (1,)):
+      with self.subTest(fields=fields):
+        with self.assertRaises(ValueError):
+          portfolio.set_home_field(fields)
+    with self.assertRaises(ValueError):
+      portfolio.set_cv_field(("education", None))
+
   def test_markdown_escapes_html_and_preserves_snake_case(self):
     rendered = markdown_inline("snake_case _underlined_ <script>alert(1)</script>")
     self.assertIn("snake_case", rendered)

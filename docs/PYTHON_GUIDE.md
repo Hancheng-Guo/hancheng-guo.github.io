@@ -175,6 +175,19 @@ portfolio = Portfolio(
 
 页脚第一行格式是 `© {year} {author}, {copyright_text}`；`copyright_text` 为空时不会保留多余逗号。
 
+## 页面分区与顺序
+
+`set_home_field()` 和 `set_cv_field()` 用一个 tuple 或 list 同时决定分区是否显示及排列顺序。Profile 是页面的基础内容，始终显示在首位；即使省略或把它写在其他位置，构建器也会自动放回首位。没有已发布内容的已选分区不会输出空壳。
+
+```python
+portfolio.set_home_field(("profile", "timeline", "projects"))
+portfolio.set_cv_field(("profile", "education", "work experience", "tech stack", "awards and scholarships"))
+```
+
+首页可用值为 `profile`、`projects`、`publications`、`timeline`；默认顺序是 `("profile", "projects", "publications", "timeline")`。CV 可用值为 `profile`、`education`、`work experience`、`publications`、`tech stack`、`awards and scholarships`；默认顺序是 `("profile", "education", "work experience", "publications", "tech stack", "awards and scholarships")`。
+
+大小写、首尾空白和连接符不敏感，例如 `"work_experience"`、`"Work-Experience"` 都等同于 `"work experience"`。未知或重复的名称、字符串参数及非字符串成员会在配置时明确报错。再次调用会完整替换上一次配置。无需编辑生成的 JSON。
+
 ## Profile 与联系方式
 
 ### `set_profile()`

@@ -23,6 +23,14 @@ _VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link"
 _RAW_TAGS = {"script", "style", "pre", "code", "textarea"}
 _INLINE_TAGS = {"a", "abbr", "b", "br", "cite", "code", "em", "i", "mark", "small", "span", "strong", "sub", "sup", "time", "u"}
 _SIMPLE_TEXT_TAGS = {"title", "h1", "h2", "h3", "h4", "h5", "h6", "p", "dt", "dd", "figcaption", "li"}
+_DEFAULT_HOME_FIELDS = ("profile", "projects", "publications", "timeline")
+_DEFAULT_CV_FIELDS = ("profile", "education", "work experience", "publications", "tech stack", "awards and scholarships")
+
+
+def _layout_fields(portfolio: Any, attribute: str, default: tuple[str, ...]) -> tuple[str, ...]:
+    """Read layouts defensively for old Portfolio instances and old data."""
+    value = getattr(portfolio, attribute, default)
+    return tuple(value) if isinstance(value, (tuple, list)) else default
 
 
 def _tag_end(source: str, start: int) -> int:
@@ -318,13 +326,14 @@ def _nav(portfolio: Any, prefix: str, *, active_cv: bool = False) -> str:
     visible_journals = [item for item in publications.get("journalArticles", []) if item.get("status") != "draft"]
     visible_conferences = [item for item in publications.get("conferencePapers", []) if item.get("status") != "draft"]
     visible_timeline = [item for item in portfolio.timeline if item.get("status") != "draft"]
-    section_links = [f'<a href="{home}#profile" data-i18n="nav.profile">Profile</a>']
-    if visible_projects:
-        section_links.append(f'<a href="{home}#projects" data-i18n="nav.projects">Projects</a>')
-    if visible_journals or visible_conferences:
-        section_links.append(f'<a href="{home}#publications" data-i18n="nav.publications">Publications</a>')
-    if visible_timeline:
-        section_links.append(f'<a href="{home}#timeline" data-i18n="nav.timeline">Timeline</a>')
+    home_fields = _layout_fields(portfolio, "home_fields", _DEFAULT_HOME_FIELDS)
+    available_links = {
+        "profile": f'<a href="{home}#profile" data-i18n="nav.profile">Profile</a>',
+        "projects": f'<a href="{home}#projects" data-i18n="nav.projects">Projects</a>' if visible_projects else "",
+        "publications": f'<a href="{home}#publications" data-i18n="nav.publications">Publications</a>' if visible_journals or visible_conferences else "",
+        "timeline": f'<a href="{home}#timeline" data-i18n="nav.timeline">Timeline</a>' if visible_timeline else "",
+    }
+    section_links = [available_links[field] for field in home_fields if available_links.get(field)]
     return f'''<nav><div class="container nav-container">
   <a href="{home}" class="logo"><span class="logo-text">{author}</span><div class="logo-dot"></div></a>
   <div class="nav-actions"><button class="control-btn menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation" data-i18n-aria-label="nav.openMenu">☰</button>
@@ -500,6 +509,7 @@ def render_home(portfolio: Any) -> str:
             "url": f"{SITE_ORIGIN}/",
         },
     )
+    home_fields = _layout_fields(portfolio, "home_fields", _DEFAULT_HOME_FIELDS)
     project_section = f'<section id="projects" class="section-padding"><div class="container"><h2 data-i18n="projects.title">Projects</h2><div class="projects-grid">{projects}</div></div></section>' if visible_projects else ""
     publication_categories = ""
     if visible_journals:
@@ -508,12 +518,14 @@ def render_home(portfolio: Any) -> str:
         publication_categories += f'<h3 data-i18n="publications.conference">Conference Papers</h3><div class="content-list home-conferences">{conferences}</div>'
     publication_section = f'<section id="publications" class="section-padding"><div class="container"><h2 data-i18n="publications.title">Publications</h2><div class="narrative-container">{publication_categories}</div></div></section>' if publication_categories else ""
     timeline_section = f'<section id="timeline" class="section-padding"><div class="container"><h2 data-i18n="timeline.title">Timeline</h2><div class="timeline-container">{timeline}</div><button class="control-btn timeline-toggle" type="button" aria-expanded="false"{toggle_attrs}><span class="timeline-toggle-label" data-i18n="timeline.showMore">Show more</span>{_icon("chevron-down").replace("class=\"svg-icon", "class=\"svg-icon timeline-chevron")}</button></div></section>' if timeline else ""
+    sections = {"projects": project_section, "publications": publication_section, "timeline": timeline_section}
+    ordered_sections = "".join(sections.get(field, "") for field in home_fields if field != "profile")
     profile_decoration = '<div class="bg-decoration" aria-hidden="true"></div>' if avatar else ""
     return f'''<!DOCTYPE html>
 {MARKER}
 <html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{title}</title>{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>{_anchor_bootstrap()}<link rel="stylesheet" href="assets/css/style.css"></head>
 <body id="top" data-page="home">{_nav(portfolio, "")}
-<main><section id="profile" class="intro profile-section"{_hero_attributes(hero_background)}>{profile_decoration}<div class="container flex-center column">{f'<div class="avatar-container"><div class="avatar-glow"></div><img class="avatar" src="{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<h1 class="gradient-text hero-title">Hello, I'm {name}</h1><div class="subtitle hero-summary">{summary}</div><div class="hero-action-row"><div class="intro-actions">{_download(portfolio.resume, "")}</div><div id="contact" class="contact-links hero-contact-links" aria-label="Contact links">{_contacts(portfolio)}</div></div></div></section>{project_section}{publication_section}{timeline_section}</main>
+<main><section id="profile" class="intro profile-section"{_hero_attributes(hero_background)}>{profile_decoration}<div class="container flex-center column">{f'<div class="avatar-container"><div class="avatar-glow"></div><img class="avatar" src="{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<h1 class="gradient-text hero-title">Hello, I'm {name}</h1><div class="subtitle hero-summary">{summary}</div><div class="hero-action-row"><div class="intro-actions">{_download(portfolio.resume, "")}</div><div id="contact" class="contact-links hero-contact-links" aria-label="Contact links">{_contacts(portfolio)}</div></div></div></section>{ordered_sections}</main>
 {_footer(portfolio)}<script type="module" src="assets/js/app.js"></script></body></html>'''
 
 
@@ -543,6 +555,15 @@ def render_cv(portfolio: Any) -> str:
     publications_section = f'<section class="narrative-container"><h2 data-i18n="publications.title">Publications</h2>{publication_categories}</section>' if publication_categories else ""
     skills_section = f'<section class="narrative-container"><h2 data-i18n="skills.title">Tech Stack</h2><div class="content-list resume-skills">{skills}</div></section>' if skills else ""
     awards_section = f'<section class="narrative-container"><h2 data-i18n="awards.title">Awards &amp; Scholarships</h2><div class="content-list resume-awards">{awards}</div></section>' if awards else ""
+    cv_fields = _layout_fields(portfolio, "cv_fields", _DEFAULT_CV_FIELDS)
+    sections = {
+        "education": education_section,
+        "work experience": work_section,
+        "publications": publications_section,
+        "tech stack": skills_section,
+        "awards and scholarships": awards_section,
+    }
+    ordered_sections = "".join(sections.get(field, "") for field in cv_fields if field != "profile")
     name = markdown_inline(profile.get("name", portfolio.author))
     summary = markdown_inline(profile.get("summary", ""))
     cv_title_source = f"CV - {localized(portfolio.site_name)}"
@@ -558,7 +579,7 @@ def render_cv(portfolio: Any) -> str:
 {MARKER}
 <html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{cv_title}</title>{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script><link rel="stylesheet" href="../assets/css/style.css"></head>
 <body data-page="resume">{_nav(portfolio, "../", active_cv=True)}<main class="section-padding"><div class="container resume-page"><a class="back-link" href="../index.html">{_link_chevron("left")}<span data-i18n="resume.back">Back to Home</span></a><h1 data-i18n="resume.title">CV</h1><div class="resume-layout"><aside class="resume-sidebar"><div class="resume-profile-heading">{f'<div class="resume-avatar-wrap"><div class="avatar-glow" aria-hidden="true"></div><img tabindex="0" class="resume-profile-avatar" src="../{escape(avatar, quote=True)}" alt="{markdown_text(profile.get("name", portfolio.author))} profile portrait"></div>' if avatar else ''}<div class="resume-profile-identity"><h2 class="resume-profile-name">{name}</h2><div class="resume-download">{_download(portfolio.resume, "../")}</div></div></div><div class="resume-profile-details"><p>{summary}</p></div><div class="contact-links resume-contact-links" aria-label="Contact links">{_contacts(portfolio, "../")}</div></aside><div class="resume-main">
-{education_section}{work_section}{publications_section}{skills_section}{awards_section}</div></div></div></main>{_footer(portfolio)}<script type="module" src="../assets/js/resume.js"></script></body></html>'''
+{ordered_sections}</div></div></div></main>{_footer(portfolio)}<script type="module" src="../assets/js/resume.js"></script></body></html>'''
 LINK_PRESENTATION = {
     "github": ("github", "Code"),
     "techDoc": ("file-pdf", "Docs"),
@@ -638,9 +659,10 @@ def render_project(portfolio: Any, project: dict[str, Any]) -> str:
             "url": f'{SITE_ORIGIN}/{project.get("page", "")}',
         },
     )
+    projects_anchor = "#projects" if "projects" in _layout_fields(portfolio, "home_fields", _DEFAULT_HOME_FIELDS) else ""
     return f'''<!DOCTYPE html>
 {MARKER}
-<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{page_title}</title>{robots}{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script><link rel="stylesheet" href="../../assets/css/style.css"></head><body data-page="project" data-project-id="{escape(str(project.get("id")), quote=True)}">{_nav(portfolio, "../../")}<main class="section-padding"><div class="container"><div class="card project-detail-card"><div class="project-container"><a class="back-link" href="../../index.html#projects">{_link_chevron("left")}<span>Back to Projects</span></a><h2>{markdown_inline(content.get("title"))}</h2>{_project_blocks(content.get("blocks", []))}{links_html}<nav class="project-adjacent" aria-label="Project navigation">{"".join(adjacent)}</nav></div></div></div></main>{_footer(portfolio)}<script type="module" src="../../assets/js/app.js"></script></body></html>'''
+<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{page_title}</title>{robots}{metadata}{favicon}<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script><link rel="stylesheet" href="../../assets/css/style.css"></head><body data-page="project" data-project-id="{escape(str(project.get("id")), quote=True)}">{_nav(portfolio, "../../")}<main class="section-padding"><div class="container"><div class="card project-detail-card"><div class="project-container"><a class="back-link" href="../../index.html{projects_anchor}">{_link_chevron("left")}<span>Back to Projects</span></a><h2>{markdown_inline(content.get("title"))}</h2>{_project_blocks(content.get("blocks", []))}{links_html}<nav class="project-adjacent" aria-label="Project navigation">{"".join(adjacent)}</nav></div></div></div></main>{_footer(portfolio)}<script type="module" src="../../assets/js/app.js"></script></body></html>'''
 
 
 def write_text_atomic(path: Path, content: str) -> None:

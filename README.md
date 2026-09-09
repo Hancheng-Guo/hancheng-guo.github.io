@@ -42,6 +42,17 @@ python portfolio.py preview
 
 联系方式可直接使用仓库内 SVG：`icon="assets/icons/linkedin.svg"`。无需添加 CSS 图标映射；路径必须是存在的仓库内 `.svg` 文件。详见[工具手册的联系方式说明](docs/PYTHON_GUIDE.md#add_contact)。
 
+## 页面分区与顺序
+
+首页和 CV 的内容分区可在 `portfolio.py` 中配置；Profile 始终保留在首位，其余项目按写入顺序显示。未设置时使用当前默认布局。
+
+```python
+portfolio.set_home_field(("profile", "projects", "publications", "timeline"))
+portfolio.set_cv_field(("profile", "education", "work experience", "publications", "tech stack", "awards and scholarships"))
+```
+
+省略某项会隐藏该分区（不会产生空白区）；完整可用值和示例见[工具手册的页面分区与顺序](docs/PYTHON_GUIDE.md#页面分区与顺序)。
+
 ## 项目卡片与详情页
 
 `portfolio.add_project()` 始终创建首页项目卡片。是否调用返回对象的 `add_page()`，决定该项目是否有详情页：

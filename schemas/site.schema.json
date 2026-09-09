@@ -84,6 +84,22 @@
     "resume": { "type": "object" },
     "timeline": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
     "techStack": { "type": "array" },
-    "contacts": { "type": "array" }
+    "contacts": { "type": "array" },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "homeFields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["profile", "projects", "publications", "timeline"] }
+        },
+        "cvFields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["profile", "education", "work experience", "publications", "tech stack", "awards and scholarships"] }
+        }
+      },
+      "additionalProperties": false
+    }
   }
 }

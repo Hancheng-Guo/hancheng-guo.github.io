@@ -32,6 +32,30 @@ _MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 _DAY = re.compile(r"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$")
 _UNSET = object()
 
+HOME_FIELDS = ("profile", "projects", "publications", "timeline")
+CV_FIELDS = (
+    "profile", "education", "work experience", "publications", "tech stack", "awards and scholarships",
+)
+
+
+def _normalise_fields(value: Any, *, allowed: tuple[str, ...], name: str) -> tuple[str, ...]:
+    """Validate a page layout and return its stable, canonical field names."""
+    if isinstance(value, (str, bytes)) or not isinstance(value, (tuple, list)):
+        raise ValueError(f"{name} 必须是 tuple 或 list，不能是字符串")
+    result: list[str] = []
+    for item in value:
+        if not isinstance(item, str):
+            raise ValueError(f"{name} 的每个分区必须是字符串")
+        canonical = re.sub(r"[\s_-]+", " ", item.strip().lower())
+        if canonical not in allowed:
+            raise ValueError(f"{name} 包含未知分区: {item}")
+        if canonical in result:
+            raise ValueError(f"{name} 包含重复分区: {canonical}")
+        result.append(canonical)
+    # Profile is structural rather than optional.  Its position is fixed so
+    # callers cannot accidentally turn the main profile into a later section.
+    return tuple(["profile", *[field for field in result if field != "profile"]])
+
 
 def _date_range(value: str | dict[str, str]) -> dict[str, str]:
     if isinstance(value, str):
@@ -187,8 +211,16 @@ class Portfolio:
     publications: dict[str, list[dict[str, Any]]] = field(default_factory=lambda: {"journalArticles": [], "conferencePapers": []})
     awards: list[dict[str, Any]] = field(default_factory=list)
     resume: dict[str, Any] = field(default_factory=dict)
+    home_fields: tuple[str, ...] = HOME_FIELDS
+    cv_fields: tuple[str, ...] = CV_FIELDS
     schema_version: int = 2
     _pages_added: set[str] = field(default_factory=set, init=False, repr=False)
+
+    def __post_init__(self) -> None:
+        # Dataclass construction is public too, so it follows the same
+        # contract as the two setters instead of allowing unvalidated layouts.
+        self.home_fields = _normalise_fields(self.home_fields, allowed=HOME_FIELDS, name="home fields")
+        self.cv_fields = _normalise_fields(self.cv_fields, allowed=CV_FIELDS, name="cv fields")
 
     @classmethod
     def load(cls, path: str | os.PathLike[str]) -> "Portfolio":
@@ -244,6 +276,16 @@ class Portfolio:
             else:
                 fields[key] = value
         self.profile.update(fields); return self
+
+    def set_home_field(self, fields: tuple[str, ...] | list[str]) -> "Portfolio":
+        """Set visible homepage sections and their order (Profile stays first)."""
+        self.home_fields = _normalise_fields(fields, allowed=HOME_FIELDS, name="home fields")
+        return self
+
+    def set_cv_field(self, fields: tuple[str, ...] | list[str]) -> "Portfolio":
+        """Set visible CV sections and their order (Profile sidebar stays present)."""
+        self.cv_fields = _normalise_fields(fields, allowed=CV_FIELDS, name="cv fields")
+        return self
 
     def add_education(
         self,
@@ -346,6 +388,7 @@ class Portfolio:
             "timeline": self.timeline,
             "techStack": self.tech_stack,
             "contacts": self.contacts,
+            "layout": {"homeFields": list(self.home_fields), "cvFields": list(self.cv_fields)},
         }
 
     def _create_page(self, project: dict[str, Any], *, template: str) -> ProjectPage:

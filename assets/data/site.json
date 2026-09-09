@@ -392,5 +392,21 @@
       "icon": "assets/icons/orcid.svg",
       "url": "https://orcid.org/0009-0005-2213-1604"
     }
-  ]
+  ],
+  "layout": {
+    "homeFields": [
+      "profile",
+      "projects",
+      "publications",
+      "timeline"
+    ],
+    "cvFields": [
+      "profile",
+      "education",
+      "work experience",
+      "publications",
+      "tech stack",
+      "awards and scholarships"
+    ]
+  }
 }

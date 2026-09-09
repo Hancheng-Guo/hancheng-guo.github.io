@@ -14,6 +14,12 @@ const LINK_PRESENTATION = {
   bilibili: { icon: 'bilibili', className: 'bilibili' },
   youtube: { icon: 'youtube', className: 'youtube' },
 };
+const DEFAULT_HOME_FIELDS = ['profile', 'projects', 'publications', 'timeline'];
+
+function homeFields(site) {
+  const fields = site?.layout?.homeFields;
+  return Array.isArray(fields) ? fields : DEFAULT_HOME_FIELDS;
+}
 
 function createLink(link) {
   const presentation = LINK_PRESENTATION[link.type];
@@ -128,7 +134,7 @@ async function renderProject() {
   clear(container);
   const backLink = document.createElement('a');
   backLink.className = 'back-link';
-  backLink.href = fromRoot('index.html#projects');
+  backLink.href = fromRoot(homeFields(site).includes('projects') ? 'index.html#projects' : 'index.html');
   backLink.append(linkChevron('left'), document.createElement('span'));
   renderInline(backLink.lastElementChild, t('projects.back'));
   container.appendChild(backLink);
