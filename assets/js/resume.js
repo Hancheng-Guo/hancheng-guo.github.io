@@ -140,7 +140,9 @@ function appendContact(container, { label, icon, url, email = false }) {
   link.title = markdownText(label);
   if (!email) { link.target = '_blank'; link.rel = 'noopener noreferrer'; }
   const iconElement = document.createElement('span');
-  iconElement.className = `svg-icon icon-${icon}`;
+  iconElement.className = 'svg-icon';
+  if (email) iconElement.classList.add(`icon-${icon}`);
+  else iconElement.style.setProperty('--icon-url', `url("${fromRoot(icon)}")`);
   iconElement.setAttribute('aria-hidden', 'true');
   const text = document.createElement('span');
   if (email) text.textContent = label;

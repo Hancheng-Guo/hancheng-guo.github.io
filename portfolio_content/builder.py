@@ -8,7 +8,7 @@ import os
 import re
 import tempfile
 
-from .validators import ValidationReport, validate_document, validate_education_items, validate_profile_assets, validate_work_experience_items
+from .validators import ValidationReport, validate_contact_icons, validate_document, validate_education_items, validate_profile_assets, validate_work_experience_items
 from .static_renderer import pretty_html, render_cv, render_home, render_project, write_text_atomic
 
 
@@ -389,6 +389,9 @@ class Portfolio:
         work_report = validate_work_experience_items(self.work_experience)
         report.errors.extend(work_report.errors)
         report.warnings.extend(work_report.warnings)
+        contact_report = validate_contact_icons(self.contacts, root=root_path)
+        report.errors.extend(contact_report.errors)
+        report.warnings.extend(contact_report.warnings)
         if self.favicon:
             if str(self.favicon).startswith("http://"):
                 report.errors.append("favicon 仅允许 https URL 或本地文件")

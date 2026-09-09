@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from urllib.parse import urlparse
 import re
 
@@ -28,6 +28,70 @@ def _local_asset(report: "ValidationReport", value: object, *, field: str, root:
         if not value.startswith("https://"): report.errors.append(f"{field} 仅允许 https URL")
     elif not (root / value).is_file():
         report.errors.append(f"{field} 文件不存在: {value}")
+
+
+def local_svg_path(value: object, *, root: Path) -> Path | None:
+    """Return a repository-contained SVG path, or ``None`` when unsafe.
+
+    Contact glyphs are embedded in static pages and later used as CSS masks.
+    Keeping their paths local avoids fetching untrusted SVG content at either
+    stage, including when a configuration happens to be rendered directly.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return None
+    raw = value.strip()
+    candidate = Path(raw)
+    if raw.startswith(("/", "\\")) or candidate.is_absolute() or PureWindowsPath(raw).is_absolute() or urlparse(raw).scheme or candidate.suffix.lower() != ".svg":
+        return None
+    try:
+        resolved_root = root.resolve()
+        resolved = (resolved_root / candidate).resolve()
+        resolved.relative_to(resolved_root)
+    except (OSError, ValueError):
+        return None
+    return resolved if resolved.is_file() else None
+
+
+def safe_local_svg_markup(value: object, *, root: Path) -> str | None:
+    """Read a local contact glyph only when it is safe to inline in HTML."""
+    path = local_svg_path(value, root=root)
+    if path is None:
+        return None
+    try:
+        markup = path.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+    svg = re.search(r"<svg\b", markup, re.I)
+    if not svg:
+        return None
+    markup = markup[svg.start():]
+    # Contact SVGs are inlined for offline/file:// compatibility. Do not let a
+    # local asset turn that convenience into executable or fetched page content.
+    unsafe = re.compile(r"<(?:script|foreignobject|iframe|object|embed)\b|\son[a-z]+\s*=|(?:href|src)\s*=\s*['\"]\s*(?:https?:|//|javascript:|data:)", re.I)
+    return None if unsafe.search(markup) else markup
+
+
+def validate_contact_icons(items: object, *, root: Path) -> "ValidationReport":
+    report = ValidationReport()
+    if not isinstance(items, list):
+        report.errors.append("contacts 必须是数组")
+        return report
+    for index, item in enumerate(items):
+        field = f"contacts[{index}].icon"
+        value = item.get("icon") if isinstance(item, dict) else None
+        if not isinstance(value, str) or not value.strip():
+            report.errors.append(f"{field} 必须是仓库内本地 SVG 路径")
+        elif value.strip().startswith(("/", "\\")) or Path(value.strip()).is_absolute() or PureWindowsPath(value.strip()).is_absolute():
+            report.errors.append(f"{field} 不允许绝对路径: {value}")
+        elif urlparse(value.strip()).scheme or value.strip().startswith("//"):
+            report.errors.append(f"{field} 不允许远程 URL: {value}")
+        elif Path(value.strip()).suffix.lower() != ".svg":
+            report.errors.append(f"{field} 必须使用 .svg 文件: {value}")
+        elif local_svg_path(value, root=root) is None:
+            report.errors.append(f"{field} 必须是存在的仓库内 SVG 文件: {value}")
+        elif safe_local_svg_markup(value, root=root) is None:
+            report.errors.append(f"{field} SVG 包含不允许的内联内容: {value}")
+    return report
 
 
 def validate_profile_assets(profile: object, *, root: Path) -> "ValidationReport":

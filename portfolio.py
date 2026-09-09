@@ -65,7 +65,7 @@ portfolio.add_contact(
         zh="代码仓库",
         en="GitHub",
     ),
-    icon="github",
+    icon="assets/icons/github.svg",
     url="https://github.com/Hancheng-Guo",
 )
 
@@ -74,7 +74,7 @@ portfolio.add_contact(
         zh="ORCID 学术档案",
         en="ORCID",
     ),
-    icon="orcid",
+    icon="assets/icons/orcid.svg",
     url="https://orcid.org/0009-0005-2213-1604",
 )
 

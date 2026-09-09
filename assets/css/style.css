@@ -326,8 +326,6 @@ body > nav {
 [data-theme="dark"] .lang-toggle .language-target-icon { filter: invert(1); }
 .icon-envelope { --icon-url: url('../icons/envelope.svg'); }
 .icon-file-pdf { --icon-url: url('../icons/file-pdf.svg'); }
-.icon-github { --icon-url: url('../icons/github.svg'); }
-.icon-orcid { --icon-url: url('../icons/orcid.svg'); }
 .icon-bilibili { --icon-url: url('../icons/bilibili.svg'); }
 .icon-youtube { --icon-url: url('../icons/youtube.svg'); }
 

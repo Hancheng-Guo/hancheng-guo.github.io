@@ -425,24 +425,50 @@ class BuilderTests(unittest.TestCase):
     self.assertNotIn('avatar-container', render_home(configured))
     self.assertNotIn('data-hero-background', render_home(configured))
 
-  def test_orcid_contact_renders_as_a_safe_local_icon_link(self):
+  def test_contact_renders_from_a_safe_local_svg_path(self):
     portfolio = Portfolio()
     portfolio.add_contact(
       label={"en": "ORCID", "zh": "ORCID 学术档案"},
-      icon="orcid",
+      icon="assets/icons/orcid.svg",
       url="https://orcid.org/0009-0005-2213-1604",
     )
     document = portfolio.site_document()
     self.assertEqual(document["contacts"][0]["url"], "https://orcid.org/0009-0005-2213-1604")
-    self.assertEqual(document["contacts"][0]["icon"], "orcid")
+    self.assertEqual(document["contacts"][0]["icon"], "assets/icons/orcid.svg")
     self.assertEqual(document["contacts"][0]["label"], {"en": "ORCID", "zh": "ORCID 学术档案"})
     for html in (render_home(portfolio), render_cv(portfolio)):
-      self.assertIn('class="svg-icon svg-icon--inline icon-orcid"', html)
+      self.assertIn('class="svg-icon svg-icon--inline"', html)
+      self.assertNotIn('icon-orcid', html)
       self.assertIn('href="https://orcid.org/0009-0005-2213-1604"', html)
       self.assertIn('target="_blank" rel="noopener noreferrer"', html)
       self.assertIn('aria-label="ORCID"', html)
       self.assertNotIn('<?xml', html)
       self.assertNotIn('Uploaded to: SVG Repo', html)
+
+  def test_contact_icon_must_be_a_repository_local_existing_svg(self):
+    for icon, expected in (
+      ("orcid", "必须使用 .svg 文件"),
+      ("https://example.com/icon.svg", "不允许远程 URL"),
+      ("/assets/icons/orcid.svg", "不允许绝对路径"),
+      (r"C:\\assets\\icons\\orcid.svg", "不允许绝对路径"),
+      ("../outside.svg", "仓库内 SVG"),
+      ("assets/icons/orcid.png", "必须使用 .svg 文件"),
+      ("assets/icons/missing.svg", "仓库内 SVG"),
+    ):
+      portfolio = Portfolio()
+      portfolio.add_contact(label="Test", icon=icon, url="https://example.com")
+      report = portfolio.validate(root=".")
+      self.assertFalse(report.ok, icon)
+      self.assertIn(expected, report.format(), icon)
+
+    import tempfile
+    with tempfile.TemporaryDirectory() as folder:
+      icon_path = Path(folder) / "assets/icons/unsafe.svg"
+      icon_path.parent.mkdir(parents=True)
+      icon_path.write_text('<svg><script>alert(1)</script></svg>', encoding="utf-8")
+      portfolio = Portfolio()
+      portfolio.add_contact(label="Unsafe", icon="assets/icons/unsafe.svg", url="https://example.com")
+      self.assertIn("不允许的内联内容", portfolio.validate(root=folder).format())
 
   def test_profile_name_and_empty_sections_follow_visible_content(self):
     empty = Portfolio()

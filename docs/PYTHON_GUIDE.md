@@ -211,7 +211,7 @@ portfolio.set_profile(
 
 ### `add_contact()`
 
-每次调用增加一个联系方式。内置社交图标包括 `github` 和 `orcid`。
+每次调用增加一个联系方式。`icon` 必须填写仓库内现有 SVG 的相对路径；不需要为新图标修改 CSS。图标会继承文字颜色，因此主题切换与悬停状态会自动保持一致。
 
 ```python
 portfolio.add_contact(
@@ -219,7 +219,7 @@ portfolio.add_contact(
         zh="代码仓库",
         en="GitHub",
     ),
-    icon="github",
+    icon="assets/icons/github.svg",
     url="https://github.com/example",
 )
 ```
@@ -232,12 +232,14 @@ portfolio.add_contact(
         zh="ORCID 学术档案",
         en="ORCID",
     ),
-    icon="orcid",
+    icon="assets/icons/orcid.svg",
     url="https://orcid.org/0000-0000-0000-0000",
 )
 ```
 
-首页和 CV 会复用同一组联系方式。
+首页和 CV 会复用同一组联系方式。路径只能指向仓库内、存在的 `.svg` 文件；远程 URL、绝对路径、`..` 越界路径和其他文件类型都会在 `validate`/`build` 时被拒绝。
+
+可以自行添加透明底的 `.svg` 格式图标，自定义新的联系方式按钮。
 
 ## CV 与履历
 

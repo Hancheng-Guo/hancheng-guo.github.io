@@ -201,7 +201,8 @@ function renderContacts(contacts, profile = {}) {
     link.setAttribute('aria-label', markdownText(localized(contact.label)));
     link.title = markdownText(localized(contact.label));
     const icon = document.createElement('span');
-    icon.className = `svg-icon icon-${contact.icon}`;
+    icon.className = 'svg-icon';
+    icon.style.setProperty('--icon-url', `url("${fromRoot(contact.icon)}")`);
     icon.setAttribute('aria-hidden', 'true');
     const label = document.createElement('span');
     label.className = 'visually-hidden';
