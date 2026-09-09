@@ -9,10 +9,10 @@ import { markdownText, renderBlock, renderInline } from './markdown.js';
 function linkChevron(direction) { const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); icon.setAttribute('class', `svg-icon svg-icon--inline motion-link-arrow link-chevron chevron-${direction}`); icon.setAttribute('aria-hidden', 'true'); icon.setAttribute('focusable', 'false'); icon.setAttribute('viewBox', '0 0 24 24'); icon.setAttribute('fill', 'none'); icon.setAttribute('stroke', 'currentColor'); icon.setAttribute('stroke-width', '3'); icon.setAttribute('stroke-linecap', 'round'); icon.setAttribute('stroke-linejoin', 'round'); const path = document.createElementNS('http://www.w3.org/2000/svg', 'path'); path.setAttribute('d', 'm6 9 6 6 6-6'); icon.appendChild(path); return icon; }
 
 const LINK_PRESENTATION = {
-  github: { icon: 'github', className: 'github' },
-  techDoc: { icon: 'file-pdf', className: '' },
-  bilibili: { icon: 'bilibili', className: 'bilibili' },
-  youtube: { icon: 'youtube', className: 'youtube' },
+  github: { icon: 'github', className: 'github', source: 'assets/icons/github.svg' },
+  techDoc: { icon: 'file-pdf', className: '', source: 'assets/icons/file-pdf.svg' },
+  bilibili: { icon: 'bilibili', className: 'bilibili', source: 'assets/icons/bilibili.svg' },
+  youtube: { icon: 'youtube', className: 'youtube', source: 'assets/icons/youtube.svg' },
 };
 const DEFAULT_HOME_FIELDS = ['profile', 'projects', 'publications', 'timeline'];
 
@@ -32,6 +32,10 @@ function createLink(link) {
   const icon = document.createElement('span');
   icon.className = `svg-icon icon-${presentation.icon}`;
   icon.setAttribute('aria-hidden', 'true');
+  // Project details are nested under pages/projects/.  Resolve the approved
+  // first-party asset from the site root so hydrated icons do not depend on
+  // page-relative CSS mappings (and match direct-path contact icons).
+  icon.style.setProperty('--icon-url', `url("${fromRoot(presentation.source)}")`);
   const label = document.createElement('span');
   const customLabel = typeof link.label === 'string'
     ? link.label
