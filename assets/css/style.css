@@ -529,7 +529,7 @@ h2::after {
 
 /* Each project card is an operable link surface, so use the same pointer
    affordance as a button without changing its existing keyboard behavior. */
-.projects-grid .card:is(:hover, :focus, :focus-within) {
+.projects-grid .card.project-card-detail:is(:hover, :focus, :focus-within) {
   cursor: pointer;
 }
 
@@ -665,13 +665,16 @@ h2::after {
   align-items: center;
   gap: 4px;
 }
+/* Status-only cards intentionally retain the footer's visual anchor without
+   borrowing the primary action colour or any link-like affordance. */
+.project-link.project-status { color: var(--text-muted); font-weight: 500; }
 .project-card-footer { display: flex; justify-content: space-between; align-items: center; min-height: 28px; gap: 12px; }
 .project-card-footer .project-date { margin: 0; font-size: .82rem; color: var(--text-muted); }
 .link-chevron { align-self: center; position: relative; top: 0.5px; width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; vertical-align: middle; }
 .chevron-left { transform: rotate(90deg); }
 .chevron-right { transform: rotate(-90deg); }
 .back-link:hover .chevron-left, .back-link:focus-visible .chevron-left, .project-adjacent-link.previous:hover .chevron-left, .project-adjacent-link.previous:focus-visible .chevron-left { transform: translateX(-4px) rotate(90deg); }
-.projects-grid .card:is(:hover, :focus, :focus-within) .project-link .chevron-right,
+.projects-grid .card.project-card-detail:is(:hover, :focus, :focus-within) .project-link .chevron-right,
 .project-adjacent-link.next:hover .chevron-right,
 .project-adjacent-link.next:focus-visible .chevron-right { transform: translateX(4px) rotate(-90deg); }
 

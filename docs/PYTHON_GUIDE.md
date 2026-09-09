@@ -408,7 +408,7 @@ portfolio.add_timeline_event(
 
 ### 新建项目
 
-`add_project()` 返回一个 `Project` 对象。`project_id` 通常省略，构建器会依次分配 `project1`、`project2` 等 ID，并自动维护 `pages/projects/<id>.html`。
+`add_project()` 返回一个 `Project` 对象。`project_id` 通常省略，构建器会依次分配 `project1`、`project2` 等 ID。项目始终显示在首页；只有随后调用 `add_page()` 时，构建器才会生成 `pages/projects/<id>.html`，并把卡片变成可打开详情的交互项。
 
 ```python
 project = portfolio.add_project(
@@ -481,6 +481,8 @@ page = project.add_page(
 - `competition`：预置 Objective、Responsibilities、System Design、Results、Awards。
 
 预置标题会先集中写入页面；需要严格控制内容顺序时使用 `minimal`。
+
+若不调用 `add_page()`，项目会保留为仅首页展示的卡片：不会显示“View Details / 查看详情”，不会成为可聚焦链接，也不会生成子页面。
 
 ## 9. ProjectPage 内容块
 

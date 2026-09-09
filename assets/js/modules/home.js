@@ -29,19 +29,29 @@ async function renderProjects() {
     const content = project.locales[currentLanguage()] || project.locales.en;
     const card = document.createElement('article');
     card.className = 'card';
-    const projectUrl = fromRoot(project.page);
-    card.tabIndex = 0;
-    card.setAttribute('role', 'link');
-    card.setAttribute('aria-label', `${t('projects.viewDetail')}: ${markdownText(content.title)}`);
-    card.addEventListener('click', (event) => {
-      if (!event.target.closest('a')) window.location.href = projectUrl;
-    });
-    card.addEventListener('keydown', (event) => {
-      if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('a')) {
-        event.preventDefault();
-        window.location.href = projectUrl;
-      }
-    });
+    const hasDetailPage = project.hasDetailPage === true;
+    if (hasDetailPage) {
+      const projectUrl = fromRoot(project.page);
+      card.classList.add('project-card-detail');
+      card.tabIndex = 0;
+      card.setAttribute('role', 'link');
+      card.setAttribute('aria-label', `${t('projects.viewDetail')}: ${markdownText(content.title)}`);
+      card.dataset.projectHref = projectUrl;
+      card.addEventListener('click', (event) => {
+        if (!event.target.closest('a')) window.location.href = projectUrl;
+      });
+      card.addEventListener('keydown', (event) => {
+        if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('a')) {
+          event.preventDefault();
+          window.location.href = projectUrl;
+        }
+      });
+    } else {
+      // Match the static fallback: status-only cards are focusable for
+      // reading/visual feedback, but have no link semantics or navigation.
+      card.classList.add('project-card-coming-soon');
+      card.tabIndex = 0;
+    }
     card.innerHTML = `
       <div class="project-thumbnail-wrapper">
         <img class="project-thumbnail" loading="lazy" decoding="async">
@@ -57,7 +67,14 @@ async function renderProjects() {
     // Keep the static fallback and hydrated DOM structurally identical so the
     // footer cannot reflow while project data is loading.
     const date = qs('.project-date', card); date.textContent = project.date ? formatDateRange(project.date) : ''; date.hidden = !project.date;
-    renderInline(qs('.project-link', card), t('projects.viewDetail')); qs('.project-link', card).appendChild(linkChevron('right'));
+    const detailCue = qs('.project-link', card);
+    if (hasDetailPage) {
+      renderInline(detailCue, t('projects.viewDetail'));
+      detailCue.appendChild(linkChevron('right'));
+    } else {
+      detailCue.classList.add('project-status');
+      renderInline(detailCue, t('projects.detailComingSoon'));
+    }
     const tags = qs('.project-tags', card);
     (project.tags || []).forEach((tag) => {
       const badge = document.createElement('span');

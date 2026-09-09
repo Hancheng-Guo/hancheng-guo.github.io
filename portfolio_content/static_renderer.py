@@ -428,6 +428,7 @@ def _project_card(project: dict[str, Any]) -> str:
     content = project["locales"]["en"]
     date_text = format_date_range(project.get("date"))
     tags = "".join(f'<span class="project-tag">{markdown_inline(tag)}</span>' for tag in project.get("tags", []))
+    has_detail_page = project.get("hasDetailPage") is True
     href = escape(str(project["page"]), quote=True)
     image = project.get("thumbnail", {})
     alt = markdown_text(localized(image.get("alt")))
@@ -435,7 +436,12 @@ def _project_card(project: dict[str, Any]) -> str:
     # client renderer uses this exact node too, which prevents hydration from
     # changing the footer's layout or DOM shape.
     date_element = f'<time class="project-date">{escape(date_text)}</time>' if date_text else '<time class="project-date" hidden></time>'
-    return f'''<article class="card" tabindex="0" role="link" aria-label="View Details: {escape(markdown_text(content.get("title")), quote=True)}" data-project-href="{href}"><div class="project-thumbnail-wrapper"><img class="project-thumbnail" src="{escape(str(image.get("src", "")), quote=True)}" alt="{alt}" loading="lazy" decoding="async"></div><div class="project-info"><div class="project-copy"><h3>{markdown_inline(content.get("title"))}</h3><p class="project-summary">{markdown_inline(content.get("summary"))}</p></div><div class="project-meta"><div class="project-tags">{tags}</div><div class="project-card-footer"><span class="project-link">View Details{_link_chevron("right")}</span>{date_element}</div></div></div></article>'''
+    attributes = (f' class="card project-card-detail" tabindex="0" role="link" aria-label="View Details: {escape(markdown_text(content.get("title")), quote=True)}" data-project-href="{href}"' if has_detail_page else ' class="card project-card-coming-soon" tabindex="0"')
+    # A card without add_page() can still receive keyboard focus so its
+    # summary remains discoverable, but it deliberately has no link behavior
+    # or destination.  Keep a non-action status in the footer's stable slot.
+    detail_cue = f'<span class="project-link">View Details{_link_chevron("right")}</span>' if has_detail_page else '<span class="project-link project-status">Details Coming Soon ...</span>'
+    return f'''<article{attributes}><div class="project-thumbnail-wrapper"><img class="project-thumbnail" src="{escape(str(image.get("src", "")), quote=True)}" alt="{alt}" loading="lazy" decoding="async"></div><div class="project-info"><div class="project-copy"><h3>{markdown_inline(content.get("title"))}</h3><p class="project-summary">{markdown_inline(content.get("summary"))}</p></div><div class="project-meta"><div class="project-tags">{tags}</div><div class="project-card-footer">{detail_cue}{date_element}</div></div></div></article>'''
 
 
 def _timeline(portfolio: Any) -> tuple[str, bool]:
@@ -578,7 +584,7 @@ def _project_blocks(blocks: list[dict[str, Any]]) -> str:
 
 def render_project(portfolio: Any, project: dict[str, Any]) -> str:
     content = project["locales"]["en"]
-    visible = [item for item in portfolio.projects if item.get("status") != "draft"]
+    visible = [item for item in portfolio.projects if item.get("status") != "draft" and item.get("hasDetailPage") is True]
     position = next((index for index, item in enumerate(visible) if item.get("id") == project.get("id")), -1)
     adjacent = []
     if position > 0:

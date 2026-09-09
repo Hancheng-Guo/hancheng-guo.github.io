@@ -4,6 +4,7 @@
     {
       "id": "project1",
       "page": "pages/projects/project1.html",
+      "hasDetailPage": true,
       "thumbnail": {
         "src": "assets/images/Portfolio-01.png",
         "alt": {
@@ -179,6 +180,7 @@
     {
       "id": "project2",
       "page": "pages/projects/project2.html",
+      "hasDetailPage": true,
       "thumbnail": {
         "src": "assets/images/Portfolio-02.png",
         "alt": {
@@ -271,6 +273,7 @@
     {
       "id": "project3",
       "page": "pages/projects/project3.html",
+      "hasDetailPage": true,
       "thumbnail": {
         "src": "assets/images/Portfolio-03.png",
         "alt": {
@@ -334,6 +337,45 @@
           "url": "https://www.bilibili.com/video/BV1VH4y1A7aM/"
         }
       ]
+    },
+    {
+      "id": "project4",
+      "page": "pages/projects/project4.html",
+      "hasDetailPage": false,
+      "thumbnail": {
+        "src": "assets/images/Portfolio-03.png",
+        "alt": {
+          "zh": "智能插秧收获一体机器人",
+          "en": "Intelligent Planting and Harvesting Robot"
+        }
+      },
+      "tags": [
+        {
+          "zh": "FreeRTOS",
+          "en": "FreeRTOS"
+        },
+        {
+          "zh": "电机控制",
+          "en": "Motor Control"
+        },
+        {
+          "zh": "多机器人协同",
+          "en": "Multi-robot Collaboration"
+        }
+      ],
+      "locales": {
+        "en": {
+          "title": "Intelligent Planting and Harvesting Robot",
+          "summary": "Smart planting and harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic design and hardware wiring, supporting dual-robot synergy.",
+          "blocks": []
+        },
+        "zh": {
+          "title": "智能插秧收获一体机器人",
+          "summary": "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。",
+          "blocks": []
+        }
+      },
+      "links": []
     }
   ]
 }

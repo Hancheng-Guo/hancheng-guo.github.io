@@ -415,6 +415,40 @@ page_3.add_bilibili_link(
     url="https://www.bilibili.com/video/BV1VH4y1A7aM/",
 )
 
+
+project_4 = portfolio.add_project(
+    title=dict(
+        zh="智能插秧收获一体机器人",
+        en="Intelligent Planting and Harvesting Robot",
+    ),
+    summary=dict(
+        zh=(
+            "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，"
+            "定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。"
+        ),
+        en=(
+            "Smart planting and harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper "
+            "lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic "
+            "design and hardware wiring, supporting dual-robot synergy."
+        ),
+    ),
+    thumbnail="assets/images/Portfolio-03.png",
+    tags=(
+        dict(
+            zh="FreeRTOS",
+            en="FreeRTOS",
+        ),
+        dict(
+            zh="电机控制",
+            en="Motor Control",
+        ),
+        dict(
+            zh="多机器人协同",
+            en="Multi-robot Collaboration",
+        ),
+    ),
+)
+
 # endregion
 
 
