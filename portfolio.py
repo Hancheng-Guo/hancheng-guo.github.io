@@ -356,18 +356,15 @@ page_2.add_image(
 
 project_3 = portfolio.add_project(
     title=dict(
-        zh="智能插秧收获一体机器人",
-        en="Intelligent Planting and Harvesting Robot",
+        zh="测试项目",
+        en="Test Project",
     ),
     summary=dict(
         zh=(
-            "基于FreeRTOS的智能插秧收获农业机器人。通过控制DJI3508电机完成夹爪抬升与全向底盘控制，"
-            "定位精度±5mm。参与气路设计与硬件布线，支持双机器人协同作业。"
+            "测试项目概述"
         ),
         en=(
-            "Smart planting and harvesting robot based on FreeRTOS. Controlled DJI3508 motors for gripper "
-            "lifting and omni-directional chassis with ±5mm positioning accuracy. Participated in pneumatic "
-            "design and hardware wiring, supporting dual-robot synergy."
+            "Summary of Test Project."
         ),
     ),
     thumbnail="assets/images/Portfolio-03.png",
@@ -385,39 +382,6 @@ project_3 = portfolio.add_project(
             en="Multi-robot Collaboration",
         ),
     ),
-)
-page_3 = project_3.add_page(
-    template="minimal",
-)
-page_3.add_image(
-    "assets/images/Portfolio-03.png",
-    alt=dict(
-        zh="智能插秧收获一体机器人比赛现场",
-        en="Intelligent planting and harvesting robot at the competition",
-    ),
-)
-page_3.add_paragraph(
-    text=dict(
-        zh=(
-            "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。"
-            "\n"
-            "通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，"
-            "使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，"
-            "支持与另一台自主运行机器人协同作业，高效完成任务。"
-        ),
-        en=(
-            "Based on FreeRTOS, I developed the control system for an integrated intelligent planting and "
-            "harvesting agricultural robot. By controlling DJI3508 motors, I completed the gripper lifting, "
-            "omnidirectional chassis, and positioning functions with ±5 mm accuracy. I also participated in "
-            "pneumatic system design and hardware wiring for collaborative dual-robot operation."
-        ),
-    ),
-)
-page_3.add_github_link(
-    url="https://github.com/Lain-Ego0/ROBOCON2024-R1",
-)
-page_3.add_bilibili_link(
-    url="https://www.bilibili.com/video/BV1VH4y1A7aM/",
 )
 
 
@@ -452,6 +416,39 @@ project_4 = portfolio.add_project(
             en="Multi-robot Collaboration",
         ),
     ),
+)
+page_4 = project_4.add_page(
+    template="minimal",
+)
+page_4.add_image(
+    "assets/images/Portfolio-03.png",
+    alt=dict(
+        zh="智能插秧收获一体机器人比赛现场",
+        en="Intelligent planting and harvesting robot at the competition",
+    ),
+)
+page_4.add_paragraph(
+    text=dict(
+        zh=(
+            "基于 FreeRTOS 实时操作系统，进行智能插秧与收获一体化农业机器人控制系统编写。"
+            "\n"
+            "通过控制 DJI3508 电机，完成夹爪抬升机构、全向轮底盘、全向定位系统等模块的功能调试，"
+            "使夹爪动作定位精度控制在 ±5 mm 内；同步参与气路系统设计与硬件布线工作，"
+            "支持与另一台自主运行机器人协同作业，高效完成任务。"
+        ),
+        en=(
+            "Based on FreeRTOS, I developed the control system for an integrated intelligent planting and "
+            "harvesting agricultural robot. By controlling DJI3508 motors, I completed the gripper lifting, "
+            "omnidirectional chassis, and positioning functions with ±5 mm accuracy. I also participated in "
+            "pneumatic system design and hardware wiring for collaborative dual-robot operation."
+        ),
+    ),
+)
+page_4.add_github_link(
+    url="https://github.com/Lain-Ego0/ROBOCON2024-R1",
+)
+page_4.add_bilibili_link(
+    url="https://www.bilibili.com/video/BV1VH4y1A7aM/",
 )
 
 # endregion

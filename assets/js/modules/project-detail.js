@@ -156,7 +156,10 @@ async function renderProject() {
   renderBlocks(container, content.blocks);
   renderLinks(container, project.links);
   initLightbox(container);
-  const projects = (await loadProjects()).filter((item) => item.status !== 'draft');
+  // Detail-page navigation must use the same publishable set as the static
+  // renderer.  Coming-soon cards deliberately have no destination, so they
+  // cannot be adjacent-page targets after hydration.
+  const projects = (await loadProjects()).filter((item) => item.status !== 'draft' && item.hasDetailPage === true);
   const position = projects.findIndex((item) => item.id === id);
   const adjacent = document.createElement('nav');
   adjacent.className = 'project-adjacent';

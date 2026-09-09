@@ -1,5 +1,6 @@
 import json
 import importlib.util
+import re
 import unittest
 from pathlib import Path
 from portfolio_content import Portfolio
@@ -99,6 +100,47 @@ class BuilderTests(unittest.TestCase):
       pages = portfolio.write_pages(root=folder)
       self.assertEqual([page.name for page in pages], ["with-page.html"])
       self.assertFalse(stale.exists())
+
+  def test_project_adjacent_navigation_skips_drafts_and_projects_without_detail_pages(self):
+    portfolio = Portfolio()
+    portfolio.add_project(project_id="leading-soon", title="Leading soon", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    first = portfolio.add_project(project_id="first", title="First", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    first.add_page(template="minimal")
+    portfolio.add_project(project_id="middle-soon-1", title="Middle soon 1", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    portfolio.add_project(project_id="middle-soon-2", title="Middle soon 2", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    second = portfolio.add_project(project_id="second", title="Second", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    second.add_page(template="minimal")
+    portfolio.add_project(project_id="trailing-soon", title="Trailing soon", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    draft = portfolio.add_project(project_id="draft", title="Draft", summary="Summary", thumbnail="assets/images/Avatar.jpg", status="draft")
+    draft.add_page(template="minimal")
+
+    first_html = render_project(portfolio, first.data)
+    second_html = render_project(portfolio, second.data)
+    self.assertNotIn('project-adjacent-link previous', first_html)
+    self.assertIn('project-adjacent-link next" href="../../pages/projects/second.html"', first_html)
+    self.assertNotIn('leading-soon.html', first_html)
+    self.assertNotIn('middle-soon-1.html', first_html)
+    self.assertNotIn('middle-soon-2.html', first_html)
+    self.assertNotIn('draft.html', first_html)
+    self.assertIn('project-adjacent-link previous" href="../../pages/projects/first.html"', second_html)
+    self.assertNotIn('project-adjacent-link next', second_html)
+    self.assertNotIn('trailing-soon.html', second_html)
+
+    only = Portfolio()
+    only.add_project(project_id="before", title="Before", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    solitary = only.add_project(project_id="solitary", title="Solitary", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    solitary.add_page(template="minimal")
+    only.add_project(project_id="after", title="After", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    solitary_html = render_project(only, solitary.data)
+    self.assertNotIn('project-adjacent-link', solitary_html)
+
+    import tempfile
+    with tempfile.TemporaryDirectory() as folder:
+      pages = portfolio.write_pages(root=folder)
+      self.assertEqual({page.name for page in pages}, {"first.html", "second.html", "draft.html"})
+      for html in (first_html, second_html):
+        for href in re.findall(r'href="../../(pages/projects/[^\"]+\.html)"', html):
+          self.assertTrue((Path(folder) / href).exists(), href)
 
   def test_pretty_html_preserves_inline_and_raw_payloads(self):
     script = 'const comparison = left > right; const markup = "<tag data-value=\'>\'>";\n  keepThisIndent();'
