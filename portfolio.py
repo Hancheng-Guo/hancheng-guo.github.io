@@ -23,7 +23,7 @@ portfolio = Portfolio(
         en="Powered by [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io)",
     ),
     last_update_date="2026-09-07",
-    # favicon="assets/images/Avatar.jpg",
+    favicon="assets/images/favicon.png",
 )
 
 # Page sections are configured here. Profile is always present first; the
