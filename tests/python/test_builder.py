@@ -643,6 +643,14 @@ class BuilderTests(unittest.TestCase):
     self.assertNotIn("Loading project", detail)
     self.assertIn('class="svg-icon motion-link-arrow link-chevron chevron-left svg-icon--inline', detail)
 
+  def test_timeline_toggle_is_hidden_without_extra_events(self):
+    portfolio = Portfolio()
+    for number in range(8):
+      portfolio.add_timeline_event(date=f"2025-{number + 1:02d}", title=f"Event {number + 1}", description="Description")
+    self.assertRegex(render_home(portfolio), r'<button class="control-btn timeline-toggle"[^>]* hidden>')
+    portfolio.add_timeline_event(date="2025-09", title="Event 9", description="Description")
+    self.assertNotRegex(render_home(portfolio), r'<button class="control-btn timeline-toggle"[^>]* hidden>')
+
   def test_page_fields_normalize_filter_reorder_and_keep_profile(self):
     portfolio = Portfolio()
     portfolio.add_project(title="Project", summary="Summary", thumbnail="assets/images/Avatar.jpg")

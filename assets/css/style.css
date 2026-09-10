@@ -176,6 +176,7 @@ body > nav {
 .timeline-extra { display: none; }
 .timeline-container.timeline-expanded .timeline-extra { display: block; }
 .timeline-toggle { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 200px; min-width: 200px; height: 30px; margin: 24px auto 0; padding: 4px 16px; white-space: nowrap; color: var(--text-main); background: var(--bg-card); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); font-size: .82rem; font-weight: 650; line-height: 1; position: relative; }
+.timeline-toggle[hidden] { display: none; }
 .control-btn.timeline-toggle { background: var(--bg-card); border-color: var(--border-light); }
 .timeline-toggle:hover, .timeline-toggle:focus-visible { background: var(--bg-hover); border-color: var(--primary); color: var(--primary); }
 .timeline-toggle-label { position: absolute; left: 50%; transform: translateX(-50%); }
