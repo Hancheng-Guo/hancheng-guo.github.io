@@ -154,3 +154,9 @@ python -m unittest discover -s tests/python -v
 浏览器回归位于 `tests/browser/`，需要 Node.js、Playwright 和 Chromium/Edge。它们覆盖静态首屏、主题与语言、锚点导航、Timeline、项目卡片和详情页状态、CV 头像及响应式布局。具体运行环境和人工检查清单见[工具手册](docs/PYTHON_GUIDE.md#发布前检查)。
 
 构建和测试通过后，将源码与生成结果一起提交。GitHub Pages 在仓库 **Settings → Pages** 中选择从目标分支的仓库根目录发布即可；部署端只提供静态文件，不需要安装 Python。
+
+## 版权与使用声明
+
+本项目已获得[原作者 Lain-Ego0](https://github.com/Lain-Ego0)对相关修改的授权。除原作者贡献以及下述保留内容外，我本人贡献的代码与实现依据 [PolyForm Noncommercial License 1.0.0](LICENSE) 允许他人在**非商业用途**下使用、修改和发布，但须保留原有作者与贡献归属；原作者贡献仍以其原有权利和授权条件为准。
+
+本站中的个人资料、履历信息、项目内容、文章文字、图片、头像及其他个人化素材不包含在上述许可中，其相关权利均予保留。未经权利人明确许可，不得复制、修改、发布或用于任何商业用途。本声明不授予任何商标、肖像、隐私或其他人格权许可。具体适用范围及第三方权利说明见 [NOTICE](NOTICE)。
