@@ -11,8 +11,8 @@ from portfolio_content import Portfolio
 
 portfolio = Portfolio(
     site_name=dict(
-        zh="郭瀚丞 个人主页",
-        en="Hancheng Guo Homepage",
+        zh="郭瀚丞 | 个人主页",
+        en="Hancheng Guo | Homepage",
     ),
     author=dict(
         zh="郭瀚丞",
@@ -22,7 +22,7 @@ portfolio = Portfolio(
         zh="由 [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io) 提供支持",
         en="Powered by [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io)",
     ),
-    last_update_date="2026-09-07",
+    last_update_date="2026-09-12",
     favicon="assets/icons/favicon.svg",
 )
 
@@ -44,12 +44,17 @@ portfolio.set_profile(
     ),
     summary=dict(
         zh=(
-            "机器人开发爱好者，大三在读，目前于人形机器人公司实习。专注于 MCU 与 Linux 开发、运动控制、强化学习和机器人感知。"
+            # "正在寻找机器人方向的博士研究机会。"
+            "研究兴趣包括机器人学习、强化学习与足式机器人，"
+            "尤其关注学习驱动的运动控制与决策，使机器人能够在复杂环境中实现稳健、自主的行为。"
+            "此前的研究聚焦无线感知."
         ),
         en=(
-            "Robot development enthusiast and junior-year student. Interning at a humanoid robot company, "
-            "with a focus on MCU and Linux development, motion control, reinforcement learning, "
-            "and robot perception."
+            # "Seeking PhD opportunities in robotics. "
+            "My research interests include Robot Learning, Reinforcement Learning, "
+            "and Legged Robotics, with a focus on learning-based locomotion and decision-making "
+            "for robust, autonomous behavior in complex environments. "
+            "My previous research focused on wireless sensing."
         ),
     ),
     email="hc.guo.tect@gmail.com",
