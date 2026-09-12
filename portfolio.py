@@ -898,6 +898,10 @@ portfolio.add_award(
         zh="2021 青少年高校科学营优秀志愿者",
         en="Outstanding Volunteer, 2021 Youth University Science Camp",
     ),
+    description=dict(
+        zh="nihao",
+        en="nihao",
+    )
 )
 
 # endregion

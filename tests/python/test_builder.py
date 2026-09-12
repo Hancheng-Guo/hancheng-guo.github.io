@@ -344,13 +344,15 @@ class BuilderTests(unittest.TestCase):
       date={"start": "2024-01"}, position="Robotics **Engineer**", company="Example Co.", location="Zurich", detail="Built *robots*"
     )
     portfolio.add_publication(publication_type="journal", date={"start": "2024-01"}, title="Paper", venue="Venue")
-    portfolio.add_award(date={"start": "2024-01"}, title="Award")
+    portfolio.add_award(date={"start": "2024-01"}, title="Award", description="Built **independently**")
     self.assertEqual(portfolio.add_award(date="2024-02", title="Single month").awards[-1]["date"], {"start": "2024-02", "end": "2024-02"})
     home, cv = render_home(portfolio), render_cv(portfolio)
     self.assertGreaterEqual(home.count("Since Jan 2024"), 3)  # project, publication, timeline
     self.assertGreaterEqual(cv.count("Since Jan 2024"), 4)  # education, work, publication, award
     expected = '<article class="content-entry work-entry"><h3 class="work-heading"><strong>Robotics <strong>Engineer</strong></strong>, Example Co., Zurich</h3><time class="entry-date">Since Jan 2024</time><p class="work-detail">Built <em>robots</em></p></article>'
     self.assertIn(expected, cv)
+    self.assertIn('<article class="content-entry"><h3>Award</h3><p><time class="entry-date">Since Jan 2024</time><span class="entry-separator"> · </span><span class="entry-detail">Built <strong>independently</strong></span></p></article>', cv)
+    self.assertIn('<h3>Award without description</h3><p><time class="entry-date">Jan 2024</time></p>', render_cv(Portfolio().add_award(date="2024-01", title="Award without description")))
     with self.assertRaises(TypeError):
       Portfolio().add_work_experience(date="2024-01", title="Legacy role")
     rejected = Portfolio()

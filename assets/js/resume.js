@@ -203,7 +203,7 @@ function renderResume(site) {
   renderWorkEntries(site.workExperience || []);
   renderEntries('.resume-journals', site.publications?.journalArticles || [], ['title', 'venue']);
   renderEntries('.resume-conferences', site.publications?.conferencePapers || [], ['title', 'venue']);
-  renderEntries('.resume-awards', site.awards || [], ['title']);
+  renderEntries('.resume-awards', site.awards || [], ['title', 'description']);
   const skills = qs('.resume-skills');
   if (!skills) { qs('#resume-status')?.remove(); return; }
   clear(skills);

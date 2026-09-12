@@ -366,8 +366,14 @@ portfolio.add_award(
         zh="全国二等奖",
         en="National Second Prize",
     ),
+    description=dict(
+        zh="凭借自主设计的机器人控制系统获奖。",
+        en="Awarded for a self-designed robotic control system.",
+    ),
 )
 ```
+
+`description` 是可选的简要说明，显示在奖项日期旁边，格式为“日期 · 简要说明”；支持字符串、中英文本地化对象和行内 Markdown。省略后仍保持原来的“标题 + 日期”布局。
 
 ### `add_tech_group()`
 

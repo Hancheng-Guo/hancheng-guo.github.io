@@ -40,6 +40,16 @@
         "status": { "type": "string" }
       },
       "additionalProperties": false
+    },
+    "awardItem": {
+      "type": "object",
+      "required": ["date"],
+      "properties": {
+        "date": { "$ref": "#/$defs/dateRange" },
+        "title": { "type": ["string", "object"] },
+        "description": { "type": ["string", "object"] },
+        "status": { "type": "string" }
+      }
     }
   },
   "type": "object",
@@ -80,7 +90,7 @@
         }
       }
     },
-    "awards": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
+    "awards": { "type": "array", "items": { "$ref": "#/$defs/awardItem" } },
     "resume": { "type": "object" },
     "timeline": { "type": "array", "items": { "$ref": "#/$defs/datedItem" } },
     "techStack": { "type": "array" },

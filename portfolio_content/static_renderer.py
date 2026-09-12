@@ -542,7 +542,7 @@ def render_cv(portfolio: Any) -> str:
     conference_items = [item for item in portfolio.publications.get("conferencePapers", []) if item.get("status") != "draft"]
     education = "".join(_education_entry(item) for item in education_items)
     work = "".join(_work_entry(item) for item in work_items)
-    awards = "".join(_entry(item, "title", ()) for item in award_items)
+    awards = "".join(_entry(item, "title", ("description",)) for item in award_items)
     journals = _publication_entries(journal_items)
     conferences = _publication_entries(conference_items)
     skills = "".join(f'<article class="content-entry"><h3>{markdown_inline(group.get("title"))}</h3><p>{"<span class=\"entry-separator\"> · </span>".join(markdown_inline(item.get("name")) for item in group.get("items", []))}</p></article>' for group in skill_groups)
