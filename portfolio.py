@@ -29,7 +29,8 @@ portfolio = Portfolio(
 # Page sections are configured here. Profile is always present first; the
 # remaining entries choose both what is shown and its order on each page.
 portfolio.set_home_field(("projects", "publications", "timeline"))
-portfolio.set_cv_field(("education", "work experience", "publications", "tech stack", "awards and scholarships"))
+# portfolio.set_cv_field(("education", "work experience", "publications", "tech stack", "awards and scholarships"))
+portfolio.set_cv_field(("education", "publications", "tech stack", "awards and scholarships"))
 
 
 # region Profile
@@ -662,24 +663,53 @@ portfolio.add_timeline_event(
 
 portfolio.add_education(
     date=dict(
-        start="2022-09",
+        start="2023-09",
         end="2026-06",
     ),
     position=dict(
-        zh="测试学科 学士",
-        en="Bachelor of Test",
+        zh="电子信息 硕士",
+        en="Master of Electronic Information",
     ),
     institute=dict(
-        zh="测试学校",
-        en="University of Test",
+        zh="华南理工大学",
+        en="South China University of Technology",
     ),
     location=dict(
-        zh="中国北京",
+        zh="中国广州",
         en="China",
     ),
     detail=dict(
-        zh="测试文案",
-        en="Test",
+        zh=(
+            "- 发表论文：SCI 一区一作论文 1篇，国际会议论文 2篇\n"
+            "- 竞赛获奖：中国研究生电子设计竞赛全国二等奖"
+        ),
+        en=(
+            "- Publications: 1 first-author Q1 journal paper and 2 international conference papers\n"
+            "- Award: National Finals Second Prize in a nationwide graduate-level electronics design competition"
+        ),
+    ),
+)
+
+portfolio.add_education(
+    date=dict(
+        start="2019-09",
+        end="2023-06",
+    ),
+    position=dict(
+        zh="信息工程 学士",
+        en="Bachelor of Information Engineering",
+    ),
+    institute=dict(
+        zh="华南理工大学",
+        en="South China University of Technology",
+    ),
+    location=dict(
+        zh="中国广州",
+        en="China",
+    ),
+    detail=dict(
+        zh="- GPA: 3.83/4.0, 专业前 10%",
+        en="- GPA: 3.83/4.0, top 10% of graduates",
     ),
 )
 
@@ -688,33 +718,33 @@ portfolio.add_education(
 
 # region Work Experience
 
-portfolio.add_work_experience(
-    date=dict(
-        start="2025-10",
-    ),
-    position=dict(
-        zh="测试实习",
-        en="Test of Intern",
-    ),
-    company=dict(
-        zh="测试公司",
-        en="Test of Company",
-    ),
-    location=dict(
-        zh="中国芜湖",
-        en="China",
-    ),
-    detail=dict(
-        zh=(
-            "- 第一行\n"
-            "- 第二行"
-        ),
-        en=(
-            "- Line 1\n"
-            "- Line 2"
-        ),
-    ),
-)
+# portfolio.add_work_experience(
+#     date=dict(
+#         start="2025-10",
+#     ),
+#     position=dict(
+#         zh="测试实习",
+#         en="Test of Intern",
+#     ),
+#     company=dict(
+#         zh="测试公司",
+#         en="Test of Company",
+#     ),
+#     location=dict(
+#         zh="中国芜湖",
+#         en="China",
+#     ),
+#     detail=dict(
+#         zh=(
+#             "- 第一行\n"
+#             "- 第二行"
+#         ),
+#         en=(
+#             "- Line 1\n"
+#             "- Line 2"
+#         ),
+#     ),
+# )
 
 # endregion
 
@@ -844,12 +874,30 @@ portfolio.add_tech_group(
 # region Award
 
 portfolio.add_award(
-    date="2025-08",
+    date="2025-12",
     title=dict(
-        zh="Award Test",
-        en="Award Test",
+        zh="汇顶科技一等奖学金",
+        en="Goodix Technology First-Class Scholarship",
     ),
-    status="test",
+)
+
+portfolio.add_award(
+    date="2023-08",
+    title=dict(
+        zh="第十八届中国研究生电子设计竞赛全国总决赛二等奖、华为专项奖二等奖",
+        en=(
+            "National Second Prize and Huawei Special Award Second Prize, "
+            "18th China Postgraduate Electronics Design Contest"
+        ),
+    ),
+)
+
+portfolio.add_award(
+    date="2021-11",
+    title=dict(
+        zh="2021 青少年高校科学营优秀志愿者",
+        en="Outstanding Volunteer, 2021 Youth University Science Camp",
+    ),
 )
 
 # endregion
