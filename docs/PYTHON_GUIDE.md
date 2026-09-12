@@ -375,6 +375,15 @@ portfolio.add_award(
 
 `description` 是可选的简要说明，显示在奖项日期旁边，格式为“日期 · 简要说明”；支持字符串、中英文本地化对象和行内 Markdown。省略后仍保持原来的“标题 + 日期”布局。
 
+`date` 也是可选字段；省略或传入 `None` 时不显示日期。如果同时提供 `description`，页面只显示说明，不会产生多余的分隔符。
+
+```python
+portfolio.add_award(
+    title=dict(zh="优秀志愿者", en="Outstanding Volunteer"),
+    description=dict(zh="体现公共服务与组织协作能力", en="Public service and organizational collaboration"),
+)
+```
+
 ### `add_tech_group()`
 
 每次调用增加一个 Tech Stack 分类。目前该模块只显示在 CV。

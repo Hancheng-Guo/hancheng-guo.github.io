@@ -874,7 +874,7 @@ portfolio.add_tech_group(
 # region Award
 
 portfolio.add_award(
-    date="2025-12",
+    # date="2025-12",
     title=dict(
         zh="汇顶科技一等奖学金",
         en="Goodix Technology First-Class Scholarship",
@@ -886,7 +886,7 @@ portfolio.add_award(
 )
 
 portfolio.add_award(
-    date="2023-08",
+    # date="2023-08",
     title=dict(
         zh="第十八届中国研究生电子设计竞赛全国总决赛二等奖、华为专项奖二等奖",
         en=(
@@ -901,7 +901,7 @@ portfolio.add_award(
 )
 
 portfolio.add_award(
-    date="2021-11",
+    # date="2021-11",
     title=dict(
         zh="中国科协 2021 青少年高校科学营优秀志愿者",
         en="Outstanding Volunteer, 2021 Youth University Science Camp, China Association for Sience and Technology",

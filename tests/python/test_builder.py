@@ -353,6 +353,10 @@ class BuilderTests(unittest.TestCase):
     self.assertIn(expected, cv)
     self.assertIn('<article class="content-entry"><h3>Award</h3><p><time class="entry-date">Since Jan 2024</time><span class="entry-separator"> · </span><span class="entry-detail">Built <strong>independently</strong></span></p></article>', cv)
     self.assertIn('<h3>Award without description</h3><p><time class="entry-date">Jan 2024</time></p>', render_cv(Portfolio().add_award(date="2024-01", title="Award without description")))
+    undated = render_cv(Portfolio().add_award(title="Undated award", description="Brief detail"))
+    self.assertIn('<h3>Undated award</h3><p><span class="entry-detail">Brief detail</span></p>', undated)
+    self.assertNotIn('entry-separator', undated)
+    self.assertNotIn('<time', undated)
     with self.assertRaises(TypeError):
       Portfolio().add_work_experience(date="2024-01", title="Legacy role")
     rejected = Portfolio()

@@ -43,7 +43,6 @@
     },
     "awardItem": {
       "type": "object",
-      "required": ["date"],
       "properties": {
         "date": { "$ref": "#/$defs/dateRange" },
         "title": { "type": ["string", "object"] },

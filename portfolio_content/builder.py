@@ -368,8 +368,12 @@ class Portfolio:
         self.publications[keys[publication_type]].append(item)
         return self
 
-    def add_award(self, *, date: str | dict[str, str], **fields: Any) -> "Portfolio":
-        self.awards.append({"date": _date_range(date), **fields}); return self
+    def add_award(self, *, date: str | dict[str, str] | None = None, **fields: Any) -> "Portfolio":
+        item = dict(fields)
+        if date is not None:
+            item["date"] = _date_range(date)
+        self.awards.append(item)
+        return self
 
     def set_resume(self, **fields: Any) -> "Portfolio":
         self.resume.update(fields); return self

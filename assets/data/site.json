@@ -96,10 +96,6 @@
   },
   "awards": [
     {
-      "date": {
-        "start": "2025-12",
-        "end": "2025-12"
-      },
       "title": {
         "zh": "汇顶科技一等奖学金",
         "en": "Goodix Technology First-Class Scholarship"
@@ -110,10 +106,6 @@
       }
     },
     {
-      "date": {
-        "start": "2023-08",
-        "end": "2023-08"
-      },
       "title": {
         "zh": "第十八届中国研究生电子设计竞赛全国总决赛二等奖、华为专项奖二等奖",
         "en": "National Second Prize and Huawei Special Award Second Prize, 18th China Postgraduate Electronics Design Contest"
@@ -124,10 +116,6 @@
       }
     },
     {
-      "date": {
-        "start": "2021-11",
-        "end": "2021-11"
-      },
       "title": {
         "zh": "中国科协 2021 青少年高校科学营优秀志愿者",
         "en": "Outstanding Volunteer, 2021 Youth University Science Camp, China Association for Sience and Technology"
