@@ -119,11 +119,15 @@ async function renderProjects() {
 
       const copyTopWhenExpanded = info.getBoundingClientRect().height
         - Math.max(0, infoBottom - tagsTop) - expandedCopyHeight;
-      // Keep a twenty-pixel fully opaque safety margin above text.  Even when
+      // Keep a configurable fully opaque safety margin above text. Even when
       // the expanded copy fits below the thumbnail, the image edge itself is
       // solid card colour so its old border cannot be distinguished.
-      const solidSurfaceY = Math.min(0, copyTopWhenExpanded - 20);
-      const fadeHeight = Math.max(64, -solidSurfaceY + 64);
+      const copySolidMargin = -10;  // 0
+      const solidSurfaceY = Math.min(0, copyTopWhenExpanded - copySolidMargin);
+      // Retain the original 64-pixel soft gradient while reducing only the
+      // fully opaque surface that extends above the expanded copy.
+      const fadeLead = 64;  // 64
+      const fadeHeight = Math.max(fadeLead, -solidSurfaceY + fadeLead);
       const solidStop = fadeHeight + solidSurfaceY;
       info.style.setProperty('--project-thumbnail-fade-height', `${fadeHeight}px`);
       info.style.setProperty('--project-thumbnail-fade-solid-stop', `${solidStop}px`);

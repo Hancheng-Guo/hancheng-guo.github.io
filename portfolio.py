@@ -367,10 +367,16 @@ project_3 = portfolio.add_project(
     ),
     summary=dict(
         zh=(
+            "测试项目概述\n"
+            "测试项目概述\n"
+            "测试项目概述\n"
             "测试项目概述"
         ),
         en=(
-            "Summary of Test Project."
+            "Summary of Test Project.\n"
+            "Summary of Test Project.\n"
+            "Summary of Test Project.\n"
+            "Summary of Test Project"
         ),
     ),
     thumbnail="assets/images/Portfolio-03.png",

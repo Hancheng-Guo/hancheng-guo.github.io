@@ -298,12 +298,12 @@
       "locales": {
         "en": {
           "title": "Test Project",
-          "summary": "Summary of Test Project.",
+          "summary": "Summary of Test Project.\nSummary of Test Project.\nSummary of Test Project.\nSummary of Test Project",
           "blocks": []
         },
         "zh": {
           "title": "测试项目",
-          "summary": "测试项目概述",
+          "summary": "测试项目概述\n测试项目概述\n测试项目概述\n测试项目概述",
           "blocks": []
         }
       },
