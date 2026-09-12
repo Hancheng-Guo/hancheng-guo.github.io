@@ -22,7 +22,7 @@ async function renderProjects() {
     grid.querySelector('button')?.addEventListener('click', () => renderProjects());
     return;
   }
-  projects = projects.filter((project) => project.status !== 'draft');
+  projects = projects.filter((project) => project.status !== 'draft').reverse();
   if (!projects.length) { grid.innerHTML = '<p class="status-view">' + t('projects.empty') + '</p>'; return; }
   clear(grid);
   projects.forEach((project) => {

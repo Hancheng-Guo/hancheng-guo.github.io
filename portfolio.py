@@ -114,28 +114,14 @@ project_1 = portfolio.add_project(
     ),
     thumbnail="assets/images/Portfolio-01.png",
     tags=(
-        dict(
-            zh="运动控制",
-            en="Motion Control",
-        ),
-        dict(
-            zh="SLAM",
-            en="SLAM",
-        ),
-        dict(
-            zh="机械设计",
-            en="Mechanical Design",
-        ),
-        dict(
-            zh="激光雷达",
-            en="LiDAR",
-        ),
+        dict(zh="运动控制", en="Motion Control"),
+        dict(zh="SLAM", en="SLAM"),
+        dict(zh="机械设计", en="Mechanical Design"),
+        dict(zh="激光雷达", en="LiDAR"),
     ),
 )
 
-page_1 = project_1.add_page(
-    template="minimal",
-)
+page_1 = project_1.add_page(template="minimal")
 page_1.add_image(
     "assets/images/Portfolio-01.png",
     alt=dict(

@@ -460,7 +460,7 @@ portfolio.add_timeline_event(
 
 ### 新建项目
 
-`add_project()` 返回一个 `Project` 对象。`project_id` 通常省略，构建器会依次分配 `project1`、`project2` 等 ID。项目始终显示在首页；只有随后调用 `add_page()` 时，构建器才会生成 `pages/projects/<id>.html`，并把卡片变成可打开详情的交互项。
+`add_project()` 返回一个 `Project` 对象。`project_id` 通常省略，构建器会依次分配 `project1`、`project2` 等 ID。项目始终显示在首页；只有随后调用 `add_page()` 时，构建器才会生成 `pages/projects/<id>.html`，并把卡片变成可打开详情的交互项。首页卡片按添加顺序的逆序显示，因此最后添加的项目位于最前，最先添加的项目位于最后；详情页的 Previous/Next 也遵循这一展示顺序，并跳过草稿及没有详情页的项目。项目 ID 和详情页路径不会改变。
 
 ```python
 project = portfolio.add_project(

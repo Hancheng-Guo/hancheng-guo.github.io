@@ -116,14 +116,14 @@ class BuilderTests(unittest.TestCase):
 
     first_html = render_project(portfolio, first.data)
     second_html = render_project(portfolio, second.data)
-    self.assertNotIn('project-adjacent-link previous', first_html)
-    self.assertIn('project-adjacent-link next" href="../../pages/projects/second.html"', first_html)
+    self.assertIn('project-adjacent-link previous" href="../../pages/projects/second.html"', first_html)
+    self.assertNotIn('project-adjacent-link next', first_html)
     self.assertNotIn('leading-soon.html', first_html)
     self.assertNotIn('middle-soon-1.html', first_html)
     self.assertNotIn('middle-soon-2.html', first_html)
     self.assertNotIn('draft.html', first_html)
-    self.assertIn('project-adjacent-link previous" href="../../pages/projects/first.html"', second_html)
-    self.assertNotIn('project-adjacent-link next', second_html)
+    self.assertNotIn('project-adjacent-link previous', second_html)
+    self.assertIn('project-adjacent-link next" href="../../pages/projects/first.html"', second_html)
     self.assertNotIn('trailing-soon.html', second_html)
 
     only = Portfolio()
@@ -141,6 +141,17 @@ class BuilderTests(unittest.TestCase):
       for html in (first_html, second_html):
         for href in re.findall(r'href="../../(pages/projects/[^\"]+\.html)"', html):
           self.assertTrue((Path(folder) / href).exists(), href)
+
+  def test_home_project_cards_use_reverse_addition_order(self):
+    portfolio = Portfolio()
+    portfolio.add_project(project_id="first", title="First project", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    portfolio.add_project(project_id="draft", title="Draft project", summary="Summary", thumbnail="assets/images/Avatar.jpg", status="draft")
+    portfolio.add_project(project_id="second", title="Second project", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    portfolio.add_project(project_id="third", title="Third project", summary="Summary", thumbnail="assets/images/Avatar.jpg")
+    home = render_home(portfolio)
+    self.assertLess(home.index("Third project"), home.index("Second project"))
+    self.assertLess(home.index("Second project"), home.index("First project"))
+    self.assertNotIn("Draft project", home)
 
   def test_pretty_html_preserves_inline_and_raw_payloads(self):
     script = 'const comparison = left > right; const markup = "<tag data-value=\'>\'>";\n  keepThisIndent();'

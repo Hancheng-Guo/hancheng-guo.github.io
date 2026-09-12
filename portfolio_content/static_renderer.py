@@ -487,7 +487,7 @@ def render_home(portfolio: Any) -> str:
     hero_background = _profile_asset(profile, "hero_background")
     name = markdown_inline(profile.get("name", portfolio.author))
     summary = markdown_inline(profile.get("summary", ""))
-    visible_projects = [project for project in portfolio.projects if project.get("status") != "draft"]
+    visible_projects = list(reversed([project for project in portfolio.projects if project.get("status") != "draft"]))
     visible_journals = [item for item in portfolio.publications.get("journalArticles", []) if item.get("status") != "draft"]
     visible_conferences = [item for item in portfolio.publications.get("conferencePapers", []) if item.get("status") != "draft"]
     projects = "".join(_project_card(project) for project in visible_projects)
@@ -624,7 +624,10 @@ def _project_blocks(blocks: list[dict[str, Any]]) -> str:
 
 def render_project(portfolio: Any, project: dict[str, Any]) -> str:
     content = project["locales"]["en"]
-    visible = [item for item in portfolio.projects if item.get("status") != "draft" and item.get("hasDetailPage") is True]
+    visible = list(reversed([
+        item for item in portfolio.projects
+        if item.get("status") != "draft" and item.get("hasDetailPage") is True
+    ]))
     position = next((index for index, item in enumerate(visible) if item.get("id") == project.get("id")), -1)
     adjacent = []
     if position > 0:

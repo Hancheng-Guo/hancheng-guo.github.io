@@ -28,8 +28,8 @@ async function links(page) {
     const staticPage = await noJs.newPage();
     await staticPage.goto(`${origin}/pages/projects/project2.html`);
     ok(JSON.stringify(await links(staticPage)) === JSON.stringify([
-      { className: 'project-adjacent-link previous', href: '/pages/projects/project1.html' },
-      { className: 'project-adjacent-link next', href: '/pages/projects/project4.html' },
+      { className: 'project-adjacent-link previous', href: '/pages/projects/project4.html' },
+      { className: 'project-adjacent-link next', href: '/pages/projects/project1.html' },
     ]), 'Static project navigation did not skip the coming-soon project');
     for (const target of ['/pages/projects/project1.html', '/pages/projects/project4.html']) {
       const response = await staticPage.goto(`${origin}${target}`);
@@ -53,8 +53,8 @@ async function links(page) {
     await page.goto(`${origin}/pages/projects/project2.html`);
     await page.waitForLoadState('networkidle');
     ok(JSON.stringify(await links(page)) === JSON.stringify([
-      { className: 'project-adjacent-link previous', href: '/pages/projects/project1.html' },
-      { className: 'project-adjacent-link next', href: '/pages/projects/project4.html' },
+      { className: 'project-adjacent-link previous', href: '/pages/projects/project4.html' },
+      { className: 'project-adjacent-link next', href: '/pages/projects/project1.html' },
     ]), 'Hydrated project navigation did not skip coming-soon or draft projects');
     for (const target of ['/pages/projects/project1.html', '/pages/projects/project4.html']) {
       const response = await page.request.get(`${origin}${target}`);
