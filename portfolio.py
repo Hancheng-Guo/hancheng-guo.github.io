@@ -879,6 +879,10 @@ portfolio.add_award(
         zh="汇顶科技一等奖学金",
         en="Goodix Technology First-Class Scholarship",
     ),
+    description=dict(
+        zh="表彰在学业与科研方面的杰出表现",
+        en="Recognition for outstanding performance of academic and research",
+    ),
 )
 
 portfolio.add_award(
@@ -890,18 +894,22 @@ portfolio.add_award(
             "18th China Postgraduate Electronics Design Contest"
         ),
     ),
+    description=dict(
+        zh="专项赛道全国第七名",
+        en="Ranked 7th nationally in the Special Track",
+    ),
 )
 
 portfolio.add_award(
     date="2021-11",
     title=dict(
-        zh="2021 青少年高校科学营优秀志愿者",
-        en="Outstanding Volunteer, 2021 Youth University Science Camp",
+        zh="中国科协 2021 青少年高校科学营优秀志愿者",
+        en="Outstanding Volunteer, 2021 Youth University Science Camp, China Association for Sience and Technology",
     ),
     description=dict(
-        zh="nihao",
-        en="nihao",
-    )
+        zh="体现公共服务意识与组织协作能力",
+        en="Demonstrating commitment to public service and organizational collaboration",
+    ),
 )
 
 # endregion

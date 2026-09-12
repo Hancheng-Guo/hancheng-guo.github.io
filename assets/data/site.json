@@ -103,6 +103,10 @@
       "title": {
         "zh": "汇顶科技一等奖学金",
         "en": "Goodix Technology First-Class Scholarship"
+      },
+      "description": {
+        "zh": "表彰在学业与科研方面的杰出表现",
+        "en": "Recognition for outstanding performance of academic and research"
       }
     },
     {
@@ -113,6 +117,10 @@
       "title": {
         "zh": "第十八届中国研究生电子设计竞赛全国总决赛二等奖、华为专项奖二等奖",
         "en": "National Second Prize and Huawei Special Award Second Prize, 18th China Postgraduate Electronics Design Contest"
+      },
+      "description": {
+        "zh": "专项赛道全国第七名",
+        "en": "Ranked 7th nationally in the Special Track"
       }
     },
     {
@@ -121,12 +129,12 @@
         "end": "2021-11"
       },
       "title": {
-        "zh": "2021 青少年高校科学营优秀志愿者",
-        "en": "Outstanding Volunteer, 2021 Youth University Science Camp"
+        "zh": "中国科协 2021 青少年高校科学营优秀志愿者",
+        "en": "Outstanding Volunteer, 2021 Youth University Science Camp, China Association for Sience and Technology"
       },
       "description": {
-        "zh": "nihao",
-        "en": "nihao"
+        "zh": "体现公共服务意识与组织协作能力",
+        "en": "Demonstrating commitment to public service and organizational collaboration"
       }
     }
   ],
