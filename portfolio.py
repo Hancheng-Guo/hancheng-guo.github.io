@@ -76,8 +76,8 @@ portfolio.add_contact(
 
 project_1 = portfolio.add_project(
     title=dict(
-        zh="低成本无线感知：从物理建模到真实验证",
-        en="Low-Cost Wireless Sensing: From Modeling to Real-World Validation",
+        zh="无线感知：从物理建模到真实验证",
+        en="Wireless Sensing: From Modeling to Real-World Validation",
     ),
     date="2025-05",
     summary=dict(

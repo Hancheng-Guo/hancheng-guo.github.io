@@ -8,8 +8,8 @@
       "thumbnail": {
         "src": "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk.jpg",
         "alt": {
-          "zh": "低成本无线感知：从物理建模到真实验证",
-          "en": "Low-Cost Wireless Sensing: From Modeling to Real-World Validation"
+          "zh": "无线感知：从物理建模到真实验证",
+          "en": "Wireless Sensing: From Modeling to Real-World Validation"
         }
       },
       "tags": [
@@ -28,7 +28,7 @@
       ],
       "locales": {
         "en": {
-          "title": "Low-Cost Wireless Sensing: From Modeling to Real-World Validation",
+          "title": "Wireless Sensing: From Modeling to Real-World Validation",
           "summary": "Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, then validated it through four months of real-world vehicle tests. First-author IEEE TAES paper and WOCC 2025 invited talk.",
           "blocks": [
             {
@@ -91,7 +91,7 @@
           ]
         },
         "zh": {
-          "title": "低成本无线感知：从物理建模到真实验证",
+          "title": "无线感知：从物理建模到真实验证",
           "summary": "负责商用 Wi-Fi 车内感知系统的软件算法与系统调试，并通过四个月的真实车辆实验完成验证。成果以第一作者发表于 IEEE TAES，并受邀在 WOCC 2025 作专题报告。",
           "blocks": [
             {
