@@ -79,7 +79,7 @@ project_1 = portfolio.add_project(
         zh="低成本无线感知：从物理建模到真实验证",
         en="Low-Cost Wireless Sensing: From Modeling to Real-World Validation",
     ),
-    date="2025-08",
+    date="2025-05",
     summary=dict(
         zh=(
             "负责商用 Wi-Fi 车内感知系统的软件算法与系统调试，并通过四个月的真实车辆实验完成验证。"
