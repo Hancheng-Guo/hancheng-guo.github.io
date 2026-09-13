@@ -611,29 +611,33 @@ class BuilderTests(unittest.TestCase):
     # through an explicit (including bilingual Markdown) label.
     page.add_github_link(url="https://github.com/example/default")
     page.add_doc_link(url="https://example.com/default.pdf")
+    page.add_paper_link(url="https://example.com/default-paper")
     page.add_bilibili_link(url="https://www.bilibili.com/video/default")
     page.add_youtube_link(url="https://www.youtube.com/watch?v=default")
     page.add_github_link(url="https://github.com/example/repo", label={"en": "**Source**", "zh": "**源码**"})
     page.add_doc_link(url="https://example.com/doc.pdf", label={"en": "Read _docs_", "zh": "阅读 _文档_"})
+    page.add_paper_link(url="https://example.com/paper", label={"en": "Read **publication**", "zh": "阅读**论文**"})
     page.add_bilibili_link(url="https://www.bilibili.com/video/example", label={"en": "**Watch**", "zh": "**观看**"})
     page.add_youtube_link(url="https://www.youtube.com/watch?v=example", label={"en": "Video _demo_", "zh": "视频 _演示_"})
     self.assertFalse(hasattr(page, "add_link"))
     self.assertEqual(
       [link["type"] for link in project.data["links"]],
-      ["github", "techDoc", "bilibili", "youtube"] * 2,
+      ["github", "techDoc", "paper", "bilibili", "youtube"] * 2,
     )
     html = render_project(portfolio, project.data)
-    for icon in ("github", "file-pdf", "bilibili", "youtube"):
+    for icon in ("github", "file-pdf", "paper", "bilibili", "youtube"):
       self.assertIn(f"icon-{icon}", html)
     self.assertIn("<strong>Source</strong>", html)
     self.assertIn("Read <u>docs</u>", html)
+    self.assertIn("Read <strong>publication</strong>", html)
     self.assertIn("<strong>Watch</strong>", html)
     self.assertIn("Video <u>demo</u>", html)
-    self.assertEqual(project.data["links"][4]["label"]["zh"], "**源码**")
-    self.assertEqual(project.data["links"][5]["label"]["zh"], "阅读 _文档_")
-    self.assertEqual(project.data["links"][6]["label"]["zh"], "**观看**")
-    self.assertEqual(project.data["links"][7]["label"]["zh"], "视频 _演示_")
-    for default_label in (">Code<", ">Docs<", ">Bilibili<", ">YouTube<"):
+    self.assertEqual(project.data["links"][5]["label"]["zh"], "**源码**")
+    self.assertEqual(project.data["links"][6]["label"]["zh"], "阅读 _文档_")
+    self.assertEqual(project.data["links"][7]["label"]["zh"], "阅读**论文**")
+    self.assertEqual(project.data["links"][8]["label"]["zh"], "**观看**")
+    self.assertEqual(project.data["links"][9]["label"]["zh"], "视频 _演示_")
+    for default_label in (">Code<", ">Docs<", ">Read Paper<", ">Bilibili<", ">YouTube<"):
       self.assertIn(default_label, html)
 
   def test_static_output_contains_content_without_loading_shell(self):

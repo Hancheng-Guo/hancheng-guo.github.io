@@ -11,6 +11,7 @@ function linkChevron(direction) { const icon = document.createElementNS('http://
 const LINK_PRESENTATION = {
   github: { icon: 'github', className: 'github', source: 'assets/icons/github.svg' },
   techDoc: { icon: 'file-pdf', className: '', source: 'assets/icons/file-pdf.svg' },
+  paper: { icon: 'paper', className: '', source: 'assets/icons/paper.svg' },
   bilibili: { icon: 'bilibili', className: 'bilibili', source: 'assets/icons/bilibili.svg' },
   youtube: { icon: 'youtube', className: 'youtube', source: 'assets/icons/youtube.svg' },
 };

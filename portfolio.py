@@ -205,7 +205,6 @@ page_1.add_paragraph(
             "随后我受邀在 WOCC 2025 作 30 分钟专题报告，将长期项目压缩成一条清晰的论证链："
             "为什么问题重要、现有方法为何受限、关键洞察是什么、系统是否真的在复杂环境中成立。"
             "能够完成研究是一种能力，能够让不同背景的研究者快速理解并质疑它，是另一种能力。"
-            "\n\n[阅读论文（IEEE Xplore）](https://ieeexplore.ieee.org/document/10971911)"
         ),
         en=(
             "The work was published with me as first author in *IEEE Transactions on Aerospace and Electronic Systems*. "
@@ -213,10 +212,10 @@ page_1.add_paragraph(
             "why the problem matters, why prior approaches are constrained, what the key insight is, and whether the system "
             "actually holds up in complex environments. Completing the research is one skill; making it quickly understandable "
             "and open to critique by researchers from other backgrounds is another."
-            "\n\n[Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/10971911)"
         ),
     ),
 )
+page_1.add_paper_link(url="https://ieeexplore.ieee.org/document/10971911")
 page_1.add_image(
     "assets/images/projects/rapidpd/RapidPD-WOCC2025-program.jpg",
     alt=dict(

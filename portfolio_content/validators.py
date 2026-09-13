@@ -6,7 +6,7 @@ import re
 
 ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 BLOCKS = {"heading", "paragraph", "image", "gallery", "list", "quote", "video", "metrics"}
-LINK_TYPES = {"github", "techDoc", "bilibili", "youtube"}
+LINK_TYPES = {"github", "techDoc", "paper", "bilibili", "youtube"}
 MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 
 

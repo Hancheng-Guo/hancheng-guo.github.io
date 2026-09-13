@@ -170,6 +170,14 @@ class ProjectPage:
     ) -> "ProjectPage":
         return self._add_link("techDoc", url, label=label)
 
+    def add_paper_link(
+        self,
+        url: str | None,
+        *,
+        label: str | dict[str, str] | None = None,
+    ) -> "ProjectPage":
+        return self._add_link("paper", url, label=label)
+
     def add_bilibili_link(
         self,
         url: str | None,

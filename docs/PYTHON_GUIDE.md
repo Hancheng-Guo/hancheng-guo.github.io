@@ -719,6 +719,14 @@ page.add_doc_link(
     ),
 )
 
+page.add_paper_link(
+    url="https://example.com/paper",
+    label=dict(
+        zh="**阅读论文**",
+        en="**Read paper**",
+    ),
+)
+
 page.add_bilibili_link(
     url="https://www.bilibili.com/video/example",
     label=dict(

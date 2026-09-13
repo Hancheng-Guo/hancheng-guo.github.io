@@ -586,6 +586,7 @@ def render_cv(portfolio: Any) -> str:
 LINK_PRESENTATION = {
     "github": ("github", "Code"),
     "techDoc": ("file-pdf", "Docs"),
+    "paper": ("paper", "Read Paper"),
     "bilibili": ("bilibili", "Bilibili"),
     "youtube": ("youtube", "YouTube"),
 }

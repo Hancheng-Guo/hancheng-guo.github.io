@@ -154,7 +154,12 @@
           ]
         }
       },
-      "links": [],
+      "links": [
+        {
+          "type": "paper",
+          "url": "https://ieeexplore.ieee.org/document/10971911"
+        }
+      ],
       "date": {
         "start": "2025-08",
         "end": "2025-08"
