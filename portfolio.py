@@ -22,7 +22,7 @@ portfolio = Portfolio(
         zh="由 [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io) 提供支持",
         en="Powered by [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io)",
     ),
-    last_update_date="2026-09-12",
+    last_update_date="2026-09-13",
     favicon="assets/icons/favicon.svg",
 )
 
@@ -96,155 +96,203 @@ portfolio.add_contact(
 
 project_1 = portfolio.add_project(
     title=dict(
-        zh="全国大学生机器人大赛 ROBOCON 足式机器人赛题",
-        en="ROBOCON 2025 Quadruped Robot Challenge",
+        zh="低成本车内感知：从物理建模到真实验证",
+        en="Low-Cost In-Vehicle Sensing: From Modeling to Real-World Validation",
     ),
-    date="2025-04",
+    date="2025-08",
     summary=dict(
         zh=(
-            "2025赛季ROBOCON足式机器人全栈研发。负责从类植保无人机碳管装配工艺机械建模、"
-            "力控制算法到3D雷达建图自主导航技术。带领团队在全国180余支队伍中取得竞速赛第30名、"
-            "障碍赛第31名、越野赛34名的优异成绩。"
+            "负责商用 Wi-Fi 车内感知系统的软件算法与系统调试，并通过四个月的真实车辆实验完成验证。"
+            "成果以第一作者发表于 IEEE TAES，并受邀在 WOCC 2025 作专题报告。"
         ),
         en=(
-            "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, "
-            "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, "
-            "31st in Obstacle, and 34th in Cross-country among 180+ teams."
+            "Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, then "
+            "validated it through four months of real-world vehicle tests. First-author IEEE TAES paper and "
+            "WOCC 2025 invited talk."
         ),
     ),
-    thumbnail="assets/images/Portfolio-01.png",
+    thumbnail="assets/images/projects/rapidpd/RapidPD-WOCC2025-talk.jpg",
     tags=(
-        dict(zh="运动控制", en="Motion Control"),
-        dict(zh="SLAM", en="SLAM"),
-        dict(zh="机械设计", en="Mechanical Design"),
-        dict(zh="激光雷达", en="LiDAR"),
+        dict(zh="算法设计", en="Algorithm Design"),
+        dict(zh="系统调试", en="System Debugging"),
+        dict(zh="实验设计", en="Experimental Design"),
+        dict(zh="真实场景验证", en="Real-World Validation"),
     ),
 )
 
 page_1 = project_1.add_page(template="minimal")
 page_1.add_image(
-    "assets/images/Portfolio-01.png",
+    "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg",
     alt=dict(
-        zh="ROBOCON 足式机器人项目主图",
-        en="ROBOCON quadruped robot project overview",
+        zh="郭瀚丞在 WOCC 2025 作 RapidPD 受邀报告",
+        en="Hancheng Guo presenting the RapidPD invited talk at WOCC 2025",
+    ),
+    caption=dict(
+        zh="在 WOCC 2025 介绍 RapidPD 的建模、系统实现与真实车辆实验",
+        en="Presenting RapidPD's modeling, system implementation, and real-vehicle evaluation at WOCC 2025",
     ),
 )
 page_1.add_paragraph(
     text=dict(
         zh=(
-            "作为我真正入门强化学习控制的第一个项目，我选择了四足机器狗这个相对成熟的课题。"
-            "\n"
-            "机器狗有相当多的开源项目可以借鉴，因此可能有人会选择下载下来，跑通它，修改一下其中的内容，"
-            "并包装成自己的项目，但我不想这样——因为学习不到一些被忽略的关键部分。"
-            "\n"
-            "在过往的科研经历中，我深知理解全流程的重要性，所以我选择基于 Stable-Baseline3 与 Mujoco 库，"
-            "自己搭建机器狗的 RL 训练流程。"
+            "RapidPD 是一个利用车辆现有 Wi-Fi 设备检测遗留儿童与宠物的低成本感知系统。"
+            "我在项目中负责软件算法设计与系统调试：从安全需求和响应延迟出发建立感知模型，"
+            "将算法接入商用硬件的数据链路，并通过长期真实场景实验不断定位和修正问题。"
         ),
         en=(
-            "Full-stack R&D for 2025 ROBOCON. Responsible for carbon tube assembly mechanical modeling, "
-            "force control algorithms, and 3D LiDAR SLAM navigation. Led the team to achieve 30th in Speed, "
-            "31st in Obstacle, and 34th in Cross-country among 180+ teams."
+            "RapidPD is a low-cost sensing system that reuses existing in-vehicle Wi-Fi devices to detect a child or pet "
+            "left behind. My responsibility was software algorithm design and system debugging: I translated the safety "
+            "and latency requirements into a sensing model, integrated the algorithm with the commercial-hardware data "
+            "pipeline, and used long-term field tests to locate and correct failures."
         ),
     ),
 )
 page_1.add_heading(
     text=dict(
-        zh="如何跑得更快？课程学习与奖励塑型",
-        en="How Can It Run Faster? Curriculum Learning and Reward Shaping",
+        zh="从约束到可运行算法",
+        en="From Constraints to a Working Algorithm",
     ),
     level=3,
 )
 page_1.add_paragraph(
     text=dict(
         zh=(
-            "ROBOCON 作为机器人领域的顶尖赛事，对机械可靠性、电控稳定性、视觉准确性提出了较高的要求。"
-            "\n"
-            "在 2025 赛季我基本完整负责了足式机器人一队从机械建模、运动控制到自主导航的全栈研发，"
-            "采用类植保无人机碳管装配工艺机构、力控制算法与 3D 雷达建图导航技术，取得 2025 年"
-            "ROBOCON（江阴）足式机器人竞速赛全国 30 名、障碍赛全国 31 名、越野赛全国 34 名，"
-            "共三项国二。"
+            "真正的难点是同时满足低成本、全车覆盖与快速响应。已有方法依赖较长时间序列来等待微弱运动累积，"
+            "我没有继续堆叠模型复杂度，而是回到传播机制本身：微小运动会以结构化方式影响同一时刻的多个子载波。"
+            "这个观察把“等待更久”改写为“利用横向结构”，最终将检测窗口缩短到 1 秒。"
+            "对我而言，这个决策体现的是一种可迁移的问题求解方式：先寻找限制性能的根因，再选择与根因匹配的表示和算法。"
         ),
         en=(
-            "During the 2025 season, I worked across mechanical modeling, motion control, and autonomous "
-            "navigation. The robot combined a carbon-tube structure, force-control algorithms, "
-            "and 3D LiDAR mapping, earning three National Second Prizes."
+            "The hard part was meeting low cost, full-cabin coverage, and fast response at the same time. Existing methods "
+            "waited for weak motion to accumulate over long sequences. Instead of adding model complexity, I returned to "
+            "the propagation mechanism and recognized that small motion leaves structure across many subcarriers at the "
+            "same instant. That reframed the task from 'wait longer' to 'use the horizontal structure' and reduced the "
+            "detection window to one second. The transferable lesson is to identify the root bottleneck before choosing the representation and algorithm."
         ),
     ),
-)
-page_1.add_heading(
-    text=dict(
-        zh="测试标题",
-        en="Heading Test",
-    ),
-    level=4,
 )
 page_1.add_paragraph(
     text=dict(
         zh=(
-            "测试文本。"
+            "硬件平台由团队提供，我的工作从数据进入软件之后开始。我把物理假设拆成可逐步检查的处理流程，"
+            "围绕硬件漂移、复杂多径和弱运动信号反复调试，在真实采集数据中定位误差来源，"
+            "并通过归一化、特征增强与判决平滑提高稳定性。最终算法只需 20 Hz 采样和 1 秒数据即可完成判断，"
+            "在实车测试中达到 99.05% 总体准确率与 99.32% 真阳性率。"
         ),
         en=(
-            "Test Text."
+            "The hardware platform was provided by the team; my work began once its data entered the software pipeline. "
+            "I decomposed the physical hypothesis into processing stages that could be inspected independently, then "
+            "debugged against hardware drift, complex multipath, and weak motion in real measurements. Normalization, "
+            "feature enhancement, and decision smoothing emerged from those observed failure modes. The final algorithm "
+            "operates on 20 Hz sampling and one second of data, reaching 99.05% overall accuracy and 99.32% true positive rate in vehicle tests."
         ),
+    ),
+)
+page_1.add_image(
+    "assets/images/projects/rapidpd/RapidPD-hardware-platform.png",
+    alt=dict(
+        zh="RapidPD 商用 Wi-Fi 硬件平台与车内天线部署",
+        en="RapidPD commercial Wi-Fi hardware platform and in-cabin antenna deployment",
+    ),
+    caption=dict(
+        zh="基于商用 Wi-Fi 芯片搭建的 2Tx-1Rx 原型与车内天线布置",
+        en="2Tx-1Rx prototype and in-cabin antenna placement using commercial Wi-Fi chipsets",
     ),
 )
 page_1.add_heading(
     text=dict(
-        zh="测试标题",
-        en="Heading Test",
+        zh="用真实场景寻找失效边界",
+        en="Finding Failure Boundaries in the Real World",
     ),
-    level=5,
+    level=3,
 )
 page_1.add_paragraph(
     text=dict(
         zh=(
-            "测试文本。"
+            "我没有把高准确率当作终点，而是把实验设计成对系统假设的压力测试。"
+            "四个多月的采集覆盖 10 个不同体型的人与宠物、11 个车内位置，以及停车楼、路边、露天区域和高架桥下等环境。"
+            "我同时设置传统基线与模块消融，检查性能提升究竟来自核心思路还是实验偶然性。"
+            "这套验证思路与机器人真实部署相同：关心的不是平均分数，而是系统在位置变化、弱信号和环境迁移下何时失效。"
         ),
         en=(
-            "Test Text."
+            "I treated evaluation as a stress test of the system's assumptions, not a search for one high score. More than "
+            "four months of collection covered ten people and pets of different sizes, eleven cabin positions, and parking "
+            "structures, roadsides, open areas, and an elevated bridge. I also compared against a conventional baseline and "
+            "ablated key modules to separate genuine improvement from experimental coincidence. This mirrors real robotics "
+            "deployment: the important question is when a system fails under viewpoint, signal-strength, and environment shifts."
         ),
     ),
 )
 page_1.add_image(
-    "assets/images/Portfolio-01-3.png",
+    "assets/images/projects/rapidpd/RapidPD-results.png",
     alt=dict(
-        zh="四足机器人训练与测试画面",
-        en="Quadruped robot training and testing",
+        zh="RapidPD 在空车、人、犬和猫场景中的混淆矩阵与性能指标",
+        en="RapidPD confusion matrix and performance metrics for empty, human, dog, and cat cases",
+    ),
+    caption=dict(
+        zh="真实车辆测试：99.05% 总体准确率、99.32% 真阳性率、1.64% 误报率",
+        en="Real-vehicle evaluation: 99.05% overall accuracy, 99.32% TPR, and 1.64% FPR",
+    ),
+)
+page_1.add_heading(
+    text=dict(
+        zh="研究成果与技术表达",
+        en="Research Outcome and Technical Communication",
+    ),
+    level=3,
+)
+page_1.add_paragraph(
+    text=dict(
+        zh=(
+            "该工作以第一作者发表于 *IEEE Transactions on Aerospace and Electronic Systems*。"
+            "随后我受邀在 WOCC 2025 作 30 分钟专题报告，将长期项目压缩成一条清晰的论证链："
+            "为什么问题重要、现有方法为何受限、关键洞察是什么、系统是否真的在复杂环境中成立。"
+            "能够完成研究是一种能力，能够让不同背景的研究者快速理解并质疑它，是另一种能力。"
+            "\n\n[阅读论文（IEEE Xplore）](https://ieeexplore.ieee.org/document/10971911) · "
+            "[查看 WOCC 2025 受邀报告幻灯片](../../assets/documents/projects/rapidpd/RapidPD-WOCC2025-Invited-Talk.pdf)"
+        ),
+        en=(
+            "The work was published with me as first author in *IEEE Transactions on Aerospace and Electronic Systems*. "
+            "I was then invited to give a 30-minute talk at WOCC 2025, compressing a long project into a clear argument: "
+            "why the problem matters, why prior approaches are constrained, what the key insight is, and whether the system "
+            "actually holds up in complex environments. Completing the research is one skill; making it quickly understandable "
+            "and open to critique by researchers from other backgrounds is another."
+            "\n\n[Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/10971911) · "
+            "[View the WOCC 2025 invited-talk slides](../../assets/documents/projects/rapidpd/RapidPD-WOCC2025-Invited-Talk.pdf)"
+        ),
     ),
 )
 page_1.add_image(
-    "assets/images/Portfolio-01-1.png",
+    "assets/images/projects/rapidpd/RapidPD-WOCC2025-program.jpg",
     alt=dict(
-        zh="四足机器人项目结构细节",
-        en="Quadruped robot project structure detail",
+        zh="WOCC 2025 议程中的 RapidPD 受邀报告条目",
+        en="RapidPD invited-talk listing in the WOCC 2025 program",
+    ),
+    caption=dict(
+        zh="WOCC 2025 官方议程中的 Invited Speech 时段（16:20-16:50）",
+        en="The RapidPD invited-speech slot in the WOCC 2025 program (16:20-16:50)",
     ),
 )
-page_1.add_image(
-    "assets/images/Portfolio-01-2.png",
-    alt=dict(
-        zh="四足机器人项目运行结果",
-        en="Quadruped robot project result",
+page_1.add_heading(
+    text=dict(
+        zh="为什么这项经历与机器人研究相关",
+        en="Why This Experience Matters for Robotics",
     ),
+    level=3,
 )
-page_1.add_github_link(
-    url="https://github.com/Lain-Ego0/BRS-Parallel-Robot",
-    label=dict(
-        en="**Source code**",
-        zh="**项目源码**"
-    ),
-)
-page_1.add_doc_link(
-    url="https://wcn9j5638vrr.feishu.cn/wiki/space/7570988375279517715?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home",
-    label=dict(
-        en="**Docs**",
-        zh="**技术文档**"
-    ),
-)
-page_1.add_bilibili_link(
-    url="https://www.bilibili.com/video/BV15wu4zuEmf",
-    label=dict(
-        en="**Demo**",
-        zh="**演示视频**"
+page_1.add_paragraph(
+    text=dict(
+        zh=(
+            "这项工作训练的是机器人研究同样需要的底层能力：从模糊需求中定义可验证问题，"
+            "把物理直觉转化为算法，把算法接入真实硬件，并用跨场景实验寻找系统的失效边界。"
+            "我希望把这套研究方法迁移到机器人感知、学习与闭环决策中，而不是把无线感知主题本身强行包装成机器人项目。"
+        ),
+        en=(
+            "This work developed the same underlying abilities required in robotics: defining a testable problem from an "
+            "ambiguous need, translating physical intuition into an algorithm, integrating that algorithm with real hardware, "
+            "and using cross-scenario experiments to locate failure boundaries. I want to carry this research method into "
+            "robot perception, learning, and closed-loop decision making - without pretending that wireless sensing itself is a robotics project."
+        ),
     ),
 )
 
