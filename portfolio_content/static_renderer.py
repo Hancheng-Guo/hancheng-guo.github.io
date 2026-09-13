@@ -359,8 +359,10 @@ def _download(resume: dict[str, Any], prefix: str) -> str:
     external = str(url).startswith(("http://", "https://"))
     href = str(url) if external else prefix + str(url)
     attrs = ' target="_blank" rel="noopener noreferrer"' if external else (' download' if resume.get("download", True) else "")
-    label = markdown_inline(resume.get("label") or "Download CV")
-    return f'<a class="publish-link primary-action" href="{escape(href, quote=True)}"{attrs}>{_icon("file-pdf")}<span>{label}</span></a>'
+    configured_label = resume.get("label")
+    label = markdown_inline(configured_label or "Download CV")
+    i18n = '' if configured_label else ' data-i18n="intro.downloadCv"'
+    return f'<a class="publish-link primary-action" href="{escape(href, quote=True)}"{attrs}>{_icon("file-pdf")}<span{i18n}>{label}</span></a>'
 
 
 def _contacts(portfolio: Any, prefix: str = "") -> str:

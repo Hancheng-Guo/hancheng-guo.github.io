@@ -204,8 +204,8 @@ class Project:
 @dataclass
 class Portfolio:
     favicon: str | None = None
-    site_name: dict[str, str] = field(default_factory=lambda: {"en": "Lain-Ego Portfolio", "zh": "Lain-Ego 作品集"})
-    author: dict[str, str] = field(default_factory=lambda: {"en": "Lain-Ego", "zh": "Lain-Ego"})
+    site_name: dict[str, str] = field(default_factory=lambda: {"en": "Homepage", "zh": "个人主页"})
+    author: dict[str, str] = field(default_factory=lambda: {"en": "", "zh": ""})
     copyright_text: dict[str, str] = field(default_factory=lambda: {"en": "All rights reserved.", "zh": "保留所有权利。"})
     last_update_date: str = "2025-01-01"
     projects: list[dict[str, Any]] = field(default_factory=list)

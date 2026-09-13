@@ -168,7 +168,7 @@ function renderProfile(profile, contacts, resume) {
     icon.className = 'svg-icon icon-file-pdf';
     icon.setAttribute('aria-hidden', 'true');
     const label = document.createElement('span');
-    renderInline(label, localized(resume.label) || 'Download CV');
+    renderInline(label, localized(resume.label) || t('intro.downloadCv'));
     link.append(icon, label);
     if (external) { link.target = '_blank'; link.rel = 'noopener noreferrer'; }
     else if (resume.download !== false) link.setAttribute('download', '');

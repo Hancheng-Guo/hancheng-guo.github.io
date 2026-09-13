@@ -10,14 +10,8 @@ from portfolio_content import Portfolio
 
 
 portfolio = Portfolio(
-    site_name=dict(
-        zh="郭瀚丞 | 个人主页",
-        en="Hancheng Guo | Homepage",
-    ),
-    author=dict(
-        zh="郭瀚丞",
-        en="Hancheng Guo",
-    ),
+    site_name=dict(zh="郭瀚丞 | 个人主页", en="Hancheng Guo | Homepage"),
+    author=dict(zh="郭瀚丞", en="Hancheng Guo"),
     copyright_text=dict(
         zh="由 [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io) 提供支持",
         en="Powered by [_Lain-Ego0.github.io_](https://github.com/Lain-Ego0/Lain-Ego0.github.io)",
@@ -36,12 +30,7 @@ portfolio.set_cv_field(("education", "publications", "tech stack", "awards and s
 # region Profile
 
 portfolio.set_profile(
-    avatar="assets/images/Avatar.jpg",
-    hero_background="assets/images/Portfolio-01-3.png",
-    name=dict(
-        zh="郭瀚丞",
-        en="Hancheng Guo",
-    ),
+    name=dict(zh="郭瀚丞", en="Hancheng Guo"),
     summary=dict(
         zh=(
             # "正在寻找机器人方向的博士研究机会。"
@@ -57,14 +46,12 @@ portfolio.set_profile(
             "My previous research focused on wireless sensing."
         ),
     ),
+    avatar="assets/images/Avatar.jpg",
+    hero_background="assets/images/Portfolio-01-3.png",
     email="hc.guo.tect@gmail.com",
 )
 
 portfolio.set_resume(
-    label=dict(
-        zh="下载简历",
-        en="Download CV",
-    ),
     url=dict(
         zh="assets/documents/简历测试.pdf",
         en="assets/documents/CVTest.pdf",
@@ -72,19 +59,12 @@ portfolio.set_resume(
 )
 
 portfolio.add_contact(
-    label=dict(
-        zh="代码仓库",
-        en="GitHub",
-    ),
+    label=dict(zh="代码仓库", en="GitHub"),
     icon="assets/icons/github.svg",
     url="https://github.com/Hancheng-Guo",
 )
-
 portfolio.add_contact(
-    label=dict(
-        zh="ORCID 学术档案",
-        en="ORCID",
-    ),
+    label=dict(zh="ORCID 学术档案", en="ORCID"),
     icon="assets/icons/orcid.svg",
     url="https://orcid.org/0009-0005-2213-1604",
 )
@@ -92,12 +72,12 @@ portfolio.add_contact(
 # endregion
 
 
-# region Project
+# region Project RapidPD
 
 project_1 = portfolio.add_project(
     title=dict(
-        zh="低成本车内感知：从物理建模到真实验证",
-        en="Low-Cost In-Vehicle Sensing: From Modeling to Real-World Validation",
+        zh="低成本无线感知：从物理建模到真实验证",
+        en="Low-Cost Wireless Sensing: From Modeling to Real-World Validation",
     ),
     date="2025-08",
     summary=dict(
@@ -106,32 +86,20 @@ project_1 = portfolio.add_project(
             "成果以第一作者发表于 IEEE TAES，并受邀在 WOCC 2025 作专题报告。"
         ),
         en=(
-            "Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, then "
-            "validated it through four months of real-world vehicle tests. First-author IEEE TAES paper and "
-            "WOCC 2025 invited talk."
+            "Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, "
+            "then validated it through four months of real-world vehicle tests. "
+            "First-author IEEE TAES paper and WOCC 2025 invited talk."
         ),
     ),
     thumbnail="assets/images/projects/rapidpd/RapidPD-WOCC2025-talk.jpg",
     tags=(
-        dict(zh="算法设计", en="Algorithm Design"),
-        dict(zh="系统调试", en="System Debugging"),
-        dict(zh="实验设计", en="Experimental Design"),
+        dict(zh="无线感知", en="Wireless Sensing"),
+        dict(zh="信号处理", en="Signal Process"),
         dict(zh="真实场景验证", en="Real-World Validation"),
     ),
 )
 
 page_1 = project_1.add_page(template="minimal")
-page_1.add_image(
-    "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg",
-    alt=dict(
-        zh="郭瀚丞在 WOCC 2025 作 RapidPD 受邀报告",
-        en="Hancheng Guo presenting the RapidPD invited talk at WOCC 2025",
-    ),
-    caption=dict(
-        zh="在 WOCC 2025 介绍 RapidPD 的建模、系统实现与真实车辆实验",
-        en="Presenting RapidPD's modeling, system implementation, and real-vehicle evaluation at WOCC 2025",
-    ),
-)
 page_1.add_paragraph(
     text=dict(
         zh=(
@@ -188,17 +156,6 @@ page_1.add_paragraph(
         ),
     ),
 )
-page_1.add_image(
-    "assets/images/projects/rapidpd/RapidPD-hardware-platform.png",
-    alt=dict(
-        zh="RapidPD 商用 Wi-Fi 硬件平台与车内天线部署",
-        en="RapidPD commercial Wi-Fi hardware platform and in-cabin antenna deployment",
-    ),
-    caption=dict(
-        zh="基于商用 Wi-Fi 芯片搭建的 2Tx-1Rx 原型与车内天线布置",
-        en="2Tx-1Rx prototype and in-cabin antenna placement using commercial Wi-Fi chipsets",
-    ),
-)
 page_1.add_heading(
     text=dict(
         zh="用真实场景寻找失效边界",
@@ -224,14 +181,14 @@ page_1.add_paragraph(
     ),
 )
 page_1.add_image(
-    "assets/images/projects/rapidpd/RapidPD-results.png",
+    "assets/images/projects/rapidpd/RapidPD-experiment.jpg",
     alt=dict(
-        zh="RapidPD 在空车、人、犬和猫场景中的混淆矩阵与性能指标",
-        en="RapidPD confusion matrix and performance metrics for empty, human, dog, and cat cases",
+        zh="真实环境下的测试结果展示",
+        en="Presentation of test results in real-world conditions",
     ),
     caption=dict(
-        zh="真实车辆测试：99.05% 总体准确率、99.32% 真阳性率、1.64% 误报率",
-        en="Real-vehicle evaluation: 99.05% overall accuracy, 99.32% TPR, and 1.64% FPR",
+        zh="真实环境下的测试结果展示",
+        en="Presentation of test results in real-world conditions",
     ),
 )
 page_1.add_heading(
@@ -248,8 +205,7 @@ page_1.add_paragraph(
             "随后我受邀在 WOCC 2025 作 30 分钟专题报告，将长期项目压缩成一条清晰的论证链："
             "为什么问题重要、现有方法为何受限、关键洞察是什么、系统是否真的在复杂环境中成立。"
             "能够完成研究是一种能力，能够让不同背景的研究者快速理解并质疑它，是另一种能力。"
-            "\n\n[阅读论文（IEEE Xplore）](https://ieeexplore.ieee.org/document/10971911) · "
-            "[查看 WOCC 2025 受邀报告幻灯片](../../assets/documents/projects/rapidpd/RapidPD-WOCC2025-Invited-Talk.pdf)"
+            "\n\n[阅读论文（IEEE Xplore）](https://ieeexplore.ieee.org/document/10971911)"
         ),
         en=(
             "The work was published with me as first author in *IEEE Transactions on Aerospace and Electronic Systems*. "
@@ -257,45 +213,51 @@ page_1.add_paragraph(
             "why the problem matters, why prior approaches are constrained, what the key insight is, and whether the system "
             "actually holds up in complex environments. Completing the research is one skill; making it quickly understandable "
             "and open to critique by researchers from other backgrounds is another."
-            "\n\n[Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/10971911) · "
-            "[View the WOCC 2025 invited-talk slides](../../assets/documents/projects/rapidpd/RapidPD-WOCC2025-Invited-Talk.pdf)"
+            "\n\n[Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/10971911)"
         ),
     ),
 )
 page_1.add_image(
     "assets/images/projects/rapidpd/RapidPD-WOCC2025-program.jpg",
     alt=dict(
-        zh="WOCC 2025 议程中的 RapidPD 受邀报告条目",
-        en="RapidPD invited-talk listing in the WOCC 2025 program",
+        zh="WOCC 2025 议程中的受邀报告条目",
+        en="The invited-talk listing in the WOCC 2025 program",
     ),
     caption=dict(
         zh="WOCC 2025 官方议程中的 Invited Speech 时段（16:20-16:50）",
         en="The RapidPD invited-speech slot in the WOCC 2025 program (16:20-16:50)",
     ),
 )
-page_1.add_heading(
-    text=dict(
-        zh="为什么这项经历与机器人研究相关",
-        en="Why This Experience Matters for Robotics",
+page_1.add_image(
+    "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg",
+    alt=dict(
+        zh="郭瀚丞在 WOCC 2025 作 RapidPD 受邀报告",
+        en="Hancheng Guo presenting the RapidPD invited talk at WOCC 2025",
     ),
-    level=3,
+    caption=dict(
+        zh="在 WOCC 2025 作受邀报告",
+        en="Presenting the invited talk at WOCC 2025",
+    ),
 )
 page_1.add_paragraph(
     text=dict(
         zh=(
-            "这项工作训练的是机器人研究同样需要的底层能力：从模糊需求中定义可验证问题，"
+            "这项工作训练的是一种通用的，能够应用到各领域的底层能力：从模糊需求中定义可验证问题，"
             "把物理直觉转化为算法，把算法接入真实硬件，并用跨场景实验寻找系统的失效边界。"
-            "我希望把这套研究方法迁移到机器人感知、学习与闭环决策中，而不是把无线感知主题本身强行包装成机器人项目。"
         ),
         en=(
-            "This work developed the same underlying abilities required in robotics: defining a testable problem from an "
-            "ambiguous need, translating physical intuition into an algorithm, integrating that algorithm with real hardware, "
-            "and using cross-scenario experiments to locate failure boundaries. I want to carry this research method into "
-            "robot perception, learning, and closed-loop decision making - without pretending that wireless sensing itself is a robotics project."
+            "This work developed the general and basic abilities, which can be applied across various fields: "
+            "defining a testable problem from an ambiguous need, translating physical intuition into an algorithm, "
+            "integrating that algorithm with real hardware, "
+            "and using cross-scenario experiments to locate failure boundaries. "
         ),
     ),
 )
 
+# endregion
+
+
+# region Project RosLittleRound
 
 project_2 = portfolio.add_project(
     title=dict(
@@ -547,157 +509,8 @@ portfolio.add_timeline_event(
         en="Open Source SliverWolf Desktop Quadruped",
     ),
     description=dict(
-        zh=(
-            "发布具备语音控制与机械臂协同作业能力的桌面级串联四足机器人 SliverWolf。"
-        ),
-        en=(
-            "Released SliverWolf, a desktop serial quadruped with voice control and robotic-arm collaboration."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date="2024-07",
-    title=dict(
-        zh="2024 ROBOCON 全国赛",
-        en="2024 ROBOCON National Competition",
-    ),
-    description=dict(
-        zh=(
-            "基于 FreeRTOS 完成 R1 机器人嵌入式控制系统开发，实现 ±5 mm 定位精度、球体发射和夹爪夹取功能。"
-        ),
-        en=(
-            "Developed the FreeRTOS embedded control system for the R1 robot,\n"
-            "achieving ±5 mm positioning accuracy, ball launching, and gripper functions."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date="2024-08",
-    title=dict(
-        zh="2024 福建省大学生电子设计大赛",
-        en="2024 Fujian Undergraduate Electronics Design Contest",
-    ),
-    description=dict(
-        zh=(
-            "基于 MSPM0G3507 开发自动驾驶小车系统并进入省级测试阶段。"
-        ),
-        en=(
-            "Developed an MSPM0G3507-based autonomous vehicle system and qualified for provincial testing."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date="2024-11",
-    title=dict(
-        zh="福建省大学生智能海洋装备设计制作大赛",
-        en="Fujian Intelligent Marine Equipment Design Competition",
-    ),
-    description=dict(
-        zh=(
-            "负责浮力可控多自由度龙虾水下机器人的控制系统开发，获特等奖。"
-        ),
-        en=(
-            "Led control-system development for a buoyancy-controlled multi-DOF lobster robot, winning the Special Prize."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date="2024-12",
-    title=dict(
-        zh="2024 世界航海装备大会",
-        en="2024 World Marine Equipment Conference",
-    ),
-    description=dict(
-        zh=(
-            "代表福建理工大学参展并展示仿生波士顿大龙虾机器人，获新华社等媒体报道。"
-        ),
-        en=(
-            "Represented Fujian University of Technology and exhibited the bionic Boston lobster robot, "
-            "receiving national media coverage."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date="2025-07",
-    title=dict(
-        zh="2025 ROBOCON 全国赛",
-        en="2025 ROBOCON National Competition",
-    ),
-    description=dict(
-        zh=(
-            "负责足式机器人全栈研发，在竞速、障碍和越野赛中获得三项国家二等奖。"
-        ),
-        en=(
-            "Led full-stack development of the quadruped robot and earned three National Second Prizes."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date="2025-08",
-    title=dict(
-        zh="2025 全国大学生电子设计大赛",
-        en="2025 National Undergraduate Electronics Design Contest",
-    ),
-    description=dict(
-        zh=(
-            "负责自动测距系统功率计的硬件设计与制作，获全国二等奖。"
-        ),
-        en=(
-            "Designed and fabricated the power-meter hardware for an automatic ranging system, winning the National Second Prize."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date="2025-09",
-    title=dict(
-        zh="开源 BRS 并联四足机器人",
-        en="Open Source BRS Parallel Quadruped Robot",
-    ),
-    description=dict(
-        zh=(
-            "在 GitHub 开源 BRS 并联四足机器人的机械结构与控制代码。"
-        ),
-        en=(
-            "Open-sourced the mechanical structure and control code of the BRS parallel quadruped robot on GitHub."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date=dict(
-        start="2025-10",
-        end="2026-03",
-    ),
-    title=dict(
-        zh="高擎机电实习",
-        en="Internship at Gaoqing Electromechanical",
-    ),
-    description=dict(
-        zh=(
-            "负责 HTDW4438 仿生四足机器人的机械设计、控制算法开发与系统集成测试。"
-        ),
-        en=(
-            "Responsible for mechanical design, control-algorithm development,\n"
-            "and system-integration testing for the HTDW4438 bionic quadruped robot."
-        ),
-    ),
-)
-portfolio.add_timeline_event(
-    date=dict(
-        start="2026-09"
-    ),
-    title=dict(
-        zh="测试时间线",
-        en="Timeline Test",
-    ),
-    description=dict(
-        zh=(
-            "- 第一行\n"
-            "- 第二行"
-        ),
-        en=(
-            "- Line 1\n"
-            "- Line 2"
-        ),
+        zh="发布具备语音控制与机械臂协同作业能力的桌面级串联四足机器人 SliverWolf。",
+        en="Released SliverWolf, a desktop serial quadruped with voice control and robotic-arm collaboration.",
     ),
 )
 
@@ -707,22 +520,10 @@ portfolio.add_timeline_event(
 # region Education
 
 portfolio.add_education(
-    date=dict(
-        start="2023-09",
-        end="2026-06",
-    ),
-    position=dict(
-        zh="电子信息 硕士",
-        en="Master of Electronic Information",
-    ),
-    institute=dict(
-        zh="华南理工大学",
-        en="South China University of Technology",
-    ),
-    location=dict(
-        zh="中国广州",
-        en="China",
-    ),
+    date=dict(start="2023-09", end="2026-06"),
+    position=dict(zh="电子信息 硕士", en="Master of Electronic Information"),
+    institute=dict(zh="华南理工大学", en="South China University of Technology"),
+    location=dict(zh="中国广州", en="China"),
     detail=dict(
         zh=(
             "- 发表论文：SCI 一区一作论文 1篇，国际会议论文 2篇\n"
@@ -736,22 +537,10 @@ portfolio.add_education(
 )
 
 portfolio.add_education(
-    date=dict(
-        start="2019-09",
-        end="2023-06",
-    ),
-    position=dict(
-        zh="信息工程 学士",
-        en="Bachelor of Information Engineering",
-    ),
-    institute=dict(
-        zh="华南理工大学",
-        en="South China University of Technology",
-    ),
-    location=dict(
-        zh="中国广州",
-        en="China",
-    ),
+    date=dict(start="2019-09", end="2023-06"),
+    position=dict(zh="信息工程 学士", en="Bachelor of Information Engineering"),
+    institute=dict(zh="华南理工大学", en="South China University of Technology"),
+    location=dict(zh="中国广州", en="China"),
     detail=dict(
         zh="- GPA: 3.83/4.0, 专业前 10%",
         en="- GPA: 3.83/4.0, top 10% of graduates",
@@ -761,155 +550,28 @@ portfolio.add_education(
 # endregion
 
 
-# region Work Experience
-
-# portfolio.add_work_experience(
-#     date=dict(
-#         start="2025-10",
-#     ),
-#     position=dict(
-#         zh="测试实习",
-#         en="Test of Intern",
-#     ),
-#     company=dict(
-#         zh="测试公司",
-#         en="Test of Company",
-#     ),
-#     location=dict(
-#         zh="中国芜湖",
-#         en="China",
-#     ),
-#     detail=dict(
-#         zh=(
-#             "- 第一行\n"
-#             "- 第二行"
-#         ),
-#         en=(
-#             "- Line 1\n"
-#             "- Line 2"
-#         ),
-#     ),
-# )
-
-# endregion
-
-
 # region Skill
 
 portfolio.add_tech_group(
-    title=dict(
-        zh="嵌入式开发",
-        en="Embedded",
-    ),
+    title=dict(zh="编程与开发", en="Programming"),
     items=[
-        dict(
-            name=dict(
-                zh="STM32",
-                en="STM32",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="ESP32",
-                en="ESP32",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="FreeRTOS",
-                en="FreeRTOS",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="C/C++",
-                en="C/C++",
-            ),
-        ),
+        dict(name="Python"),
+        dict(name="C++"),
+        dict(name="ROS2"),
+
+        dict(name="PyTorch"),
+        dict(name="MATLAB"),
+        dict(name="Git"),
     ],
 )
 portfolio.add_tech_group(
-    title=dict(
-        zh="机器人技术",
-        en="Robotics",
-    ),
+    title=dict(zh="机器人技术", en="Robotics"),
     items=[
-        dict(
-            name=dict(
-                zh="ROS/ROS2",
-                en="ROS/ROS2",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="Gazebo",
-                en="Gazebo",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="运动控制",
-                en="Motion Control",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="强化学习",
-                en="Reinforcement Learning",
-            ),
-        ),
-    ],
-)
-portfolio.add_tech_group(
-    title=dict(
-        zh="硬件设计",
-        en="Hardware",
-    ),
-    items=[
-        dict(
-            name=dict(
-                zh="Altium",
-                en="Altium",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="SolidWorks",
-                en="SolidWorks",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="PCB",
-                en="PCB",
-            ),
-        ),
-    ],
-)
-portfolio.add_tech_group(
-    title=dict(
-        zh="软件与工具",
-        en="Software",
-    ),
-    items=[
-        dict(
-            name=dict(
-                zh="Linux",
-                en="Linux",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="Python",
-                en="Python",
-            ),
-        ),
-        dict(
-            name=dict(
-                zh="Git",
-                en="Git",
-            ),
-        ),
+        dict(name=dict(zh="强化学习", en="Reinforcement Learning")),
+        dict(name=dict(zh="课程学习", en="Curriculum")),
+
+        dict(name="MuJoCo"),
+        dict(name="Isaac Lab"),
     ],
 )
 
@@ -919,7 +581,6 @@ portfolio.add_tech_group(
 # region Award
 
 portfolio.add_award(
-    # date="2025-12",
     title=dict(
         zh="汇顶科技一等奖学金",
         en="Goodix Technology First-Class Scholarship",
@@ -931,7 +592,6 @@ portfolio.add_award(
 )
 
 portfolio.add_award(
-    # date="2023-08",
     title=dict(
         zh="第十八届中国研究生电子设计竞赛全国总决赛二等奖、华为专项奖二等奖",
         en=(
@@ -946,7 +606,6 @@ portfolio.add_award(
 )
 
 portfolio.add_award(
-    # date="2021-11",
     title=dict(
         zh="中国科协 2021 青少年高校科学营优秀志愿者",
         en="Outstanding Volunteer, 2021 Youth University Science Camp, China Association for Sience and Technology",

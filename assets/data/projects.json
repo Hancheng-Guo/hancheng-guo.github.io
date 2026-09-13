@@ -8,22 +8,18 @@
       "thumbnail": {
         "src": "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk.jpg",
         "alt": {
-          "zh": "低成本车内感知：从物理建模到真实验证",
-          "en": "Low-Cost In-Vehicle Sensing: From Modeling to Real-World Validation"
+          "zh": "低成本无线感知：从物理建模到真实验证",
+          "en": "Low-Cost Wireless Sensing: From Modeling to Real-World Validation"
         }
       },
       "tags": [
         {
-          "zh": "算法设计",
-          "en": "Algorithm Design"
+          "zh": "无线感知",
+          "en": "Wireless Sensing"
         },
         {
-          "zh": "系统调试",
-          "en": "System Debugging"
-        },
-        {
-          "zh": "实验设计",
-          "en": "Experimental Design"
+          "zh": "信号处理",
+          "en": "Signal Process"
         },
         {
           "zh": "真实场景验证",
@@ -32,15 +28,9 @@
       ],
       "locales": {
         "en": {
-          "title": "Low-Cost In-Vehicle Sensing: From Modeling to Real-World Validation",
+          "title": "Low-Cost Wireless Sensing: From Modeling to Real-World Validation",
           "summary": "Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, then validated it through four months of real-world vehicle tests. First-author IEEE TAES paper and WOCC 2025 invited talk.",
           "blocks": [
-            {
-              "type": "image",
-              "src": "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg",
-              "alt": "Hancheng Guo presenting the RapidPD invited talk at WOCC 2025",
-              "caption": "Presenting RapidPD's modeling, system implementation, and real-vehicle evaluation at WOCC 2025"
-            },
             {
               "type": "paragraph",
               "text": "RapidPD is a low-cost sensing system that reuses existing in-vehicle Wi-Fi devices to detect a child or pet left behind. My responsibility was software algorithm design and system debugging: I translated the safety and latency requirements into a sensing model, integrated the algorithm with the commercial-hardware data pipeline, and used long-term field tests to locate and correct failures."
@@ -59,12 +49,6 @@
               "text": "The hardware platform was provided by the team; my work began once its data entered the software pipeline. I decomposed the physical hypothesis into processing stages that could be inspected independently, then debugged against hardware drift, complex multipath, and weak motion in real measurements. Normalization, feature enhancement, and decision smoothing emerged from those observed failure modes. The final algorithm operates on 20 Hz sampling and one second of data, reaching 99.05% overall accuracy and 99.32% true positive rate in vehicle tests."
             },
             {
-              "type": "image",
-              "src": "assets/images/projects/rapidpd/RapidPD-hardware-platform.png",
-              "alt": "RapidPD commercial Wi-Fi hardware platform and in-cabin antenna deployment",
-              "caption": "2Tx-1Rx prototype and in-cabin antenna placement using commercial Wi-Fi chipsets"
-            },
-            {
               "type": "heading",
               "level": 3,
               "text": "Finding Failure Boundaries in the Real World"
@@ -75,9 +59,9 @@
             },
             {
               "type": "image",
-              "src": "assets/images/projects/rapidpd/RapidPD-results.png",
-              "alt": "RapidPD confusion matrix and performance metrics for empty, human, dog, and cat cases",
-              "caption": "Real-vehicle evaluation: 99.05% overall accuracy, 99.32% TPR, and 1.64% FPR"
+              "src": "assets/images/projects/rapidpd/RapidPD-experiment.jpg",
+              "alt": "Presentation of test results in real-world conditions",
+              "caption": "Presentation of test results in real-world conditions"
             },
             {
               "type": "heading",
@@ -86,35 +70,30 @@
             },
             {
               "type": "paragraph",
-              "text": "The work was published with me as first author in *IEEE Transactions on Aerospace and Electronic Systems*. I was then invited to give a 30-minute talk at WOCC 2025, compressing a long project into a clear argument: why the problem matters, why prior approaches are constrained, what the key insight is, and whether the system actually holds up in complex environments. Completing the research is one skill; making it quickly understandable and open to critique by researchers from other backgrounds is another.\n\n[Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/10971911) · [View the WOCC 2025 invited-talk slides](../../assets/documents/projects/rapidpd/RapidPD-WOCC2025-Invited-Talk.pdf)"
+              "text": "The work was published with me as first author in *IEEE Transactions on Aerospace and Electronic Systems*. I was then invited to give a 30-minute talk at WOCC 2025, compressing a long project into a clear argument: why the problem matters, why prior approaches are constrained, what the key insight is, and whether the system actually holds up in complex environments. Completing the research is one skill; making it quickly understandable and open to critique by researchers from other backgrounds is another."
             },
             {
               "type": "image",
               "src": "assets/images/projects/rapidpd/RapidPD-WOCC2025-program.jpg",
-              "alt": "RapidPD invited-talk listing in the WOCC 2025 program",
+              "alt": "The invited-talk listing in the WOCC 2025 program",
               "caption": "The RapidPD invited-speech slot in the WOCC 2025 program (16:20-16:50)"
             },
             {
-              "type": "heading",
-              "level": 3,
-              "text": "Why This Experience Matters for Robotics"
+              "type": "image",
+              "src": "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg",
+              "alt": "Hancheng Guo presenting the RapidPD invited talk at WOCC 2025",
+              "caption": "Presenting the invited talk at WOCC 2025"
             },
             {
               "type": "paragraph",
-              "text": "This work developed the same underlying abilities required in robotics: defining a testable problem from an ambiguous need, translating physical intuition into an algorithm, integrating that algorithm with real hardware, and using cross-scenario experiments to locate failure boundaries. I want to carry this research method into robot perception, learning, and closed-loop decision making - without pretending that wireless sensing itself is a robotics project."
+              "text": "This work developed the general and basic abilities, which can be applied across various fields: defining a testable problem from an ambiguous need, translating physical intuition into an algorithm, integrating that algorithm with real hardware, and using cross-scenario experiments to locate failure boundaries. "
             }
           ]
         },
         "zh": {
-          "title": "低成本车内感知：从物理建模到真实验证",
+          "title": "低成本无线感知：从物理建模到真实验证",
           "summary": "负责商用 Wi-Fi 车内感知系统的软件算法与系统调试，并通过四个月的真实车辆实验完成验证。成果以第一作者发表于 IEEE TAES，并受邀在 WOCC 2025 作专题报告。",
           "blocks": [
-            {
-              "type": "image",
-              "src": "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg",
-              "alt": "郭瀚丞在 WOCC 2025 作 RapidPD 受邀报告",
-              "caption": "在 WOCC 2025 介绍 RapidPD 的建模、系统实现与真实车辆实验"
-            },
             {
               "type": "paragraph",
               "text": "RapidPD 是一个利用车辆现有 Wi-Fi 设备检测遗留儿童与宠物的低成本感知系统。我在项目中负责软件算法设计与系统调试：从安全需求和响应延迟出发建立感知模型，将算法接入商用硬件的数据链路，并通过长期真实场景实验不断定位和修正问题。"
@@ -133,12 +112,6 @@
               "text": "硬件平台由团队提供，我的工作从数据进入软件之后开始。我把物理假设拆成可逐步检查的处理流程，围绕硬件漂移、复杂多径和弱运动信号反复调试，在真实采集数据中定位误差来源，并通过归一化、特征增强与判决平滑提高稳定性。最终算法只需 20 Hz 采样和 1 秒数据即可完成判断，在实车测试中达到 99.05% 总体准确率与 99.32% 真阳性率。"
             },
             {
-              "type": "image",
-              "src": "assets/images/projects/rapidpd/RapidPD-hardware-platform.png",
-              "alt": "RapidPD 商用 Wi-Fi 硬件平台与车内天线部署",
-              "caption": "基于商用 Wi-Fi 芯片搭建的 2Tx-1Rx 原型与车内天线布置"
-            },
-            {
               "type": "heading",
               "level": 3,
               "text": "用真实场景寻找失效边界"
@@ -149,9 +122,9 @@
             },
             {
               "type": "image",
-              "src": "assets/images/projects/rapidpd/RapidPD-results.png",
-              "alt": "RapidPD 在空车、人、犬和猫场景中的混淆矩阵与性能指标",
-              "caption": "真实车辆测试：99.05% 总体准确率、99.32% 真阳性率、1.64% 误报率"
+              "src": "assets/images/projects/rapidpd/RapidPD-experiment.jpg",
+              "alt": "真实环境下的测试结果展示",
+              "caption": "真实环境下的测试结果展示"
             },
             {
               "type": "heading",
@@ -160,22 +133,23 @@
             },
             {
               "type": "paragraph",
-              "text": "该工作以第一作者发表于 *IEEE Transactions on Aerospace and Electronic Systems*。随后我受邀在 WOCC 2025 作 30 分钟专题报告，将长期项目压缩成一条清晰的论证链：为什么问题重要、现有方法为何受限、关键洞察是什么、系统是否真的在复杂环境中成立。能够完成研究是一种能力，能够让不同背景的研究者快速理解并质疑它，是另一种能力。\n\n[阅读论文（IEEE Xplore）](https://ieeexplore.ieee.org/document/10971911) · [查看 WOCC 2025 受邀报告幻灯片](../../assets/documents/projects/rapidpd/RapidPD-WOCC2025-Invited-Talk.pdf)"
+              "text": "该工作以第一作者发表于 *IEEE Transactions on Aerospace and Electronic Systems*。随后我受邀在 WOCC 2025 作 30 分钟专题报告，将长期项目压缩成一条清晰的论证链：为什么问题重要、现有方法为何受限、关键洞察是什么、系统是否真的在复杂环境中成立。能够完成研究是一种能力，能够让不同背景的研究者快速理解并质疑它，是另一种能力。"
             },
             {
               "type": "image",
               "src": "assets/images/projects/rapidpd/RapidPD-WOCC2025-program.jpg",
-              "alt": "WOCC 2025 议程中的 RapidPD 受邀报告条目",
+              "alt": "WOCC 2025 议程中的受邀报告条目",
               "caption": "WOCC 2025 官方议程中的 Invited Speech 时段（16:20-16:50）"
             },
             {
-              "type": "heading",
-              "level": 3,
-              "text": "为什么这项经历与机器人研究相关"
+              "type": "image",
+              "src": "assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg",
+              "alt": "郭瀚丞在 WOCC 2025 作 RapidPD 受邀报告",
+              "caption": "在 WOCC 2025 作受邀报告"
             },
             {
               "type": "paragraph",
-              "text": "这项工作训练的是机器人研究同样需要的底层能力：从模糊需求中定义可验证问题，把物理直觉转化为算法，把算法接入真实硬件，并用跨场景实验寻找系统的失效边界。我希望把这套研究方法迁移到机器人感知、学习与闭环决策中，而不是把无线感知主题本身强行包装成机器人项目。"
+              "text": "这项工作训练的是一种通用的，能够应用到各领域的底层能力：从模糊需求中定义可验证问题，把物理直觉转化为算法，把算法接入真实硬件，并用跨场景实验寻找系统的失效边界。"
             }
           ]
         }

@@ -4,15 +4,15 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Low-Cost In-Vehicle Sensing: From Modeling to Real-World Validation - Hancheng Guo | Homepage</title>
+    <title>Low-Cost Wireless Sensing: From Modeling to Real-World Validation - Hancheng Guo | Homepage</title>
     <meta name="description" content="Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, then validated it through four months of real-world vehicle tests. First-author IEEE TAES paper and WOCC 2025 invited talk.">
-    <meta property="og:title" content="Low-Cost In-Vehicle Sensing: From Modeling to Real-World Validation - Hancheng Guo | Homepage">
+    <meta property="og:title" content="Low-Cost Wireless Sensing: From Modeling to Real-World Validation - Hancheng Guo | Homepage">
     <meta property="og:description" content="Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, then validated it through four months of real-world vehicle tests. First-author IEEE TAES paper and WOCC 2025 invited talk.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://hancheng-guo.github.io/pages/projects/project1.html">
     <meta property="og:image" content="https://hancheng-guo.github.io/assets/images/projects/rapidpd/RapidPD-WOCC2025-talk.jpg">
     <link rel="canonical" href="https://hancheng-guo.github.io/pages/projects/project1.html">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"Low-Cost In-Vehicle Sensing: From Modeling to Real-World Validation","description":"Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, then validated it through four months of real-world vehicle tests. First-author IEEE TAES paper and WOCC 2025 invited talk.","url":"https://hancheng-guo.github.io/pages/projects/project1.html"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"Low-Cost Wireless Sensing: From Modeling to Real-World Validation","description":"Developed and debugged the software algorithm for a commercial-Wi-Fi in-vehicle sensing system, then validated it through four months of real-world vehicle tests. First-author IEEE TAES paper and WOCC 2025 invited talk.","url":"https://hancheng-guo.github.io/pages/projects/project1.html"}</script>
     <link rel="icon" href="../../assets/icons/favicon.svg">
     <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
     <link rel="stylesheet" href="../../assets/css/style.css">
@@ -65,11 +65,7 @@
               </svg>
               <span>Back to Projects</span>
             </a>
-            <h2>Low-Cost In-Vehicle Sensing: From Modeling to Real-World Validation</h2>
-            <figure>
-              <img class="project-img" src="../../assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg" alt="Hancheng Guo presenting the RapidPD invited talk at WOCC 2025" loading="lazy" decoding="async">
-              <figcaption>Presenting RapidPD's modeling, system implementation, and real-vehicle evaluation at WOCC 2025</figcaption>
-            </figure>
+            <h2>Low-Cost Wireless Sensing: From Modeling to Real-World Validation</h2>
             <div class="project-detail-desc markdown-body">
               <p>RapidPD is a low-cost sensing system that reuses existing in-vehicle Wi-Fi devices to detect a child or pet left behind. My responsibility was software algorithm design and system debugging: I translated the safety and latency requirements into a sensing model, integrated the algorithm with the commercial-hardware data pipeline, and used long-term field tests to locate and correct failures.</p>
             </div>
@@ -80,30 +76,29 @@
             <div class="project-detail-desc markdown-body">
               <p>The hardware platform was provided by the team; my work began once its data entered the software pipeline. I decomposed the physical hypothesis into processing stages that could be inspected independently, then debugged against hardware drift, complex multipath, and weak motion in real measurements. Normalization, feature enhancement, and decision smoothing emerged from those observed failure modes. The final algorithm operates on 20 Hz sampling and one second of data, reaching 99.05% overall accuracy and 99.32% true positive rate in vehicle tests.</p>
             </div>
-            <figure>
-              <img class="project-img" src="../../assets/images/projects/rapidpd/RapidPD-hardware-platform.png" alt="RapidPD commercial Wi-Fi hardware platform and in-cabin antenna deployment" loading="lazy" decoding="async">
-              <figcaption>2Tx-1Rx prototype and in-cabin antenna placement using commercial Wi-Fi chipsets</figcaption>
-            </figure>
             <h3 class="project-content-heading">Finding Failure Boundaries in the Real World</h3>
             <div class="project-detail-desc markdown-body">
               <p>I treated evaluation as a stress test of the system's assumptions, not a search for one high score. More than four months of collection covered ten people and pets of different sizes, eleven cabin positions, and parking structures, roadsides, open areas, and an elevated bridge. I also compared against a conventional baseline and ablated key modules to separate genuine improvement from experimental coincidence. This mirrors real robotics deployment: the important question is when a system fails under viewpoint, signal-strength, and environment shifts.</p>
             </div>
             <figure>
-              <img class="project-img" src="../../assets/images/projects/rapidpd/RapidPD-results.png" alt="RapidPD confusion matrix and performance metrics for empty, human, dog, and cat cases" loading="lazy" decoding="async">
-              <figcaption>Real-vehicle evaluation: 99.05% overall accuracy, 99.32% TPR, and 1.64% FPR</figcaption>
+              <img class="project-img" src="../../assets/images/projects/rapidpd/RapidPD-experiment.jpg" alt="Presentation of test results in real-world conditions" loading="lazy" decoding="async">
+              <figcaption>Presentation of test results in real-world conditions</figcaption>
             </figure>
             <h3 class="project-content-heading">Research Outcome and Technical Communication</h3>
             <div class="project-detail-desc markdown-body">
               <p>The work was published with me as first author in <em>IEEE Transactions on Aerospace and Electronic Systems</em>. I was then invited to give a 30-minute talk at WOCC 2025, compressing a long project into a clear argument: why the problem matters, why prior approaches are constrained, what the key insight is, and whether the system actually holds up in complex environments. Completing the research is one skill; making it quickly understandable and open to critique by researchers from other backgrounds is another.</p>
-              <p><a href="https://ieeexplore.ieee.org/document/10971911">Read the paper on IEEE Xplore</a> · <a href="../../assets/documents/projects/rapidpd/RapidPD-WOCC2025-Invited-Talk.pdf">View the WOCC 2025 invited-talk slides</a></p>
+              <p><a href="https://ieeexplore.ieee.org/document/10971911">Read the paper on IEEE Xplore</a></p>
             </div>
             <figure>
-              <img class="project-img" src="../../assets/images/projects/rapidpd/RapidPD-WOCC2025-program.jpg" alt="RapidPD invited-talk listing in the WOCC 2025 program" loading="lazy" decoding="async">
+              <img class="project-img" src="../../assets/images/projects/rapidpd/RapidPD-WOCC2025-program.jpg" alt="The invited-talk listing in the WOCC 2025 program" loading="lazy" decoding="async">
               <figcaption>The RapidPD invited-speech slot in the WOCC 2025 program (16:20-16:50)</figcaption>
             </figure>
-            <h3 class="project-content-heading">Why This Experience Matters for Robotics</h3>
+            <figure>
+              <img class="project-img" src="../../assets/images/projects/rapidpd/RapidPD-WOCC2025-talk-wide.jpg" alt="Hancheng Guo presenting the RapidPD invited talk at WOCC 2025" loading="lazy" decoding="async">
+              <figcaption>Presenting the invited talk at WOCC 2025</figcaption>
+            </figure>
             <div class="project-detail-desc markdown-body">
-              <p>This work developed the same underlying abilities required in robotics: defining a testable problem from an ambiguous need, translating physical intuition into an algorithm, integrating that algorithm with real hardware, and using cross-scenario experiments to locate failure boundaries. I want to carry this research method into robot perception, learning, and closed-loop decision making - without pretending that wireless sensing itself is a robotics project.</p>
+              <p>This work developed the basic abilities: defining a testable problem from an ambiguous need, translating physical intuition into an algorithm, integrating that algorithm with real hardware, and using cross-scenario experiments to locate failure boundaries. </p>
             </div>
             <nav class="project-adjacent" aria-label="Project navigation">
               <a class="project-adjacent-link previous" href="../../pages/projects/project2.html">

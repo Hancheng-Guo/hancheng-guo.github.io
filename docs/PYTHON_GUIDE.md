@@ -415,10 +415,10 @@ portfolio.add_tech_group(
 
 ```python
 portfolio.set_resume(
-    label=dict(
-        zh="下载简历",
-        en="Download CV",
-    ),
+    # label=dict(
+    #     zh="下载简历",
+    #     en="Download CV",
+    # ),
     url=dict(
         zh="assets/documents/resume-zh.pdf",
         en="assets/documents/resume-en.pdf",
@@ -426,7 +426,7 @@ portfolio.set_resume(
 )
 ```
 
-PDF 应先放入 `assets/documents/`。未配置当前语言 URL 时，不生成对应下载按钮。
+PDF 应先放入 `assets/documents/`。未配置当前语言 URL 时，不生成对应下载按钮。当不传入 `label` 字段时，按钮显示默认文案。
 
 ## Timeline
 

@@ -660,6 +660,16 @@ class BuilderTests(unittest.TestCase):
     self.assertNotIn("Loading project", detail)
     self.assertIn('class="svg-icon motion-link-arrow link-chevron chevron-left svg-icon--inline', detail)
 
+  def test_resume_download_uses_i18n_default_and_allows_an_override(self):
+    portfolio = Portfolio().set_resume(url="assets/documents/CVTest.pdf")
+    for html in (render_home(portfolio), render_cv(portfolio)):
+      self.assertIn('<span data-i18n="intro.downloadCv">Download CV</span>', html)
+
+    portfolio.set_resume(label={"en": "Download PDF", "zh": "下载 PDF"})
+    for html in (render_home(portfolio), render_cv(portfolio)):
+      self.assertIn('<span>Download PDF</span>', html)
+      self.assertNotIn('data-i18n="intro.downloadCv"', html)
+
   def test_timeline_toggle_is_hidden_without_extra_events(self):
     portfolio = Portfolio()
     for number in range(8):

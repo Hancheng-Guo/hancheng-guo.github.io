@@ -127,10 +127,6 @@
     }
   ],
   "resume": {
-    "label": {
-      "zh": "下载简历",
-      "en": "Download CV"
-    },
     "url": {
       "zh": "assets/documents/简历测试.pdf",
       "en": "assets/documents/CVTest.pdf"
@@ -150,163 +146,32 @@
         "zh": "发布具备语音控制与机械臂协同作业能力的桌面级串联四足机器人 SliverWolf。",
         "en": "Released SliverWolf, a desktop serial quadruped with voice control and robotic-arm collaboration."
       }
-    },
-    {
-      "date": {
-        "start": "2024-07",
-        "end": "2024-07"
-      },
-      "title": {
-        "zh": "2024 ROBOCON 全国赛",
-        "en": "2024 ROBOCON National Competition"
-      },
-      "description": {
-        "zh": "基于 FreeRTOS 完成 R1 机器人嵌入式控制系统开发，实现 ±5 mm 定位精度、球体发射和夹爪夹取功能。",
-        "en": "Developed the FreeRTOS embedded control system for the R1 robot,\nachieving ±5 mm positioning accuracy, ball launching, and gripper functions."
-      }
-    },
-    {
-      "date": {
-        "start": "2024-08",
-        "end": "2024-08"
-      },
-      "title": {
-        "zh": "2024 福建省大学生电子设计大赛",
-        "en": "2024 Fujian Undergraduate Electronics Design Contest"
-      },
-      "description": {
-        "zh": "基于 MSPM0G3507 开发自动驾驶小车系统并进入省级测试阶段。",
-        "en": "Developed an MSPM0G3507-based autonomous vehicle system and qualified for provincial testing."
-      }
-    },
-    {
-      "date": {
-        "start": "2024-11",
-        "end": "2024-11"
-      },
-      "title": {
-        "zh": "福建省大学生智能海洋装备设计制作大赛",
-        "en": "Fujian Intelligent Marine Equipment Design Competition"
-      },
-      "description": {
-        "zh": "负责浮力可控多自由度龙虾水下机器人的控制系统开发，获特等奖。",
-        "en": "Led control-system development for a buoyancy-controlled multi-DOF lobster robot, winning the Special Prize."
-      }
-    },
-    {
-      "date": {
-        "start": "2024-12",
-        "end": "2024-12"
-      },
-      "title": {
-        "zh": "2024 世界航海装备大会",
-        "en": "2024 World Marine Equipment Conference"
-      },
-      "description": {
-        "zh": "代表福建理工大学参展并展示仿生波士顿大龙虾机器人，获新华社等媒体报道。",
-        "en": "Represented Fujian University of Technology and exhibited the bionic Boston lobster robot, receiving national media coverage."
-      }
-    },
-    {
-      "date": {
-        "start": "2025-07",
-        "end": "2025-07"
-      },
-      "title": {
-        "zh": "2025 ROBOCON 全国赛",
-        "en": "2025 ROBOCON National Competition"
-      },
-      "description": {
-        "zh": "负责足式机器人全栈研发，在竞速、障碍和越野赛中获得三项国家二等奖。",
-        "en": "Led full-stack development of the quadruped robot and earned three National Second Prizes."
-      }
-    },
-    {
-      "date": {
-        "start": "2025-08",
-        "end": "2025-08"
-      },
-      "title": {
-        "zh": "2025 全国大学生电子设计大赛",
-        "en": "2025 National Undergraduate Electronics Design Contest"
-      },
-      "description": {
-        "zh": "负责自动测距系统功率计的硬件设计与制作，获全国二等奖。",
-        "en": "Designed and fabricated the power-meter hardware for an automatic ranging system, winning the National Second Prize."
-      }
-    },
-    {
-      "date": {
-        "start": "2025-09",
-        "end": "2025-09"
-      },
-      "title": {
-        "zh": "开源 BRS 并联四足机器人",
-        "en": "Open Source BRS Parallel Quadruped Robot"
-      },
-      "description": {
-        "zh": "在 GitHub 开源 BRS 并联四足机器人的机械结构与控制代码。",
-        "en": "Open-sourced the mechanical structure and control code of the BRS parallel quadruped robot on GitHub."
-      }
-    },
-    {
-      "date": {
-        "start": "2025-10",
-        "end": "2026-03"
-      },
-      "title": {
-        "zh": "高擎机电实习",
-        "en": "Internship at Gaoqing Electromechanical"
-      },
-      "description": {
-        "zh": "负责 HTDW4438 仿生四足机器人的机械设计、控制算法开发与系统集成测试。",
-        "en": "Responsible for mechanical design, control-algorithm development,\nand system-integration testing for the HTDW4438 bionic quadruped robot."
-      }
-    },
-    {
-      "date": {
-        "start": "2026-09"
-      },
-      "title": {
-        "zh": "测试时间线",
-        "en": "Timeline Test"
-      },
-      "description": {
-        "zh": "- 第一行\n- 第二行",
-        "en": "- Line 1\n- Line 2"
-      }
     }
   ],
   "techStack": [
     {
       "title": {
-        "zh": "嵌入式开发",
-        "en": "Embedded"
+        "zh": "编程与开发",
+        "en": "Programming"
       },
       "items": [
         {
-          "name": {
-            "zh": "STM32",
-            "en": "STM32"
-          }
+          "name": "Python"
         },
         {
-          "name": {
-            "zh": "ESP32",
-            "en": "ESP32"
-          }
+          "name": "C++"
         },
         {
-          "name": {
-            "zh": "FreeRTOS",
-            "en": "FreeRTOS"
-          }
+          "name": "ROS2"
         },
         {
-          "name": {
-            "zh": "C/C++",
-            "en": "C/C++"
-          }
+          "name": "PyTorch"
+        },
+        {
+          "name": "MATLAB"
+        },
+        {
+          "name": "Git"
         }
       ]
     },
@@ -318,79 +183,21 @@
       "items": [
         {
           "name": {
-            "zh": "ROS/ROS2",
-            "en": "ROS/ROS2"
-          }
-        },
-        {
-          "name": {
-            "zh": "Gazebo",
-            "en": "Gazebo"
-          }
-        },
-        {
-          "name": {
-            "zh": "运动控制",
-            "en": "Motion Control"
-          }
-        },
-        {
-          "name": {
             "zh": "强化学习",
             "en": "Reinforcement Learning"
           }
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "硬件设计",
-        "en": "Hardware"
-      },
-      "items": [
-        {
-          "name": {
-            "zh": "Altium",
-            "en": "Altium"
-          }
         },
         {
           "name": {
-            "zh": "SolidWorks",
-            "en": "SolidWorks"
+            "zh": "课程学习",
+            "en": "Curriculum"
           }
         },
         {
-          "name": {
-            "zh": "PCB",
-            "en": "PCB"
-          }
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "软件与工具",
-        "en": "Software"
-      },
-      "items": [
-        {
-          "name": {
-            "zh": "Linux",
-            "en": "Linux"
-          }
+          "name": "MuJoCo"
         },
         {
-          "name": {
-            "zh": "Python",
-            "en": "Python"
-          }
-        },
-        {
-          "name": {
-            "zh": "Git",
-            "en": "Git"
-          }
+          "name": "Isaac Lab"
         }
       ]
     }
